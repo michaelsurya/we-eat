@@ -26,7 +26,7 @@ const Header = () => {
       <Menu.Item>Login</Menu.Item>
 
       <Menu.Item>
-        <Button color="red">Sign-up</Button>
+        <Button color="orange">Sign-up</Button>
       </Menu.Item>
     </Menu>
   );

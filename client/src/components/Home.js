@@ -1,20 +1,22 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
 import styles from "../assets/css/home.module.css";
-
+import { Container, Header } from "semantic-ui-react";
 import SearchCard from "./home/SearchCard";
+import EventGrid from "./home/EventGrid";
 
 const Home = () => {
   return (
     <div>
-      <Grid columns={5} className={styles.with_background}>
-        <Grid.Column></Grid.Column>
-
-        <Grid.Column>
-          <SearchCard></SearchCard>
-        </Grid.Column>
-      </Grid>
-      <div style={{ height: "1000px" }}></div>
+      <div className={styles.with_background}>
+        <SearchCard></SearchCard>
+      </div>
+      <Container className={styles.explore_container}>
+        <Header as="h1" textAlign="center">
+          Explore
+        </Header>
+        <EventGrid></EventGrid>
+        <Header as="h2" color="orange" className={styles.show_more}>Show more...</Header>
+      </Container>
     </div>
   );
 };

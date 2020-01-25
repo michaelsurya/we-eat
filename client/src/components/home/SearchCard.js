@@ -1,30 +1,40 @@
 import React from "react";
-import { Card, Icon, Image, Grid } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Header,
+  Label,
+  Segment,
+  FormGroup
+} from "semantic-ui-react";
+import { Field, reduxForm } from "redux-form";
+import styles from "../../assets/css/home.module.css";
 
 const SearchCard = () => {
   return (
-    <Card>
-      <Image
-        src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-        wrapped
-        ui={false}
-      />
-      <Card.Content>
-        <Card.Header>Matthew</Card.Header>
-        <Card.Meta>
-          <span className="date">Joined in 2015</span>
-        </Card.Meta>
-        <Card.Description>
-          Matthew is a musician living in Nashville.
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <a>
-          <Icon name="user" />
-          22 Friends
-        </a>
-      </Card.Content>
-    </Card>
+    //USE REDUX FORM LATER
+    <div className={styles.vertical_helper}>
+      <Segment raised className={styles.search_card}>
+        <Header as="h1">Let's find something good</Header>
+        <Form>
+          <Form.Field>
+            <label>Where</label>
+            <input placeholder="Eg: Newcastle" />
+          </Form.Field>
+          <Form.Group inline>
+            <Form.Field>
+              <label>Date</label>
+              <input placeholder="DD/MM/YYYY" />
+            </Form.Field>
+            <Form.Field>
+              <label>Guests</label>
+              <input placeholder="DD/MM/YYYY" />
+            </Form.Field>
+          </Form.Group>
+          <Button type="submit" color="orange">Submit</Button>
+        </Form>
+      </Segment>
+    </div>
   );
 };
 

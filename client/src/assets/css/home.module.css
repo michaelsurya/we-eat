@@ -4,3 +4,26 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.search_card {
+    width: 22%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 10% !important;
+    opacity: 0.9;
+}
+
+.vertical_helper {
+    position: relative;
+    height: 100%;
+    
+}
+
+.explore_container {
+    margin-top: 3rem !important;
+}
+
+.show_more {
+    margin-top: 0 !important;
+}
