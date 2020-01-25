@@ -6,7 +6,7 @@
 }
 
 .search_card {
-    width: 22%;
+    width: 30%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -25,5 +25,9 @@
 }
 
 .show_more {
-    margin-top: 0 !important;
+    margin-top: 1rem !important;
+}
+
+.event_card {
+    margin: auto !important;
 }

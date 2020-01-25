@@ -1,5 +1,6 @@
 import React from "react";
-import Header from "./Header";
+import Header from "./Nav";
+import Footer from "./Footer";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,6 +17,7 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={Home} />
       </Switch>
+      <Footer></Footer>
     </Router>
   ) 
 };

@@ -16,7 +16,7 @@ const SearchCard = () => {
     <div className={styles.vertical_helper}>
       <Segment raised className={styles.search_card}>
         <Header as="h1">Let's find something good</Header>
-        <Form>
+        <Form size="medium">
           <Form.Field>
             <label>Where</label>
             <input placeholder="Eg: Newcastle" />
@@ -28,7 +28,7 @@ const SearchCard = () => {
             </Form.Field>
             <Form.Field>
               <label>Guests</label>
-              <input placeholder="DD/MM/YYYY" />
+              <input placeholder="1" />
             </Form.Field>
           </Form.Group>
           <Button type="submit" color="orange">Submit</Button>

@@ -1,0 +1,15 @@
+.top_footer {
+    padding: 2rem; 
+}
+
+.bottom_footer {
+    background-color: #F2711C !important;
+    margin: 0 !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    border-radius: 0!important;
+}
+
+.footer {
+    margin-top: 2rem !important;
+}

@@ -4,6 +4,7 @@ import { Container, Header } from "semantic-ui-react";
 import SearchCard from "./home/SearchCard";
 import EventGrid from "./home/EventGrid";
 
+
 const Home = () => {
   return (
     <div>

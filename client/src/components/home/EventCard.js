@@ -1,9 +1,10 @@
 import React from "react";
+import styles from "../../assets/css/home.module.css";
 import { Card, Icon, Image } from "semantic-ui-react";
 
 const EventCard = (title, location, rating, desc, price, host) => {
   return (
-    <Card>
+    <Card className={styles.event_card}>
       <Image
         src="https://react.semantic-ui.com/images/wireframe/image.png"
         wrapped

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Dropdown, Menu } from "semantic-ui-react";
-import styles from "../assets/css/header.module.css";
+import styles from "../assets/css/nav.module.css";
 import { Link } from "react-router-dom";
 
 const Header = () => {

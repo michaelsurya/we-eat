@@ -4,7 +4,6 @@ import EventCard from "./EventCard";
 
 const EventGrid = () => {
   return (
-    <Grid>
       <Grid columns={3}>
         <Grid.Row>
           <Grid.Column>
@@ -29,7 +28,6 @@ const EventGrid = () => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </Grid>
   );
 };
 
