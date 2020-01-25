@@ -1,0 +1,6 @@
+.with_background {
+    height: 50vh;
+    background-image: url(../img/black-frying-pan-with-spaghetti-sauce-near-brown-wooden.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
