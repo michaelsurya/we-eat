@@ -31,3 +31,7 @@
 .event_card {
     margin: auto !important;
 }
+
+.rating {
+    text-align: right;
+}

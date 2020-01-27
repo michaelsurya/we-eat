@@ -16,7 +16,7 @@ const SearchCard = () => {
     <div className={styles.vertical_helper}>
       <Segment raised className={styles.search_card}>
         <Header as="h1">Let's find something good</Header>
-        <Form size="medium">
+        <Form>
           <Form.Field>
             <label>Where</label>
             <input placeholder="Eg: Newcastle" />

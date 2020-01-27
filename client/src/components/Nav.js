@@ -1,14 +1,21 @@
 import React from "react";
-import { Button, Dropdown, Menu } from "semantic-ui-react";
+import { Button, Dropdown, Header, Image, Menu } from "semantic-ui-react";
 import styles from "../assets/css/nav.module.css";
 import { Link } from "react-router-dom";
+import logo from "../assets/img/Logo.png";
 
-const Header = () => {
+const Nav = () => {
   return (
     <Menu borderless size="massive" className={styles.navbar}>
-      <Menu.Item>Logo</Menu.Item>
+      <Menu.Item as={Link} to="/">
+        <Image src={logo} className={styles.logo}></Image>
+      </Menu.Item>
 
-      <Menu.Item>WeEat</Menu.Item>
+      <Menu.Item>
+        <Header as="h1" color="orange">
+          WeEAT
+        </Header>
+      </Menu.Item>
 
       <Menu.Menu position="right">
         <Dropdown item text="£-GBP">
@@ -21,7 +28,9 @@ const Header = () => {
 
       <Menu.Item name="host">Become a host</Menu.Item>
 
-      <Menu.Item as={Link} name="help" to="/help">Help</Menu.Item>
+      <Menu.Item as={Link} name="help" to="/help">
+        Help
+      </Menu.Item>
 
       <Menu.Item>Login</Menu.Item>
 
@@ -32,4 +41,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Nav;

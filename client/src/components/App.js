@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./Nav";
+import Nav from "./Nav";
 import Footer from "./Footer";
 import {
   BrowserRouter as Router,
@@ -13,7 +13,7 @@ import Home from "./Home";
 const App = () => {
   return (
     <Router>
-      <Header />
+      <Nav />
       <Switch>
         <Route path="/" exact component={Home} />
       </Switch>
