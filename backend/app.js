@@ -5,19 +5,32 @@ const routes = require("./routes/routes");
 
 const app = express();
 
-mongoose.Promise = global.Promise;
-// if (process.env.NODE_ENV !== "test") {
-  mongoose.connect("mongodb://localhost/weeat", { useNewUrlParser: true, useUnifiedTopology:true }) ;
-  mongoose.connection
-    .once("open", () => {
-      console.log("Connection succesful");
-    })
-    .on("error", error => {
-      console.warn("Warning", error);
-    });
-// }
+const dbUri = "mongodb://localhost/weeat";
 
+mongoose.Promise = global.Promise;
+
+mongoose.connect(dbUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
+mongoose.connection
+  .once("open", () => {
+    console.log("Connection succesful");
+  })
+  .on("error", error => {
+    console.warn("Warning", error);
+  }); 
+
+// Body parser
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Passport middleware
+app.use(passport.initialize());
+require("./config/passport")(passport)
+
+//Routes
 routes(app);
 
 app.use((err, req, res, next) => {
