@@ -5,21 +5,30 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 import Home from "./Home";
+import Login from "./Login";
+import Register from "./Register";
 
 const App = () => {
   return (
     <Router>
-      <Nav />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route component={DefaultContainer} />
       </Switch>
-      <Footer></Footer>
     </Router>
-  ) 
+  );
 };
+
+const DefaultContainer = () => (
+  <div>
+    <Nav></Nav>
+    <Route path="/" exact component={Home} />
+    <Footer></Footer>
+  </div>
+);
 
 export default App;

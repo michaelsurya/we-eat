@@ -1,0 +1,8 @@
+.centre {
+    width: 500px !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -250px !important;
+    margin-left: -250px !important;
+}

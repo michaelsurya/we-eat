@@ -1,20 +1,14 @@
 import React from "react";
-import { Button, Dropdown, Header, Image, Menu } from "semantic-ui-react";
+import { Button, Dropdown, Image, Menu } from "semantic-ui-react";
 import styles from "../assets/css/nav.module.css";
 import { Link } from "react-router-dom";
-import logo from "../assets/img/Logo.png";
+import logo from "../assets/img/Logo_2.png";
 
 const Nav = () => {
   return (
     <Menu borderless size="massive" className={styles.navbar}>
-      <Menu.Item as={Link} to="/">
+      <Menu.Item as={Link} to="/" className={styles.no_padding}>
         <Image src={logo} className={styles.logo}></Image>
-      </Menu.Item>
-
-      <Menu.Item>
-        <Header as="h1" color="orange">
-          WeEAT
-        </Header>
       </Menu.Item>
 
       <Menu.Menu position="right">
@@ -32,9 +26,11 @@ const Nav = () => {
         Help
       </Menu.Item>
 
-      <Menu.Item>Login</Menu.Item>
+      <Menu.Item as={Link} to="/login">
+        Login
+      </Menu.Item>
 
-      <Menu.Item>
+      <Menu.Item as={Link} to="/register">
         <Button color="orange">Sign-up</Button>
       </Menu.Item>
     </Menu>
