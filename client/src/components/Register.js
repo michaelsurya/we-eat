@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { register } from "../actions";
-import { Header, Segment } from "semantic-ui-react";
+import { registerUser } from "../actions/authActions";
+import { Header, Icon, Segment } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 import styles from "../assets/css/auth.module.css";
 
@@ -9,8 +10,8 @@ import logo from "../assets/img/Logo.png";
 import RegisterForm from "./auth/RegisterForm";
 
 const Register = props => {
-  const onSubmit = (formValues) => {
-    props.register(formValues);
+  const onSubmit = formValues => {
+    props.registerUser(formValues);
   };
 
   return (
@@ -22,9 +23,13 @@ const Register = props => {
         image={logo}
         content="Sign Up"
       ></Header>
+      <Header size="small" as={Link} to="/" color="orange">
+        <Icon name="arrow left" />
+        <Header.Content>Back to Home</Header.Content>
+      </Header>
       <RegisterForm onSubmit={onSubmit}></RegisterForm>
     </Segment>
   );
 };
 
-export default connect(null, { register })(Register);
+export default connect(null, { registerUser })(Register);

@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { Button, Form, Message } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 
 class RegisterForm extends React.Component {
   renderError({ error, touched }) {
