@@ -3,11 +3,9 @@ import {
   Button,
   Form,
   Header,
-  Label,
   Segment,
-  FormGroup
 } from "semantic-ui-react";
-import { Field, reduxForm } from "redux-form";
+// import { Field, reduxForm } from "redux-form";
 import styles from "../../assets/css/home.module.css";
 
 const SearchCard = () => {

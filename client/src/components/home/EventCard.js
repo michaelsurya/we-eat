@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../assets/css/home.module.css";
-import { Card, Icon, Image, Grid } from "semantic-ui-react";
+import { Card, Icon, Image} from "semantic-ui-react";
 
 const EventCard = (title, location, date, time, rating, desc, price, host) => {
   return (

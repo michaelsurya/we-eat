@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
-import { Header, Icon, Segment } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Header, Icon, Message, Segment } from "semantic-ui-react";
+import { Link, withRouter } from "react-router-dom";
+
+import isEmpty from "lodash/isEmpty";
 
 import styles from "../assets/css/auth.module.css";
 
@@ -11,7 +13,13 @@ import RegisterForm from "./auth/RegisterForm";
 
 const Register = props => {
   const onSubmit = formValues => {
-    props.registerUser(formValues);
+    props.registerUser(formValues, props.history);
+  };
+
+  const renderErrorMessage = () => {
+    if (!isEmpty(props.error)) {
+      return <Message error header="Error" content={props.error}></Message>;
+    }
   };
 
   return (
@@ -27,9 +35,15 @@ const Register = props => {
         <Icon name="arrow left" />
         <Header.Content>Back to Home</Header.Content>
       </Header>
+      {renderErrorMessage()}
       <RegisterForm onSubmit={onSubmit}></RegisterForm>
     </Segment>
   );
 };
 
-export default connect(null, { registerUser })(Register);
+const mapStateToProps = state => ({
+  auth: state.auth,
+  error: state.error
+});
+
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

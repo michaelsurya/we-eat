@@ -32,4 +32,9 @@ const Login = props => {
   );
 };
 
-export default connect(null, { loginUser })(Login);
+const mapStateToProps = state => ({
+  auth: state.auth,
+  error: state.error
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

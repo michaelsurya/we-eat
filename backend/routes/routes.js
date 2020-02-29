@@ -5,6 +5,6 @@ module.exports = (app) => {
         res.send("It works!");
     });
 
-    app.post('/api/register', UserController.register);
-    app.post('/api/authenticate', UserController.authenticate);
+    app.post('/api/users/register', UserController.register);
+    app.post('/api/users/login', UserController.authenticate);
   };
