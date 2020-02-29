@@ -1,13 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Header, Segment } from "semantic-ui-react";
+import { loginUser } from "../actions/authActions";
+import { Header, Icon, Segment } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 import styles from "../assets/css/auth.module.css";
 
 import logo from "../assets/img/Logo.png";
 import LoginForm from "./auth/LoginForm";
 
-const Login = () => {
+const Login = props => {
+  const onSubmit = formValues => {
+    props.loginUser(formValues);
+  };
+
   return (
     <Segment raised className={styles.centre}>
       <Header
@@ -17,9 +23,13 @@ const Login = () => {
         image={logo}
         content="Log In"
       ></Header>
-      <LoginForm></LoginForm>
+      <Header size="small" as={Link} to="/" color="orange">
+        <Icon name="arrow left" />
+        <Header.Content>Back to Home</Header.Content>
+      </Header>
+      <LoginForm onSubmit={onSubmit}></LoginForm>
     </Segment>
   );
 };
 
-export default connect(null, {})(Login);
+export default connect(null, { loginUser })(Login);
