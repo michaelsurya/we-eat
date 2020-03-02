@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 import styles from "../assets/css/auth.module.css";
 
 import logo from "../assets/img/Logo.png";
-import LoginForm from "./auth/LoginForm";
+import SignInForm from "./auth/SignInForm";
 
-const Login = props => {
+const SignIn = props => {
   const onSubmit = formValues => {
     props.loginUser(formValues);
   };
@@ -21,13 +21,13 @@ const Login = props => {
         textAlign="center"
         color="orange"
         image={logo}
-        content="Log In"
+        content="Sign In"
       ></Header>
       <Header size="small" as={Link} to="/" color="orange">
         <Icon name="arrow left" />
         <Header.Content>Back to Home</Header.Content>
       </Header>
-      <LoginForm onSubmit={onSubmit}></LoginForm>
+      <SignInForm onSubmit={onSubmit}></SignInForm>
     </Segment>
   );
 };
@@ -37,4 +37,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser })(SignIn);

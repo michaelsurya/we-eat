@@ -2,7 +2,7 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button, Form } from "semantic-ui-react";
 
-class RegisterForm extends React.Component {
+class SignInForm extends React.Component {
   renderError({ error, touched }) {
     if (touched && error) {
       return error;
@@ -30,7 +30,6 @@ class RegisterForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="name" component={this.renderTextField} label="Full Name" />
         <Field name="email" component={this.renderTextField} label="Email" />
         <Field
           name="password"
@@ -38,14 +37,8 @@ class RegisterForm extends React.Component {
           label="Password"
           type="password"
         />
-        <Field
-          name="repeatPassword"
-          component={this.renderTextField}
-          label="Confirm Password"
-          type="password"
-        />
         <Button type="submit" color="orange">
-          Sign up
+          Log in
         </Button>
       </Form>
     );
@@ -54,10 +47,6 @@ class RegisterForm extends React.Component {
 
 const validate = formValues => {
   const errors = {};
-  if (!formValues.name) {
-    // Check if user has not enter their name
-    errors.name = "Name is required";
-  }
 
   if (!formValues.email) {
     errors.email = "Email is required";
@@ -67,14 +56,9 @@ const validate = formValues => {
 
   if (!formValues.password) {
     errors.password = "Required";
-  } else if (!formValues.repeatPassword) {
-    errors.repeatPassword = "Required";
-  } else if (formValues.password !== formValues.repeatPassword) {
-    errors.repeatPassword = "Password does not match";
   }
+
   return errors;
 };
 
-export default reduxForm({ form: "registerForm", validate: validate })(
-  RegisterForm
-);
+export default reduxForm({ form: "signInForm", validate: validate })(SignInForm);

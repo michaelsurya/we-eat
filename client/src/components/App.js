@@ -8,15 +8,15 @@ import {
 } from "react-router-dom";
 
 import Home from "./Home";
-import Login from "./Login";
-import Register from "./Register";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={SignIn} />
+        <Route exact path="/register" component={SignUp} />
         <Route component={DefaultContainer} />
       </Switch>
     </Router>

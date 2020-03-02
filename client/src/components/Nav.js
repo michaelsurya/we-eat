@@ -27,11 +27,11 @@ const Nav = () => {
       </Menu.Item>
 
       <Menu.Item as={Link} to="/login">
-        Login
+        Sign in
       </Menu.Item>
 
       <Menu.Item as={Link} to="/register">
-        <Button color="orange">Sign-up</Button>
+        <Button color="orange">Sign up</Button>
       </Menu.Item>
     </Menu>
   );
