@@ -1,10 +1,33 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Button, Dropdown, Image, Menu } from "semantic-ui-react";
 import styles from "../assets/css/nav.module.css";
 import { Link } from "react-router-dom";
 import logo from "../assets/img/Logo_2.png";
 
-const Nav = () => {
+const Nav = props => {
+  const renderSignInSignOut = () => {
+    if (props.auth.isSignedIn) {
+      return (
+        <Menu.Item as={Link} to="/">
+          {props.auth.user.name}
+        </Menu.Item>
+      );
+    } else {
+      return (
+        <>
+          <Menu.Item as={Link} to="/login">
+            Sign in
+          </Menu.Item>
+
+          <Menu.Item as={Link} to="/register">
+            <Button color="orange">Sign up</Button>
+          </Menu.Item>
+        </>
+      );
+    }
+  };
+
   return (
     <Menu borderless size="massive" className={styles.navbar}>
       <Menu.Item as={Link} to="/" className={styles.no_padding}>
@@ -26,15 +49,14 @@ const Nav = () => {
         Help
       </Menu.Item>
 
-      <Menu.Item as={Link} to="/login">
-        Sign in
-      </Menu.Item>
-
-      <Menu.Item as={Link} to="/register">
-        <Button color="orange">Sign up</Button>
-      </Menu.Item>
+      {renderSignInSignOut()}
     </Menu>
   );
 };
 
-export default Nav;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  error: state.error
+});
+
+export default connect(mapStateToProps, {})(Nav);

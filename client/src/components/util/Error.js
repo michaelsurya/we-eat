@@ -3,9 +3,9 @@ import { Message } from "semantic-ui-react";
 import isEmpty from "lodash/isEmpty";
 
 const Error = props => {
-  if (!isEmpty(props.message)) {
+  if (!isEmpty(props.error)) {
     return (
-      <Message error header="Error" content={props.message}></Message>
+      <Message error header="Error" content={props.error.message}></Message>
     );
   }else{
     return null;

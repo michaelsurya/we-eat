@@ -28,7 +28,7 @@ module.exports = {
     // Check if email is available
     User.findOne({ email: value.email }).then(user => {
       if (user) {
-        return res.status(400).json("Email already exists");
+        return res.status(400).json({message: "Email already exists"});
       }
     });
 
@@ -65,7 +65,7 @@ module.exports = {
       .then(user => {
         // Check if user exists
         if (!user) {
-          return res.status(404).json("Invalid email or password");
+          return res.status(404).json({message: "Invalid email or password"});
         }
         // Check password
         bcrypt.compare(password, user.password).then(isMatch => {
@@ -91,7 +91,7 @@ module.exports = {
               }
             );
           } else {
-            return res.status(400).json("Invalid email or password");
+            return res.status(400).json({message: "Invalid email or password"});
           }
         });
       })
