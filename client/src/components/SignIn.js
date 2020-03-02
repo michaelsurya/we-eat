@@ -24,8 +24,8 @@ class SignIn extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isSignedIn) {
+  componentDidUpdate(){
+    if(this.props.auth.isSignedIn){
       this.props.history.push("/");
     }
   }

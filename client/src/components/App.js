@@ -1,15 +1,13 @@
 import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PrivateRoute from "./auth/PrivateRoute";
 
 import Home from "./Home";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+
 
 const App = () => {
   return (
@@ -26,7 +24,7 @@ const App = () => {
 const DefaultContainer = () => (
   <div>
     <Nav></Nav>
-    <Route path="/" exact component={Home} />
+    <PrivateRoute path="/" exact component={Home} />
     <Footer></Footer>
   </div>
 );
