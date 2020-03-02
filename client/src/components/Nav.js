@@ -1,17 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Dropdown, Image, Menu } from "semantic-ui-react";
+import { Button, Dropdown, Header, Image, Menu } from "semantic-ui-react";
 import styles from "../assets/css/nav.module.css";
 import { Link } from "react-router-dom";
+
+import { logoutUser } from "../actions/authActions";
+
 import logo from "../assets/img/Logo_2.png";
 
 const Nav = props => {
   const renderSignInSignOut = () => {
     if (props.auth.isSignedIn) {
       return (
-        <Menu.Item as={Link} to="/">
-          {props.auth.user.name}
-        </Menu.Item>
+        <>
+          <Dropdown text={props.auth.user.name} className="link item">
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to="">
+                <Header as="h4">My Profile</Header>
+              </Dropdown.Item>
+              <Dropdown.Item onClick={props.logOutUser}>
+                <Header as="h4" color="red">
+                  Sign Out
+                </Header>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </>
       );
     } else {
       return (
@@ -59,4 +73,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, {})(Nav);
+export default connect(mapStateToProps, { logOutUser: logoutUser })(Nav);

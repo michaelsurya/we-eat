@@ -24,7 +24,7 @@ const App = () => {
 const DefaultContainer = () => (
   <div>
     <Nav></Nav>
-    <PrivateRoute path="/" exact component={Home} />
+    <Route path="/" exact component={Home} />
     <Footer></Footer>
   </div>
 );
