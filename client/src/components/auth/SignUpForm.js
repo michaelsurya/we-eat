@@ -30,7 +30,10 @@ class SignUpForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="name" component={this.renderTextField} label="Full Name" />
+        <Form.Group widths='equal'>
+          <Field name="firstName" component={this.renderTextField} label="First Name" />
+          <Field name="surname" component={this.renderTextField} label="Surname" />
+        </Form.Group>
         <Field name="email" component={this.renderTextField} label="Email" />
         <Field
           name="password"

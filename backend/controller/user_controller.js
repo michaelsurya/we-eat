@@ -7,6 +7,9 @@ const Joi = require("@hapi/joi");
 const secret = process.env.secret;
 
 module.exports = {
+  /*
+   * Function  for new user registration
+   */
   register(req, res, next) {
     // Validation Schema
     const schema = Joi.object({
@@ -15,35 +18,39 @@ module.exports = {
         .required(),
       password: Joi.string().required(),
       repeatPassword: Joi.ref("password"),
-      name: Joi.string().required()
+      firstName: Joi.string().required(),
+      surname: Joi.string().required()
     });
 
     const { error, value } = schema.validate(req.body);
 
-    // Check validation
+    // Check validation, input sanitation
     if (error) {
       res.status(400).json(error.details);
-    }
-
-    // Check if email is available
-    User.findOne({ email: value.email }).then(user => {
-      if (user) {
-        return res.status(400).json({message: "Email already exists"});
-      }
-    });
-
-    // Save user
-    const user = new User(value);
-    user
-      .save()
-      .then(result => {
-        if (result) {
-          res.status(200).send();
+    } else {
+      // Check if email is available
+      User.findOne({ email: value.email }).then(user => {
+        if (user) {
+          return res.status(400).json({ message: "Email already exists" });
         }
-      })
-      .catch(next);
+      });
+
+      // Save user
+      const user = new User(value);
+      user
+        .save()
+        .then(result => {
+          if (result) {
+            res.status(200).send();
+          }
+        })
+        .catch(next);
+    }
   },
 
+  /*
+   * Function to authenticate user login
+   */
   authenticate(req, res, next) {
     // Validation Schema
     const schema = Joi.object({
@@ -65,7 +72,7 @@ module.exports = {
       .then(user => {
         // Check if user exists
         if (!user) {
-          return res.status(404).json({message: "Invalid email or password"});
+          return res.status(404).json({ message: "Invalid email or password" });
         }
         // Check password
         bcrypt.compare(password, user.password).then(isMatch => {
@@ -74,7 +81,8 @@ module.exports = {
             // Create JWT Payload
             const payload = {
               id: user.id,
-              name: user.name
+              firstName: user.firstName,
+              surname: user.surname
             };
             // Sign token
             jwt.sign(
@@ -91,7 +99,9 @@ module.exports = {
               }
             );
           } else {
-            return res.status(400).json({message: "Invalid email or password"});
+            return res
+              .status(400)
+              .json({ message: "Invalid email or password" });
           }
         });
       })

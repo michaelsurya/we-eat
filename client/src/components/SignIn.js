@@ -24,8 +24,8 @@ class SignIn extends React.Component {
     }
   }
 
-  componentDidUpdate(){
-    if(this.props.auth.isSignedIn){
+  componentDidUpdate() {
+    if (this.props.auth.isSignedIn) {
       this.props.history.push("/");
     }
   }
@@ -40,10 +40,12 @@ class SignIn extends React.Component {
           image={logo}
           content="Sign In"
         ></Header>
-        <Header size="small" as={Link} to="/" color="orange">
-          <Icon name="arrow left" />
-          <Header.Content>Back to Home</Header.Content>
-        </Header>
+        <div className={styles.back_button}>
+          <Header size="small" as={Link} to="/" color="orange">
+            <Icon name="arrow left" />
+            <Header.Content>Back to Home</Header.Content>
+          </Header>
+        </div>
         <Error error={this.props.error}></Error>
         <SignInForm onSubmit={this.onSubmit}></SignInForm>
       </Segment>

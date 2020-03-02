@@ -9,13 +9,13 @@ import { logoutUser } from "../actions/authActions";
 import logo from "../assets/img/Logo_2.png";
 
 const Nav = props => {
-  const renderSignInSignOut = () => {
-    if (props.auth.isSignedIn) {
+  const renderSignInSignOut = (isSignedIn, user) => {
+    if (isSignedIn) {
       return (
         <>
-          <Dropdown text={props.auth.user.name} className="link item">
+          <Dropdown text={user.firstName} className="link item">
             <Dropdown.Menu>
-              <Dropdown.Item as={Link} to="">
+              <Dropdown.Item as={Link} to={`/profile/${user.id}`}>
                 <Header as="h4">My Profile</Header>
               </Dropdown.Item>
               <Dropdown.Item onClick={props.logOutUser}>
@@ -63,7 +63,7 @@ const Nav = props => {
         Help
       </Menu.Item>
 
-      {renderSignInSignOut()}
+      {renderSignInSignOut(props.auth.isSignedIn, props.auth.user)}
     </Menu>
   );
 };

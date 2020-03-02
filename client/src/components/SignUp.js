@@ -5,7 +5,6 @@ import { resetError } from "../actions/errorActions";
 import { Header, Icon, Segment } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 
-
 import styles from "../assets/css/auth.module.css";
 
 import logo from "../assets/img/Logo.png";
@@ -27,7 +26,7 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <Segment raised className={styles.centre}> 
+      <Segment raised className={styles.centre}>
         <Header
           as="h1"
           textAlign="center"
@@ -35,10 +34,12 @@ class SignUp extends React.Component {
           image={logo}
           content="Sign Up"
         ></Header>
-        <Header size="small" as={Link} to="/" color="orange">
-          <Icon name="arrow left" />
-          <Header.Content>Back to Home</Header.Content>
-        </Header>
+        <div className={styles.back_button}>
+          <Header size="small" as={Link} to="/" color="orange">
+            <Icon name="arrow left" />
+            <Header.Content>Back to Home</Header.Content>
+          </Header>
+        </div>
         <Error error={this.props.error}></Error>
         <SignUpForm onSubmit={this.onSubmit}></SignUpForm>
       </Segment>
@@ -51,4 +52,6 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { registerUser, resetError })(withRouter(SignUp));
+export default connect(mapStateToProps, { registerUser, resetError })(
+  withRouter(SignUp)
+);
