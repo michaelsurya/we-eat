@@ -30,9 +30,17 @@ class SignUpForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Form.Group widths='equal'>
-          <Field name="firstName" component={this.renderTextField} label="First Name" />
-          <Field name="surname" component={this.renderTextField} label="Surname" />
+        <Form.Group widths="equal">
+          <Field
+            name="firstName"
+            component={this.renderTextField}
+            label="First Name"
+          />
+          <Field
+            name="surname"
+            component={this.renderTextField}
+            label="Surname"
+          />
         </Form.Group>
         <Field name="email" component={this.renderTextField} label="Email" />
         <Field
@@ -55,26 +63,59 @@ class SignUpForm extends React.Component {
   }
 }
 
-const validate = formValues => {
+const validate = ({ firstName, surname, email, password, repeatPassword }) => {
   const errors = {};
-  if (!formValues.name) {
-    // Check if user has not enter their name
-    errors.name = "Name is required";
+
+  const nameRegex = /^[a-z ,.'-]+$/i;
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i;
+
+  // Check if user has entered their first name
+  if (!firstName) {
+    errors.firstName = "First name is required";
+  } else {
+    // Check the first name length
+    if (firstName.length < 3) {
+      errors.firstName = "Invalid length";
+    }
+    if (!nameRegex.test(firstName)) {
+      errors.firstName = "Invalid character";
+    }
   }
 
-  if (!formValues.email) {
+  // Check if user has entered their surname
+  if (!surname) {
+    errors.surname = "Surname is required";
+  } else {
+    // Check the first name length
+    if (surname.length < 3) {
+      errors.surname = "Invalid length";
+    }
+    if (!nameRegex.test(surname)) {
+      errors.surname = "Invalid character";
+    }
+  }
+
+  // Check if user has entered their email
+  if (!email) {
     errors.email = "Email is required";
-  } else if (!/^.+@.+$/i.test(formValues.email)) {
-    errors.email = "Invalid email address";
+    // Check if valid email
+  } else if (!emailRegex.test(email)) {
+    errors.email = "Please enter a valid email";
   }
 
-  if (!formValues.password) {
+  // Check if user has entered password
+  if (!password) {
     errors.password = "Required";
-  } else if (!formValues.repeatPassword) {
+  } else if(password.length < 8 ){
+    errors.password = "Password needs to be at least 8 characters";
+  }
+  // Check if user has entered repeat password
+  if (!repeatPassword) {
     errors.repeatPassword = "Required";
-  } else if (formValues.password !== formValues.repeatPassword) {
+  } else if(password !== repeatPassword) {
     errors.repeatPassword = "Password does not match";
   }
+
   return errors;
 };
 
