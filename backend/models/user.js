@@ -1,15 +1,24 @@
 const mongoose = require("mongoose");
-
 const bcrypt = require("bcrypt");
+
+const ReviewSchema = require("./review");
 
 const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: { type: String, required: true, select: false },
   firstName: { type: String, required: true },
   surname: { type: String, required: true },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+
+  desc: { type: String },
+  events: {},
+  reviews: [ReviewSchema],
+  rating: { type: Number },
+
+  languages: [{ type: String }],
+  interests: [{ type: String }]
 });
 
 UserSchema.pre("save", function(next) {
