@@ -124,6 +124,15 @@ module.exports = {
       return res.status(400).json(error.details);
     }
 
-    User.findById(value.id).then(user => res.send(user));
+    User.findById(value.id)
+      .then(user => {
+        //If user is not found
+        if(!user){
+          return res.status(404).json({message: "User not found"})
+        }else{
+          return res.send(user);
+        }
+      })
+      .catch(next);
   }
 };
