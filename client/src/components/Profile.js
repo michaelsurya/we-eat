@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getUser } from "../actions/userActions";
 import {
   Container,
   Divider,
@@ -7,21 +9,58 @@ import {
   Icon,
   Image,
   Label,
+  Segment
 } from "semantic-ui-react";
+
 import styles from "../assets/css/profile.module.css";
 
 import Interest from "./profile/Interest";
-import Language from "./profile/Language";
+import LanguageTag from "./profile/LanguageTag";
 import ReviewList from "./review/ReviewList";
 import Statistics from "./profile/Statistics";
 
 class Profile extends React.Component {
   //To be deleted
-  reviews = [
-    {name: "joe", date:"25 March 2020", content:"Michael is a lovely host, the food was delicious and the venue delightful, thank you do much!"},
-    {name: "Amir", date:"25 March 2020", content:"Great host great food"}
-  ]
-  
+  // reviews = [
+  //   {
+  //     name: "joe",
+  //     date: "25 March 2020",
+  //     content:
+  //       "Michael is a lovely host, the food was delicious and the venue delightful, thank you do much!"
+  //   },
+  //   { name: "Amir", date: "25 March 2020", content: "Great host great food" }
+  // ];
+
+  componentDidMount() {
+    this.props.getUser(this.props.match.params.id);
+  }
+
+  renderInterestsSegment = interests => {
+    return (
+      <Segment
+        basic
+        textAlign="left"
+        className={`${styles.margin_zero} ${styles.padding_zero}`}
+      >
+        <Header as="p">Interests</Header>
+        <Interest interests={interests}></Interest>
+      </Segment>
+    );
+  };
+
+  renderLanguagesSegment = languages => {
+    return (
+      <Segment
+        basic
+        textAlign="left"
+        className={`${styles.margin_zero} ${styles.padding_zero}`}
+      >
+        <Header as="p">Languages</Header>
+        <LanguageTag languages={languages}></LanguageTag>
+      </Segment>
+    );
+  };
+
   renderSexLabel = sex => {
     if (sex === "M") {
       return (
@@ -39,6 +78,14 @@ class Profile extends React.Component {
   };
 
   render() {
+    const {
+      events,
+      firstName,
+      interests,
+      languages,
+      reviews,
+      surname
+    } = this.props.user;
     return (
       <Container className={styles.top_margin}>
         <Grid column={9} centered>
@@ -54,22 +101,23 @@ class Profile extends React.Component {
               Verified User
             </Label>
             <Divider></Divider>
-            <Statistics eatCount={5} reviewCount={10} rating={5}></Statistics>
+            <Statistics eatCount={5} reviewCount={reviews ? reviews.length : 0} rating={5}></Statistics>
             <Divider></Divider>
-            <Language
-              languages={["Indonesian", "English", "Chinese"]}
-            ></Language>
+            {this.renderLanguagesSegment(languages)}
             <Divider></Divider>
-            <Interest interests={["Game", "Motorcycle", "Football"]}></Interest>
+            {this.renderInterestsSegment(interests)}
           </Grid.Column>
 
           {/* RIGHT SIDE */}
           <Grid.Column width={6}>
             <Header as="h1" className={styles.margin_zero}>
-              Michael Surya Putra
+              {`${firstName} ${surname}`}
             </Header>
             {this.renderSexLabel("M")}
-            <Container textAlign="justified" className={`${styles.description}`}>
+            <Container
+              textAlign="justified"
+              className={`${styles.description}`}
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit
               amet finibus leo. Duis a augue id nibh condimentum maximus et sit
               amet risus. Praesent a justo ex. Nulla augue sapien, convallis a
@@ -77,10 +125,9 @@ class Profile extends React.Component {
               congue imperdiet. Suspendisse feugiat consequat scelerisque.
             </Container>
 
-
             <Header as="h1">Upcoming events</Header>
             <Header as="h1">Reviews</Header>
-            <ReviewList reviews={this.reviews}></ReviewList>
+            <ReviewList reviews={reviews}></ReviewList>
           </Grid.Column>
         </Grid>
       </Container>
@@ -88,4 +135,8 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps, { getUser })(Profile);

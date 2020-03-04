@@ -26,7 +26,7 @@ const DefaultContainer = () => (
   <div>
     <Nav></Nav>
     <Route path="/" exact component={Home} />
-    <Route path="/profile/" component={Profile} />
+    <Route path="/profile/:id" component={Profile} />
     <Footer></Footer>
   </div>
 );

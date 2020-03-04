@@ -1,6 +1,6 @@
 import React from "react";
-import { Header, Label, Segment } from "semantic-ui-react";
-import styles from "../../assets/css/profile.module.css";
+import { Label } from "semantic-ui-react";
+import isEmpty from "lodash/isEmpty";
 
 const Interest = ({ interests }) => {
   const colors = [
@@ -14,20 +14,20 @@ const Interest = ({ interests }) => {
     "orange"
   ];
 
-  return (
-    <Segment
-      basic
-      textAlign="left"
-      className={`${styles.margin_zero} ${styles.padding_zero}`}
-    >
-      <Header as="p">Interests</Header>
-      <Label.Group>
-        {interests.map((interest, index) => (
-          <Label color={colors[index]}>{interest}</Label>
-        ))}
-      </Label.Group>
-    </Segment>
-  );
+  if (interests) {
+    if (isEmpty(interests)) {
+      return <div>No interests</div>;
+    } else {
+      return (
+        <Label.Group>
+          {interests.map((interest, index) => (
+            <Label color={colors[index]}>{interest}</Label>
+          ))}
+        </Label.Group>
+      );
+    }
+  }
+  return null;
 };
 
 export default Interest;
