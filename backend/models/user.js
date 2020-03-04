@@ -5,11 +5,14 @@ const ReviewSchema = require("./review");
 
 const saltRounds = 10;
 
+const GENDERS = ["M", "F"];
+
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, select: false },
   firstName: { type: String, required: true },
   surname: { type: String, required: true },
+  gender: { type: String, enum: GENDERS},
   date: { type: Date, default: Date.now },
 
   desc: { type: String },
