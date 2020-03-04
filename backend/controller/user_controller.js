@@ -69,6 +69,7 @@ module.exports = {
     const { email, password } = value;
 
     User.findOne({ email })
+      .select("+password")
       .then(user => {
         // Check if user exists
         if (!user) {
@@ -106,5 +107,23 @@ module.exports = {
         });
       })
       .catch(next);
+  },
+
+  /*
+   * Function to get user details
+   */
+  getOne(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      id: Joi.string().required()
+    });
+
+    const { error, value } = schema.validate(req.params);
+
+    if (error) {
+      return res.status(400).json(error.details);
+    }
+
+    User.findById(value.id).then(user => res.send(user));
   }
 };
