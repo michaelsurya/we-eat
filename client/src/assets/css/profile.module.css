@@ -1,0 +1,27 @@
+.top_margin {
+    margin-top: 2rem !important;
+}
+
+.image {
+    margin-bottom: 1rem !important;
+}
+
+.margin_zero {
+    margin: 0 !important;
+}
+
+.padding_zero {
+    padding: 0 !important;
+}
+
+.padding_horizontal_zero {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.description {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+
+    height: 125px;
+}
