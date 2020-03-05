@@ -84,10 +84,11 @@ class Profile extends React.Component {
       interests,
       languages,
       reviews,
+      sex,
       surname
     } = this.props.user;
     return (
-      <Container className={styles.top_margin}>
+      <Container className={`${styles.top_margin} ${styles.container}`}>
         <Grid column={9} centered>
           {/* LEFT SIDE */}
           <Grid.Column width={3} textAlign="center">
@@ -101,7 +102,11 @@ class Profile extends React.Component {
               Verified User
             </Label>
             <Divider></Divider>
-            <Statistics eatCount={5} reviewCount={reviews ? reviews.length : 0} rating={5}></Statistics>
+            <Statistics
+              eatCount={5}
+              reviewCount={reviews ? reviews.length : 0}
+              rating={5}
+            ></Statistics>
             <Divider></Divider>
             {this.renderLanguagesSegment(languages)}
             <Divider></Divider>
@@ -113,7 +118,7 @@ class Profile extends React.Component {
             <Header as="h1" className={styles.margin_zero}>
               {`${firstName} ${surname}`}
             </Header>
-            {this.renderSexLabel("M")}
+            {this.renderSexLabel({ sex })}
             <Container
               textAlign="justified"
               className={`${styles.description}`}
