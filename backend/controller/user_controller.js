@@ -20,7 +20,7 @@ module.exports = {
       repeatPassword: Joi.ref("password"),
       firstName: Joi.string().required(),
       surname: Joi.string().required(),
-      gender: Joi.string().valid('M', 'F')
+      sex: Joi.string().valid('M', 'F')
     });
 
     const { error, value } = schema.validate(req.body);

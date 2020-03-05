@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true, select: false },
   firstName: { type: String, required: true },
   surname: { type: String, required: true },
-  gender: { type: String, enum: GENDERS},
+  sex: { type: String, enum: GENDERS},
   date: { type: Date, default: Date.now },
 
   desc: { type: String },
