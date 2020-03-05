@@ -2,6 +2,8 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button, Form } from "semantic-ui-react";
 
+import styles from "../../assets/css/auth.module.css";
+
 class SignUpForm extends React.Component {
   renderError({ error, touched }) {
     if (touched && error) {
@@ -42,6 +44,7 @@ class SignUpForm extends React.Component {
             label="Surname"
           />
         </Form.Group>
+        <Field name="sex" component={sexRadioButton} />
         <Field name="email" component={this.renderTextField} label="Email" />
         <Field
           name="password"
@@ -63,7 +66,14 @@ class SignUpForm extends React.Component {
   }
 }
 
-const validate = ({ firstName, surname, email, password, repeatPassword }) => {
+const validate = ({
+  firstName,
+  surname,
+  sex,
+  email,
+  password,
+  repeatPassword
+}) => {
   const errors = {};
 
   const nameRegex = /^[a-z ,.'-]+$/i;
@@ -95,6 +105,10 @@ const validate = ({ firstName, surname, email, password, repeatPassword }) => {
     }
   }
 
+  if (!sex) {
+    errors.sex = "Please choose one";
+  }
+
   // Check if user has entered their email
   if (!email) {
     errors.email = "Email is required";
@@ -106,18 +120,45 @@ const validate = ({ firstName, surname, email, password, repeatPassword }) => {
   // Check if user has entered password
   if (!password) {
     errors.password = "Required";
-  } else if(password.length < 8 ){
+  } else if (password.length < 8) {
     errors.password = "Password needs to be at least 8 characters";
   }
   // Check if user has entered repeat password
   if (!repeatPassword) {
     errors.repeatPassword = "Required";
-  } else if(password !== repeatPassword) {
+  } else if (password !== repeatPassword) {
     errors.repeatPassword = "Password does not match";
   }
 
   return errors;
 };
+
+class sexRadioButton extends React.Component {
+  render() {
+    const {
+      input: { value, onChange },
+      meta: { touched, error }
+    } = this.props;
+    return (
+      <Form.Group inline>
+        <label>Sex</label>
+        <Form.Radio
+          label="Male"
+          value="M"
+          checked={value === "M"}
+          onClick={() => onChange("M")}
+        />
+        <Form.Radio
+          label="Female"
+          value="F"
+          checked={value === "F"}
+          onClick={() => onChange("F")}
+        />
+        {touched && error ? <p className={styles.error}>{error}</p> : null}
+      </Form.Group>
+    );
+  }
+}
 
 export default reduxForm({ form: "signUpForm", validate: validate })(
   SignUpForm
