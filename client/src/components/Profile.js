@@ -118,7 +118,7 @@ class Profile extends React.Component {
             <Header as="h1" className={styles.margin_zero}>
               {`${firstName} ${surname}`}
             </Header>
-            {this.renderSexLabel({ sex })}
+            {this.renderSexLabel(sex)}
             <Container
               textAlign="justified"
               className={`${styles.description}`}
