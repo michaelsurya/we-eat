@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button, Dropdown, Header, Image, Menu } from "semantic-ui-react";
 import styles from "../assets/css/nav.module.css";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import { logoutUser } from "../actions/authActions";
 
@@ -18,7 +18,7 @@ const Nav = props => {
               <Dropdown.Item as={Link} to={`/profile/${user.id}`}>
                 <Header as="h4">My Profile</Header>
               </Dropdown.Item>
-              <Dropdown.Item onClick={props.logOutUser}>
+              <Dropdown.Item onClick={()=>props.logOutUser(props.history)}>
                 <Header as="h4" color="red">
                   Sign Out
                 </Header>
@@ -73,4 +73,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { logOutUser: logoutUser })(Nav);
+export default connect(mapStateToProps, { logOutUser: logoutUser })(withRouter(Nav));
