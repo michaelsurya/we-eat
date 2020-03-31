@@ -2,29 +2,11 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button, Form } from "semantic-ui-react";
 
-import styles from "../../assets/css/auth.module.css";
+import SexRadioButton from "../reduxForm/SexRadioButton";
+import RenderTextField from "../reduxForm/RenderTextField";
+
 
 class SignUpForm extends React.Component {
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return error;
-    }
-  }
-
-  renderTextField = ({ input, label, type, meta }) => {
-    return (
-      <Form.Field>
-        <label>{label}</label>
-        <Form.Input
-          {...input}
-          placeholder={label}
-          type={type}
-          error={this.renderError(meta)}
-        ></Form.Input>
-      </Form.Field>
-    );
-  };
-
   onSubmit = formValues => {
     this.props.onSubmit(formValues);
   };
@@ -35,26 +17,26 @@ class SignUpForm extends React.Component {
         <Form.Group widths="equal">
           <Field
             name="firstName"
-            component={this.renderTextField}
+            component={RenderTextField}
             label="First Name"
           />
           <Field
             name="surname"
-            component={this.renderTextField}
+            component={RenderTextField}
             label="Surname"
           />
         </Form.Group>
-        <Field name="sex" component={sexRadioButton} />
-        <Field name="email" component={this.renderTextField} label="Email" />
+        <Field name="sex" component={SexRadioButton} />
+        <Field name="email" component={RenderTextField} label="Email" />
         <Field
           name="password"
-          component={this.renderTextField}
+          component={RenderTextField}
           label="Password"
           type="password"
         />
         <Field
           name="repeatPassword"
-          component={this.renderTextField}
+          component={RenderTextField}
           label="Confirm Password"
           type="password"
         />
@@ -132,33 +114,6 @@ const validate = ({
 
   return errors;
 };
-
-class sexRadioButton extends React.Component {
-  render() {
-    const {
-      input: { value, onChange },
-      meta: { touched, error }
-    } = this.props;
-    return (
-      <Form.Group inline>
-        <label>Sex</label>
-        <Form.Radio
-          label="Male"
-          value="M"
-          checked={value === "M"}
-          onClick={() => onChange("M")}
-        />
-        <Form.Radio
-          label="Female"
-          value="F"
-          checked={value === "F"}
-          onClick={() => onChange("F")}
-        />
-        {touched && error ? <p className={styles.error}>{error}</p> : null}
-      </Form.Group>
-    );
-  }
-}
 
 export default reduxForm({ form: "signUpForm", validate: validate })(
   SignUpForm

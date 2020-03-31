@@ -2,27 +2,9 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button, Form } from "semantic-ui-react";
 
+import RenderTextField from "../reduxForm/RenderTextField";
+
 class SignInForm extends React.Component {
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return error;
-    }
-  }
-
-  renderTextField = ({ input, label, type, meta }) => {
-    return (
-      <Form.Field>
-        <label>{label}</label>
-        <Form.Input
-          {...input}
-          placeholder={label}
-          type={type}
-          error={this.renderError(meta)}
-        ></Form.Input>
-      </Form.Field>
-    );
-  };
-
   onSubmit = formValues => {
     this.props.onSubmit(formValues);
   };
@@ -30,10 +12,10 @@ class SignInForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="email" component={this.renderTextField} label="Email" />
+        <Field name="email" component={RenderTextField} label="Email" />
         <Field
           name="password"
-          component={this.renderTextField}
+          component={RenderTextField}
           label="Password"
           type="password"
         />
