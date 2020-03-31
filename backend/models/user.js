@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
   surname: { type: String, required: true },
   sex: { type: String, enum: GENDERS},
   date: { type: Date, default: Date.now },
+  phoneNumber: { type: Number },
 
   desc: { type: String },
   events: {},
@@ -21,7 +22,9 @@ const UserSchema = new mongoose.Schema({
   rating: { type: Number },
 
   languages: [{ type: String }],
-  interests: [{ type: String }]
+  interests: [{ type: String }],
+
+  isVerified: {type:Boolean, default: false}
 });
 
 UserSchema.pre("save", function(next) {
