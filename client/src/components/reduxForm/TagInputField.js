@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import TagsInput from "react-tagsinput";
 import { Form, Icon, Input, Label } from "semantic-ui-react";
 
 const TagInputField = props => {
@@ -29,13 +28,12 @@ const TagInputField = props => {
   }, [tags]);
 
   return (
-    <div>
-      <Form.Field>
-        <label>{label}</label>
-      </Form.Field>
+    <Form.Field>
+      <label>{label}</label>
+
       <Label.Group>
         {tags.map((tag, index) => (
-          <Label key={index}>
+          <Label key={index} size="large">
             {tag}
             <Icon name="delete" onClick={() => removeTag(index)} />
           </Label>
@@ -45,7 +43,7 @@ const TagInputField = props => {
         placeholder="Place enter to add tags"
         onKeyUp={e => addTag(e)}
       />
-    </div>
+    </Form.Field>
   );
 };
 

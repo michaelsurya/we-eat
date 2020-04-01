@@ -12,6 +12,7 @@ import {
   Label,
   Segment
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 import styles from "../assets/css/profile.module.css";
 
@@ -81,10 +82,15 @@ class Profile extends React.Component {
   renderEditButton = () => {
     const profileId = this.props.match.params.id;
 
-    if(this.props.auth.isSignedIn){
+    if (this.props.auth.isSignedIn) {
       if (profileId === this.props.auth.user.id) {
         return (
-          <Button floated="right" color="orange">
+          <Button
+            as={Link}
+            to={`/profile/edit/${this.props.auth.user.id}`}
+            floated="right"
+            color="orange"
+          >
             <Icon name="edit outline" />
             Edit
           </Button>

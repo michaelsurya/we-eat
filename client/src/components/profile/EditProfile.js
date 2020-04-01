@@ -1,21 +1,20 @@
 import React from "react";
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  Label,
-  Segment
-} from "semantic-ui-react";
+import { connect } from "react-redux";
+import { getUser } from "../../actions/userActions";
+import { Container, Grid, Header, Image, Label } from "semantic-ui-react";
+import { Link, withRouter } from "react-router-dom";
 
 import styles from "../../assets/css/profile.module.css";
 
 import EditProfileForm from "./EditProfileForm";
 
 class EditProfile extends React.Component {
+  componentDidMount() {
+    if (this.props.auth.user.id !== this.props.match.params.id) {
+      this.props.history.push("/")
+    }
+  }
+
   render() {
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
@@ -46,4 +45,9 @@ class EditProfile extends React.Component {
   }
 }
 
-export default EditProfile;
+const mapStateToProps = state => ({
+  user: state.user,
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { getUser })(withRouter(EditProfile));

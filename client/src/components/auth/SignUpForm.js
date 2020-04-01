@@ -41,7 +41,7 @@ class SignUpForm extends React.Component {
           type="password"
         />
         <Button type="submit" color="orange">
-          Sign up
+          Save
         </Button>
       </Form>
     );

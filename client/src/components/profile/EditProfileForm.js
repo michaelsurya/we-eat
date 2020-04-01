@@ -34,7 +34,7 @@ class EditProfileForm extends React.Component {
             component={RenderTextField}
             label="Email"
           />
-        <Field
+          <Field
             inline
             name="phone"
             component={RenderTextField}
@@ -56,6 +56,9 @@ class EditProfileForm extends React.Component {
             component={TagInputField}
             label="Your Interests"
           />
+          <Button type="submit" color="orange" fluid>
+            Save
+          </Button>
         </Form>
       </Segment>
     );
