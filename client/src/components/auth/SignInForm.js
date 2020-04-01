@@ -2,7 +2,7 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button, Form } from "semantic-ui-react";
 
-import RenderTextField from "../reduxForm/RenderTextField";
+import TextField from "../reduxForm/TextField";
 
 class SignInForm extends React.Component {
   onSubmit = formValues => {
@@ -12,10 +12,10 @@ class SignInForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="email" component={RenderTextField} label="Email" />
+        <Field name="email" component={TextField} label="Email" />
         <Field
           name="password"
-          component={RenderTextField}
+          component={TextField}
           label="Password"
           type="password"
         />

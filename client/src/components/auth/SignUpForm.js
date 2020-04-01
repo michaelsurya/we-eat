@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { Button, Form } from "semantic-ui-react";
 
 import SexRadioButton from "../reduxForm/SexRadioButton";
-import RenderTextField from "../reduxForm/RenderTextField";
+import TextField from "../reduxForm/TextField";
 
 
 class SignUpForm extends React.Component {
@@ -17,26 +17,26 @@ class SignUpForm extends React.Component {
         <Form.Group widths="equal">
           <Field
             name="firstName"
-            component={RenderTextField}
+            component={TextField}
             label="First Name"
           />
           <Field
             name="surname"
-            component={RenderTextField}
+            component={TextField}
             label="Surname"
           />
         </Form.Group>
         <Field name="sex" component={SexRadioButton} />
-        <Field name="email" component={RenderTextField} label="Email" />
+        <Field name="email" component={TextField} label="Email" />
         <Field
           name="password"
-          component={RenderTextField}
+          component={TextField}
           label="Password"
           type="password"
         />
         <Field
           name="repeatPassword"
-          component={RenderTextField}
+          component={TextField}
           label="Confirm Password"
           type="password"
         />

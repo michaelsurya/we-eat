@@ -1,16 +1,16 @@
 import React from "react";
-import { Form, Input } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 
-const renderInlineTextField = ({ input, label, type, meta }) => {
+const TextField = ({ input, label, type, meta }) => {
   return (
-    <Form.Field inline>
+    <Form.Field>
       <label>{label}</label>
-      <Input
+      <Form.Input
         {...input}
         placeholder={label}
         type={type}
         error={renderError(meta)}
-      ></Input>
+      ></Form.Input>
     </Form.Field>
   );
 };
@@ -21,4 +21,4 @@ function renderError({ error, touched }) {
   }
 }
 
-export default renderInlineTextField;
+export default TextField;

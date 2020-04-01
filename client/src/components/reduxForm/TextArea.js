@@ -1,16 +1,16 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
 
-const renderTextField = ({ input, label, type, meta }) => {
+const TextArea = ({ input, label, type, meta }) => {
   return (
     <Form.Field>
       <label>{label}</label>
-      <Form.Input
+      <Form.TextArea
         {...input}
         placeholder={label}
         type={type}
         error={renderError(meta)}
-      ></Form.Input>
+      ></Form.TextArea>
     </Form.Field>
   );
 };
@@ -21,4 +21,4 @@ function renderError({ error, touched }) {
   }
 }
 
-export default renderTextField;
+export default TextArea;

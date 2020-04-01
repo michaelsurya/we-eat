@@ -7,8 +7,8 @@ import LanguageOptions from "../reduxForm/LanguageOptions";
 import MultipleSelectionDropdown from "../reduxForm/MultipleSelectionDropdown";
 import SexRadioButton from "../reduxForm/SexRadioButton";
 import ReadOnlyField from "../reduxForm/ReadOnlyField";
-import RenderTextArea from "../reduxForm/RenderTextArea";
-import RenderTextField from "../reduxForm/RenderTextField";
+import RenderTextArea from "../reduxForm/TextArea";
+import RenderTextField from "../reduxForm/TextField";
 import TagInputField from "../reduxForm/TagInputField";
 
 class EditProfileForm extends React.Component {
