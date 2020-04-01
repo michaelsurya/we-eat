@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getUser } from "../actions/userActions";
 import {
+  Button,
   Container,
   Divider,
   Grid,
@@ -64,11 +65,11 @@ class Profile extends React.Component {
   renderSexLabel = sex => {
     if (sex === "M") {
       return (
-        <Label as="a" color="blue">
+        <Label color="blue">
           <Icon name="mars"></Icon>Male
         </Label>
       );
-    } else {
+    } else if (sex === "F") {
       return (
         <Label color="pink">
           <Icon name="venus"></Icon>Female
@@ -77,16 +78,33 @@ class Profile extends React.Component {
     }
   };
 
+  renderEditButton = () => {
+    const profileId = this.props.match.params.id;
+
+    if(this.props.auth.isSignedIn){
+      if (profileId === this.props.auth.user.id) {
+        return (
+          <Button floated="right" color="orange">
+            <Icon name="edit outline" />
+            Edit
+          </Button>
+        );
+      }
+    }
+  };
+
   render() {
     const {
       events,
       firstName,
       interests,
+      isVerified,
       languages,
       reviews,
       sex,
       surname
     } = this.props.user;
+
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
         <Grid column={9} centered>
@@ -117,6 +135,7 @@ class Profile extends React.Component {
           <Grid.Column width={6}>
             <Header as="h1" className={styles.margin_zero}>
               {`${firstName} ${surname}`}
+              {this.renderEditButton()}
             </Header>
             {this.renderSexLabel(sex)}
             <Container
@@ -141,7 +160,8 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getUser })(Profile);
