@@ -8,7 +8,6 @@ const TagInputField = props => {
     input: { value, onChange },
     label: label,
     meta: { touched, error },
-    options: options
   } = props;
 
   const addTag = e => {

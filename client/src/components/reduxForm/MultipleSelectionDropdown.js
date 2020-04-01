@@ -3,9 +3,9 @@ import { Dropdown, Form } from "semantic-ui-react";
 
 const MultipleSelectionDropdown = props => {
   const {
-    input: { value, onChange },
+    input: { onChange },
     label: label,
-    meta: { touched, error },
+    meta: meta,
     options: options,
   } = props;
 
@@ -20,9 +20,16 @@ const MultipleSelectionDropdown = props => {
         search
         options={options}
         onChange={(e, { value }) => onChange(value)}
+        error={renderError(meta)}
       ></Dropdown>
     </Form.Field>
   );
 };
+
+function renderError({ error, touched }) {
+  if (touched && error) {
+    return error;
+  }
+}
 
 export default MultipleSelectionDropdown;

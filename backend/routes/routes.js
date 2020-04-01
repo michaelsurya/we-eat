@@ -12,7 +12,7 @@ module.exports = (app) => {
     app.post('/api/users/register', UserController.register);
     app.post('/api/users/login', UserController.authenticate);
 
-    app.put('/api/users/:id', UserController.edit)
+    app.patch('/api/users/:id', UserController.edit)
 
     
   };

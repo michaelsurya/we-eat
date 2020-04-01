@@ -17,3 +17,16 @@ export const getUser = id => async dispatch => {
       });
     });
 };
+
+export const editProfile = (id, userData, history) => async dispatch => {
+  console.log(userData)
+  axios
+    .patch(`/api/users/${id}`, userData)
+    .then(res => history.push(`/profile/${id}`))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};

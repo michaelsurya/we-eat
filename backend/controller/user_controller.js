@@ -157,7 +157,7 @@ module.exports = {
       phoneNumber: Joi.number(),
       sex: Joi.string().valid("M", "F"),
       languages: Joi.array(),
-      interest: Joi.array()
+      interests: Joi.array()
     });
 
     const { error, value } = schema.validate(req.body);

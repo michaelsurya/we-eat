@@ -56,7 +56,7 @@ class EditProfileForm extends React.Component {
             component={TagInputField}
             label="Your Interests"
           />
-          <Button type="submit" color="orange" fluid>
+          <Button type="button" color="orange" fluid onClick={this.props.handleSubmit(this.onSubmit)}>
             Save
           </Button>
         </Form>
