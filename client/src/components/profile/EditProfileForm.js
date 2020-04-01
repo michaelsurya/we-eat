@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import LanguageOptions from "../reduxForm/LanguageOptions";
 import MultipleSelectionDropdown from "../reduxForm/MultipleSelectionDropdown";
 import SexRadioButton from "../reduxForm/SexRadioButton";
+import ReadOnlyField from "../reduxForm/ReadOnlyField";
 import RenderTextArea from "../reduxForm/RenderTextArea";
 import RenderTextField from "../reduxForm/RenderTextField";
 import TagInputField from "../reduxForm/TagInputField";
@@ -31,9 +32,8 @@ class EditProfileForm extends React.Component {
           <Field
             inline
             name="email"
-            component={RenderTextField}
-            label="Email"
-            // input={{ disabled: true, }}
+            component={ReadOnlyField}
+            label="Email" 
           />
           <Field
             inline
