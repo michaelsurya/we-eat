@@ -33,10 +33,11 @@ class EditProfileForm extends React.Component {
             name="email"
             component={RenderTextField}
             label="Email"
+            // input={{ disabled: true, }}
           />
           <Field
             inline
-            name="phone"
+            name="phoneNumber"
             component={RenderTextField}
             label="Phone Number"
           />

@@ -3,10 +3,10 @@ import { Dropdown, Form } from "semantic-ui-react";
 
 const MultipleSelectionDropdown = props => {
   const {
-    input: { onChange },
+    input: { value, onChange },
     label: label,
     meta: meta,
-    options: options,
+    options: options
   } = props;
 
   return (
@@ -19,6 +19,7 @@ const MultipleSelectionDropdown = props => {
         selection
         search
         options={options}
+        defaultValue={value}
         onChange={(e, { value }) => onChange(value)}
         error={renderError(meta)}
       ></Dropdown>

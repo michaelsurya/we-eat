@@ -2,42 +2,37 @@ import React, { useEffect } from "react";
 import { Form, Icon, Input, Label } from "semantic-ui-react";
 
 const TagInputField = props => {
-  // React Hooks here
-  const [tags, setTags] = React.useState([]);
   const {
     input: { value, onChange },
-    label: label,
-    meta: { touched, error },
+    label: label
   } = props;
 
   const addTag = e => {
     if (e.key === "Enter" && e.target.value !== "") {
-      setTags([...tags, e.target.value]);
+      onChange([...value, e.target.value]);
       e.target.value = "";
     }
   };
 
   const removeTag = index => {
-    setTags([...tags.filter(tag => tags.indexOf(tag) !== index)]);
+    onChange([...value.filter(tag => value.indexOf(tag) !== index)]);
   };
 
-  // Synchronise the state to redux form value
-  useEffect(() => {
-    onChange(tags);
-  }, [tags]);
+  const renderTagLabels = () => {
+    if (value) {
+      return value.map((tag, index) => (
+        <Label key={index} size="large">
+          {tag}
+          <Icon name="delete" onClick={() => removeTag(index)} />
+        </Label>
+      ));
+    }
+  };
 
   return (
     <Form.Field>
       <label>{label}</label>
-
-      <Label.Group>
-        {tags.map((tag, index) => (
-          <Label key={index} size="large">
-            {tag}
-            <Icon name="delete" onClick={() => removeTag(index)} />
-          </Label>
-        ))}
-      </Label.Group>
+      <Label.Group>{renderTagLabels()}</Label.Group>
       <Form.Input
         placeholder="Place enter to add tags"
         onKeyUp={e => addTag(e)}
