@@ -7,8 +7,12 @@ module.exports = (app) => {
         res.send("It works!");
     });
 
+    app.get('/api/users/:id', UserController.getOne);
+
     app.post('/api/users/register', UserController.register);
     app.post('/api/users/login', UserController.authenticate);
 
-    app.get('/api/users/:id', UserController.getOne);
+    app.put('/api/users/:id', UserController.edit)
+
+    
   };

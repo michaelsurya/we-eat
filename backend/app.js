@@ -14,7 +14,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false,
 });
 mongoose.connection
   .once("open", () => {

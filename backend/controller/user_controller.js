@@ -9,6 +9,7 @@ const secret = process.env.secret;
 module.exports = {
   /*
    * Function  for new user registration
+   * @path /users/register
    */
   register(req, res, next) {
     // Validation Schema
@@ -20,7 +21,9 @@ module.exports = {
       repeatPassword: Joi.ref("password"),
       firstName: Joi.string().required(),
       surname: Joi.string().required(),
-      sex: Joi.string().valid('M', 'F')
+      sex: Joi.string()
+        .valid("M", "F")
+        .required()
     });
 
     const { error, value } = schema.validate(req.body);
@@ -51,6 +54,7 @@ module.exports = {
 
   /*
    * Function to authenticate user login
+   * @path /users/authenticate
    */
   authenticate(req, res, next) {
     // Validation Schema
@@ -112,6 +116,7 @@ module.exports = {
 
   /*
    * Function to get user details
+   * @path /users/getOne
    */
   getOne(req, res, next) {
     // Validation Schema
@@ -128,12 +133,47 @@ module.exports = {
     User.findById(value.id)
       .then(user => {
         //If user is not found
-        if(!user){
-          return res.status(404).json({message: "User not found"})
-        }else{
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        } else {
           return res.send(user);
         }
       })
       .catch(next);
+  },
+
+  /*
+   * Function to edit user details
+   * @path /users/edit/
+   * @private
+   */
+  edit(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      firstName: Joi.string(),
+      surname: Joi.string(),
+      email: Joi.string().email(),
+      description: Joi.string(),
+      phoneNumber: Joi.number(),
+      sex: Joi.string().valid("M", "F"),
+      languages: Joi.array(),
+      interest: Joi.array()
+    });
+
+    const { error, value } = schema.validate(req.body);
+
+    const id = req.params.id;
+
+    // Check validation, input sanitation
+    if (error) {
+      res.status(400).json(error.details);
+    } else {
+      // Find user by id and update the field
+      User.findByIdAndUpdate({ _id: id }, value)
+      .then(result =>
+        res.send(result)
+      )
+      .catch(next);
+    }
   }
 };

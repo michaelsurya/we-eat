@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   phoneNumber: { type: Number },
 
-  desc: { type: String },
+  description: { type: String },
   events: {},
   reviews: [ReviewSchema],
   rating: { type: Number },
