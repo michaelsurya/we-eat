@@ -154,7 +154,7 @@ module.exports = {
       surname: Joi.string(),
       email: Joi.string().email(),
       description: Joi.string(),
-      phoneNumber: Joi.number(),
+      phoneNumber: Joi.string(),
       sex: Joi.string().valid("M", "F"),
       languages: Joi.array(),
       interests: Joi.array(),

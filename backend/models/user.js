@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
   surname: { type: String, required: true },
   sex: { type: String, enum: GENDERS},
   date: { type: Date, default: Date.now },
-  phoneNumber: { type: Number },
+  phoneNumber: { type: String },
 
   description: { type: String },
   events: {},
