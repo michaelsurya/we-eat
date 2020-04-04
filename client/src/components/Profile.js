@@ -10,7 +10,7 @@ import {
   Icon,
   Image,
   Label,
-  Segment
+  Segment,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
@@ -37,64 +37,6 @@ class Profile extends React.Component {
     this.props.getUser(this.props.match.params.id);
   }
 
-  renderDescription = description => {
-    if (description === "") {
-      this.return(
-        <Container textAlign="justified" className={`${styles.description}`}>
-          This user has not written any description.
-        </Container>
-      );
-    }
-
-    return (
-      <Container textAlign="justified" className={`${styles.description}`}>
-        {description}
-      </Container>
-    );
-  };
-
-  renderInterestsSegment = interests => {
-    return (
-      <Segment
-        basic
-        textAlign="left"
-        className={`${styles.margin_zero} ${styles.padding_zero}`}
-      >
-        <Header as="p">Interests</Header>
-        <Interest interests={interests}></Interest>
-      </Segment>
-    );
-  };
-
-  renderLanguagesSegment = languages => {
-    return (
-      <Segment
-        basic
-        textAlign="left"
-        className={`${styles.margin_zero} ${styles.padding_zero}`}
-      >
-        <Header as="p">Languages</Header>
-        <LanguageTag languages={languages}></LanguageTag>
-      </Segment>
-    );
-  };
-
-  renderSexLabel = sex => {
-    if (sex === "M") {
-      return (
-        <Label color="blue">
-          <Icon name="mars"></Icon>Male
-        </Label>
-      );
-    } else if (sex === "F") {
-      return (
-        <Label color="pink">
-          <Icon name="venus"></Icon>Female
-        </Label>
-      );
-    }
-  };
-
   renderEditButton = () => {
     const profileId = this.props.match.params.id;
 
@@ -115,6 +57,84 @@ class Profile extends React.Component {
     }
   };
 
+  renderDescription = (description) => {
+    if (description === "") {
+      this.return(
+        <Container textAlign="justified" className={`${styles.description}`}>
+          This user has not written any description.
+        </Container>
+      );
+    }
+
+    return (
+      <Container textAlign="justified" className={`${styles.description}`}>
+        {description}
+      </Container>
+    );
+  };
+
+  renderInterestsSegment = (interests) => {
+    return (
+      <Segment
+        basic
+        textAlign="left"
+        className={`${styles.margin_zero} ${styles.padding_zero}`}
+      >
+        <Header as="p">Interests</Header>
+        <Interest interests={interests}></Interest>
+      </Segment>
+    );
+  };
+
+  renderLanguagesSegment = (languages) => {
+    return (
+      <Segment
+        basic
+        textAlign="left"
+        className={`${styles.margin_zero} ${styles.padding_zero}`}
+      >
+        <Header as="p">Languages</Header>
+        <LanguageTag languages={languages}></LanguageTag>
+      </Segment>
+    );
+  };
+
+  renderSexLabel = (sex) => {
+    if (sex === "M") {
+      return (
+        <Label color="blue">
+          <Icon name="mars"></Icon>Male
+        </Label>
+      );
+    } else if (sex === "F") {
+      return (
+        <Label color="pink">
+          <Icon name="venus"></Icon>Female
+        </Label>
+      );
+    }
+  };
+
+  renderVerified = (isVerified) => {
+    const profileId = this.props.match.params.id;
+    if (this.props.auth.isSignedIn) {
+      if ((profileId === this.props.auth.user.id) & !isVerified) {
+        return (
+          <Button as={Link} to="" inverted color="orange">
+            Verify Account
+          </Button>
+        );
+      } else if (isVerified) {
+        return (
+          <Label color="orange" size="large">
+            <Icon name="check"></Icon>
+            Verified
+          </Label>
+        );
+      }
+    }
+  };
+
   render() {
     const {
       events,
@@ -125,7 +145,7 @@ class Profile extends React.Component {
       reviews,
       sex,
       surname,
-      description
+      description,
     } = this.props.user;
 
     return (
@@ -139,9 +159,7 @@ class Profile extends React.Component {
               size="medium"
               circular
             />
-            <Label color="orange" size="large">
-              Verified User
-            </Label>
+            {this.renderVerified(isVerified)}
             <Divider></Divider>
             <Statistics
               eatCount={5}
@@ -172,9 +190,9 @@ class Profile extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user,
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getUser })(Profile);

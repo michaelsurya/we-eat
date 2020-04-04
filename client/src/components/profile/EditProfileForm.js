@@ -66,4 +66,55 @@ class EditProfileForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: "editProfileForm" })(EditProfileForm);
+const validate = ({
+  firstName,
+  surname,
+  sex,
+  email,
+  description,
+  password,
+  repeatPassword
+}) => {
+  const errors = {};
+
+  const nameRegex = /^[a-z ,.'-]+$/i;
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i;
+
+  // Check if user has entered their first name
+  if (!firstName) {
+    errors.firstName = "First name is required";
+  } else {
+    // Check the first name length
+    if (firstName.length < 3) {
+      errors.firstName = "Invalid length";
+    }
+    if (!nameRegex.test(firstName)) {
+      errors.firstName = "Invalid character";
+    }
+  }
+
+  // Check if user has entered their surname
+  if (!surname) {
+    errors.surname = "Surname is required";
+  } else {
+    // Check the first name length
+    if (surname.length < 3) {
+      errors.surname = "Invalid length";
+    }
+    if (!nameRegex.test(surname)) {
+      errors.surname = "Invalid character";
+    }
+  }
+
+  if (!sex) {
+    errors.sex = "Please choose one";
+  }
+
+  if (description && (description.length > 500)) {
+    errors.description = "Maximum description length is 500 characters"
+  }
+
+  return errors;
+};
+
+export default reduxForm({ form: "editProfileForm", validate: validate })(EditProfileForm);
