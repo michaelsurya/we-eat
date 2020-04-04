@@ -120,7 +120,7 @@ class Profile extends React.Component {
     if (this.props.auth.isSignedIn) {
       if ((profileId === this.props.auth.user.id) & !isVerified) {
         return (
-          <Button as={Link} to="" inverted color="orange">
+          <Button as={Link} to={`/verify/${profileId}`} inverted color="orange">
             Verify Account
           </Button>
         );

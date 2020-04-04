@@ -56,6 +56,7 @@ class EditProfile extends React.Component {
   }
 
   render() {
+    console.log(this.props.user)
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
         {this.renderError()}
@@ -81,6 +82,7 @@ class EditProfile extends React.Component {
             <EditProfileForm
               onSubmit={this.onSubmit}
               initialValues={this.destructureIntialValues(this.props.user)}
+              enableReinitialize="true"
             ></EditProfileForm>
           </Grid.Column>
         </Grid>

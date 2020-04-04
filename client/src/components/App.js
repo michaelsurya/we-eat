@@ -9,6 +9,7 @@ import Home from "./Home";
 import Profile from "./Profile";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import Verify from "./Verify";
 
 const App = () => {
   return (
@@ -31,6 +32,11 @@ const DefaultContainer = () => (
       path="/profile/edit/:id"
       exact
       component={EditProfile}
+    ></PrivateRoute>
+    <PrivateRoute
+      path="/verify/:id"
+      exact
+      component={Verify}
     ></PrivateRoute>
     <Footer></Footer>
   </div>

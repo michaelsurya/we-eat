@@ -34,3 +34,6 @@
     padding-left: 48px !important;
     width: 300px !important;
 }
+.error {
+    color: #b46463;
+}
