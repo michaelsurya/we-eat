@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getUser, editPhoneNumber } from "../actions/userActions";
+import { withRouter } from "react-router-dom";
 import {
   Button,
   Container,
@@ -17,16 +19,41 @@ import styles from "../assets/css/verify.module.css";
 import PhoneNumberForm from "./verify/PhoneNumberForm";
 
 class Verify extends React.Component {
-  render() {
-    return (
-      <Container className={`${styles.top_margin} ${styles.container}`}>
-        <Header as="h1" textAlign="center">
-          Verify your account
-        </Header>
+  submitPhoneNumber = formValues => {
+    this.props.editPhoneNumber(
+      this.props.match.params.id,
+      formValues,
+    );
+  };
 
-        <Segment>
+  componentDidMount() {
+    //Fetch user data
+    this.props.getUser(this.props.match.params.id);
+  }
+
+  renderEmailVerification = () => {
+    const user = this.props.user;
+
+    if (user.verifiedEmail) {
+      // Verified email
+      return (
+        <>
           <Header as="h2">
-            {/* <Icon name="check" color="green"></Icon>*/}
+            <Icon name="check" color="green"></Icon>
+            Email
+          </Header>
+          <Divider></Divider>
+          <Header as="h4">You have verified your email. Thank you!</Header>
+          <Header as="h3">
+            Your email is: <u>{user.email}</u>
+          </Header>
+        </>
+      );
+    } else {
+      // Has not verify the email
+      return (
+        <>
+          <Header as="h2">
             <Icon name="close" color="red"></Icon>
             Email
           </Header>
@@ -36,7 +63,7 @@ class Verify extends React.Component {
             verify your email.
           </Header>
           <Header as="h3">
-            Your email is: <u>shura.mike22@yahoo.com</u>
+            Your email is: <u>{user.email}</u>
           </Header>
           <Header as="h4">
             Please click the "Verify" button to send the verification link to
@@ -45,11 +72,32 @@ class Verify extends React.Component {
           <Button textAlign="center" color="orange">
             Verify
           </Button>
-        </Segment>
+        </>
+      );
+    }
+  };
 
-        <Segment>
+  renderPhoneVerification = () => {
+    const user = this.props.user;
+    if (user.verifiedPhone) {
+      // Verified phone
+      return (
+        <>
           <Header as="h2">
-            {/* <Icon name="check" color="green"></Icon>*/}
+            <Icon name="check" color="green"></Icon>
+            Phone
+          </Header>
+          <Divider></Divider>
+          <Header as="h4">
+            You have provided a phone number. Thank you!
+          </Header>
+        </>
+      );
+    } else {
+      // Phone not verified
+      return (
+        <>
+          <Header as="h2">
             <Icon name="close" color="red"></Icon>
             Phone
           </Header>
@@ -62,11 +110,33 @@ class Verify extends React.Component {
               reservations are confirmed
             </Header.Subheader>
           </Header>
-          <PhoneNumberForm></PhoneNumberForm>
-        </Segment>
+          <PhoneNumberForm onSubmit={this.submitPhoneNumber}></PhoneNumberForm>
+        </>
+      );
+    }
+  };
+
+  render() {
+    return (
+      <Container className={`${styles.top_margin} ${styles.container}`}>
+        <Header as="h1" textAlign="center">
+          Verify your account
+        </Header>
+
+        <Segment>{this.renderEmailVerification()}</Segment>
+
+        <Segment>{this.renderPhoneVerification()}</Segment>
       </Container>
     );
   }
 }
 
-export default Verify;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  auth: state.auth,
+  error: state.error,
+});
+
+export default connect(mapStateToProps, { getUser, editPhoneNumber })(
+  withRouter(Verify)
+);

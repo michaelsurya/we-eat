@@ -159,7 +159,7 @@ module.exports = {
     }
 
     User.findById(value.id)
-      .select("phoneNumber")
+      .select("+phoneNumber")
       .then((user) => {
         //If user is not found
         if (!user) {

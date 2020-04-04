@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getUser, editProfile } from "../../actions/userActions";
+import { getUserPrivate, editProfile } from "../../actions/userActions";
 import { Container, Grid, Header, Image, Label } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
@@ -51,7 +51,7 @@ class EditProfile extends React.Component {
     if (this.props.auth.user.id !== this.props.match.params.id) {
       this.props.history.push("/");
     } else {
-      this.props.getUser(this.props.match.params.id);
+      this.props.getUserPrivate(this.props.match.params.id);
     }
   }
 
@@ -97,6 +97,6 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { getUser, editProfile })(
+export default connect(mapStateToProps, { getUserPrivate, editProfile })(
   withRouter(EditProfile)
 );
