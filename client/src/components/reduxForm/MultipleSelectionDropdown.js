@@ -13,7 +13,7 @@ const MultipleSelectionDropdown = props => {
     <Form.Field>
       <label>{label}</label>
       <Dropdown
-        placeholder="Skills"
+        placeholder={label}
         fluid
         multiple
         selection

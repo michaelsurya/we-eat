@@ -37,6 +37,22 @@ class Profile extends React.Component {
     this.props.getUser(this.props.match.params.id);
   }
 
+  renderDescription = description => {
+    if (description === "") {
+      this.return(
+        <Container textAlign="justified" className={`${styles.description}`}>
+          This user has not written any description.
+        </Container>
+      );
+    }
+
+    return (
+      <Container textAlign="justified" className={`${styles.description}`}>
+        {description}
+      </Container>
+    );
+  };
+
   renderInterestsSegment = interests => {
     return (
       <Segment
@@ -108,7 +124,8 @@ class Profile extends React.Component {
       languages,
       reviews,
       sex,
-      surname
+      surname,
+      description
     } = this.props.user;
 
     return (
@@ -144,17 +161,7 @@ class Profile extends React.Component {
               {this.renderEditButton()}
             </Header>
             {this.renderSexLabel(sex)}
-            <Container
-              textAlign="justified"
-              className={`${styles.description}`}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit
-              amet finibus leo. Duis a augue id nibh condimentum maximus et sit
-              amet risus. Praesent a justo ex. Nulla augue sapien, convallis a
-              iaculis non, eleifend iaculis justo. Sed tempus sit amet eros
-              congue imperdiet. Suspendisse feugiat consequat scelerisque.
-            </Container>
-
+            {this.renderDescription(description)}
             <Header as="h1">Upcoming events</Header>
             <Header as="h1">Reviews</Header>
             <ReviewList reviews={reviews}></ReviewList>
