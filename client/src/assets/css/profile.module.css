@@ -29,3 +29,8 @@
 .container {
     min-height: 80vh;
 }
+
+.phone_input {
+    padding-left: 48px !important;
+    width: 300px !important;
+}
