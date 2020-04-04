@@ -7,7 +7,8 @@ module.exports = (app) => {
         res.send("It works!");
     });
 
-    app.get('/api/users/:id', UserController.getOne);
+    app.get('/api/users/:id', UserController.getOnePublic);
+    app.get('/api/users/private/:id', UserController.getOnePrivate)
 
     app.post('/api/users/register', UserController.register);
     app.post('/api/users/login', UserController.authenticate);

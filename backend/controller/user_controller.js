@@ -66,7 +66,7 @@ module.exports = {
 
     // Convert email to lower case
     value.email = value.email.toLowerCase();
-    
+
     if (error) {
       return res.status(400).json(error.details);
     }
@@ -116,9 +116,9 @@ module.exports = {
 
   /*
    * Function to get user details
-   * @path /users/getOne
+   * @path /users/:id
    */
-  getOne(req, res, next) {
+  getOnePublic(req, res, next) {
     // Validation Schema
     const schema = Joi.object({
       id: Joi.string().required(),
@@ -143,6 +143,35 @@ module.exports = {
   },
 
   /*
+   * Function to get user details
+   * @path /users/private/:id
+   */
+  getOnePrivate(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      id: Joi.string().required(),
+    });
+
+    const { error, value } = schema.validate(req.params);
+
+    if (error) {
+      return res.status(400).json(error.details);
+    }
+
+    User.findById(value.id)
+      .select("phoneNumber")
+      .then((user) => {
+        //If user is not found
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        } else {
+          return res.send(user);
+        }
+      })
+      .catch(next);
+  },
+
+  /*
    * Function to edit user details
    * @path /users/edit/
    * @private
@@ -154,7 +183,7 @@ module.exports = {
       surname: Joi.string(),
       email: Joi.string().email(),
       description: Joi.string(),
-      phoneNumber: Joi.string().allow(''),
+      phoneNumber: Joi.string().allow(""),
       sex: Joi.string().valid("M", "F"),
       languages: Joi.array(),
       interests: Joi.array(),
@@ -171,6 +200,14 @@ module.exports = {
       // Find user by id and update the field
       User.findByIdAndUpdate({ _id: id }, value)
         .then((result) => res.send(result))
+        .then(() => User.findById(id).select("+phoneNumber"))
+        .then((user) => {
+          let updatedValue = {};
+          if (user.phoneNumber !== "") {
+            updatedValue = { verifiedPhone: true };
+            User.findByIdAndUpdate({ _id: id }, updatedValue).then(() => {}); //Empty callback to force the update
+          }
+        })
         .catch(next);
     }
   },
