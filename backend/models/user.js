@@ -24,7 +24,9 @@ const UserSchema = new mongoose.Schema({
   languages: [{ type: String }],
   interests: [{ type: String }],
 
-  isVerified: {type:Boolean, default: false}
+  isVerified: {type:Boolean, default: false},
+  verifiedEmail: {type:Boolean, default: false},
+  verifiedPhone: {type:Boolean, default: false}
 });
 
 UserSchema.pre("save", function(next) {
