@@ -12,6 +12,8 @@ module.exports = (app) => {
 
     app.post('/api/users/register', UserController.register);
     app.post('/api/users/login', UserController.authenticate);
+    app.post('/api/users/send/verification/', UserController.sendEmailVerification)
+    app.get('/api/verify/:token', UserController.verifyEmail);
 
     app.patch('/api/users/:id', UserController.edit)
 

@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true, select: false },
   firstName: { type: String, required: true },
   surname: { type: String, required: true },
-  sex: { type: String, enum: GENDERS},
+  sex: { type: String, enum: GENDERS },
   date: { type: Date, default: Date.now },
   phoneNumber: { type: String, select: false },
 
@@ -24,17 +24,17 @@ const UserSchema = new mongoose.Schema({
   languages: [{ type: String }],
   interests: [{ type: String }],
 
-  isVerified: {type:Boolean, default: false},
-  verifiedEmail: {type:Boolean, default: false},
-  verifiedPhone: {type:Boolean, default: false}
+  isVerified: { type: Boolean, default: false },
+  verifiedEmail: { type: Boolean, default: false },
+  verifiedPhone: { type: Boolean, default: false },
 });
 
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", function (next) {
   // Check if object is new or a new password has been set
   if (this.isNew || this.isModified("password")) {
     // Saving reference to this because of changing scopes
     const object = this;
-    bcrypt.hash(object.password, saltRounds, function(err, hashedPassword) {
+    bcrypt.hash(object.password, saltRounds, function (err, hashedPassword) {
       if (err) {
         next(err);
       } else {
@@ -47,8 +47,20 @@ UserSchema.pre("save", function(next) {
   }
 });
 
-UserSchema.methods.isCorrectPassword = function(password, callback) {
-  bcrypt.compare(password, this.password, function(err, same) {
+// Always executed after findOneAndUpdate query. To check verification
+UserSchema.post("findOneAndUpdate", async function () {
+  const doc = await this.model.findOne(this.getQuery()).select("+phoneNumber");
+  if (doc.phoneNumber !== "") {
+    doc.verifiedPhone = true;
+  }
+  if (doc.verifiedEmail && doc.verifiedEmail) {
+    doc.isVerified = true;
+  }
+  doc.save();
+});
+
+UserSchema.methods.isCorrectPassword = function (password, callback) {
+  bcrypt.compare(password, this.password, function (err, same) {
     if (err) {
       callback(err);
     } else {
