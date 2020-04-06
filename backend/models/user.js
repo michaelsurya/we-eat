@@ -45,6 +45,14 @@ UserSchema.pre("save", function (next) {
   } else {
     next();
   }
+
+  if (this.isModified("verifiedEmail")) {
+    const object = this;
+    if(object.verifiedEmail && object.verifiedPhone){
+      object.isVerified = true;
+      next();
+    }
+  }
 });
 
 // Always executed after findOneAndUpdate query. To check verification
@@ -53,7 +61,7 @@ UserSchema.post("findOneAndUpdate", async function () {
   if (doc.phoneNumber !== "") {
     doc.verifiedPhone = true;
   }
-  if (doc.verifiedEmail && doc.verifiedEmail) {
+  if (doc.verifiedPhone && doc.verifiedEmail) {
     doc.isVerified = true;
   }
   doc.save();

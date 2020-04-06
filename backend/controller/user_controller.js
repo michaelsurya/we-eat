@@ -298,7 +298,7 @@ module.exports = {
     if (error) {
       return res.status(400).json(error.details);
     } else {
-      Token.findOne({ token: 'f83882f2218a28eaf5a9e40a07b13afe' })
+      Token.findOne({ token: value.token })
         .then((token) => {
           if (!token) {
             res.status(404).json({ message: "Invalid/Expired token" });
@@ -317,8 +317,8 @@ module.exports = {
             }
             // Set user to verified and save
             user.verifiedEmail = true;
-            user.save().then((res) => {
-              if (res) {
+            user.save().then((result) => {
+              if (result) {
                 res.status(200).send();
               }
             });
