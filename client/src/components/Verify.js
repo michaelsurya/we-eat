@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getUser, editPhoneNumber } from "../actions/userActions";
+import {
+  editPhoneNumber,
+  getUser,
+  sendEmailVerification,
+} from "../actions/userActions";
+import { resetError } from "../actions/errorActions";
 import { withRouter } from "react-router-dom";
 import {
   Button,
@@ -19,14 +24,12 @@ import styles from "../assets/css/verify.module.css";
 import PhoneNumberForm from "./verify/PhoneNumberForm";
 
 class Verify extends React.Component {
-  submitPhoneNumber = formValues => {
-    this.props.editPhoneNumber(
-      this.props.match.params.id,
-      formValues,
-    );
+  submitPhoneNumber = (formValues) => {
+    this.props.editPhoneNumber(this.props.match.params.id, formValues);
   };
 
   componentDidMount() {
+    this.props.resetError();
     //Fetch user data
     this.props.getUser(this.props.match.params.id);
   }
@@ -69,7 +72,7 @@ class Verify extends React.Component {
             Please click the "Verify" button to send the verification link to
             your email.
           </Header>
-          <Button textAlign="center" color="orange">
+          <Button textAlign="center" color="orange" onClik={this.props.sendEmailVerification(this.props.match.params.id)}>
             Verify
           </Button>
         </>
@@ -88,9 +91,7 @@ class Verify extends React.Component {
             Phone
           </Header>
           <Divider></Divider>
-          <Header as="h4">
-            You have provided a phone number. Thank you!
-          </Header>
+          <Header as="h4">You have provided a phone number. Thank you!</Header>
         </>
       );
     } else {
@@ -137,6 +138,9 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { getUser, editPhoneNumber })(
-  withRouter(Verify)
-);
+export default connect(mapStateToProps, {
+  editPhoneNumber,
+  getUser,
+  resetError,
+  sendEmailVerification,
+})(withRouter(Verify));
