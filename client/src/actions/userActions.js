@@ -62,7 +62,7 @@ export const getUserPrivate = (id) => async (dispatch) => {
 export const sendEmailVerification = (id) => async (dispatch) => {
   axios
     .post(`/api/users/send/verification`, { id: id })
-    .then((res) => console.log(res))
+    .then((res) => {})
     .catch((err) => {
       dispatch({
         type: GET_ERRORS,

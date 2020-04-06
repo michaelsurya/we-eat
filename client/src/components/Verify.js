@@ -72,7 +72,7 @@ class Verify extends React.Component {
             Please click the "Verify" button to send the verification link to
             your email.
           </Header>
-          <Button textAlign="center" color="orange" onClik={this.props.sendEmailVerification(this.props.match.params.id)}>
+          <Button textAlign="center" color="orange" onClick={() => this.props.sendEmailVerification(this.props.match.params.id)}>
             Verify
           </Button>
         </>
