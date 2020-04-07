@@ -99,6 +99,28 @@ class Profile extends React.Component {
     );
   };
 
+  renderProfilePict = (profilePict) => {
+    if  (profilePict) {
+      return (
+        <Image
+          className={styles.image}
+          src={`http:\\\\localhost:8080\\${profilePict.imageData}`}
+          size="medium"
+          circular
+        />
+      );
+    } else {
+      return (
+        <Image
+          className={styles.image}
+          src={"https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
+          size="medium"
+          circular
+        />
+      )
+    }
+  };
+
   renderSexLabel = (sex) => {
     if (sex === "M") {
       return (
@@ -146,6 +168,7 @@ class Profile extends React.Component {
       sex,
       surname,
       description,
+      profilePict,
     } = this.props.user;
 
     return (
@@ -153,12 +176,13 @@ class Profile extends React.Component {
         <Grid column={9} centered>
           {/* LEFT SIDE */}
           <Grid.Column width={3} textAlign="center">
-            <Image
+            {/* <Image
               className={styles.image}
               src="https://react.semantic-ui.com/images/avatar/small/matt.jpg"
               size="medium"
               circular
-            />
+            /> */}
+            {this.renderProfilePict(profilePict)}
             {this.renderVerified(isVerified)}
             <Divider></Divider>
             <Statistics
