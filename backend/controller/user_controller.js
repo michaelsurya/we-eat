@@ -319,7 +319,7 @@ module.exports = {
             user.verifiedEmail = true;
             user.save().then((result) => {
               if (result) {
-                res.status(200).send("Email verification sucess");
+                res.status(200).send("Email verification sucess.");
               }
             });
           });
