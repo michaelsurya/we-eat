@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const ReviewSchema = require("./review");
+const ImageSchema = require("./image");
 
 const saltRounds = 10;
 
@@ -15,6 +16,8 @@ const UserSchema = new mongoose.Schema({
   sex: { type: String, enum: GENDERS },
   date: { type: Date, default: Date.now },
   phoneNumber: { type: String, select: false },
+
+  profilePict: ImageSchema,
 
   description: { type: String },
   events: {},

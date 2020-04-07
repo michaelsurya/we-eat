@@ -21,9 +21,11 @@ mongoose.connection
   .once("open", () => {
     console.log("Connection succesful");
   })
-  .on("error", error => {
+  .on("error", (error) => {
     console.warn("Warning", error);
-  }); 
+  });
+
+app.use("/uploads", express.static("uploads"));
 
 // Body parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,7 +33,7 @@ app.use(bodyParser.json());
 
 // Passport middleware
 app.use(passport.initialize());
-require("./config/passport")(passport)
+require("./config/passport")(passport);
 
 //Routes
 routes(app);
