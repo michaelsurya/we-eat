@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getUserPrivate, editProfile } from "../../actions/userActions";
-import { Container, Grid, Header, Image, Label } from "semantic-ui-react";
+import { changeProfilePict, getUserPrivate, editProfile } from "../../actions/userActions";
+import { Button, Container, Grid, Header, Image } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
 
@@ -11,7 +11,7 @@ import EditProfileForm from "./EditProfileForm";
 import Error from "../util/Error";
 
 class EditProfile extends React.Component {
-  onSubmit = formValues => {
+  onSubmit = (formValues) => {
     this.props.editProfile(
       this.props.match.params.id,
       formValues,
@@ -27,7 +27,7 @@ class EditProfile extends React.Component {
     phoneNumber,
     description,
     languages,
-    interests
+    interests,
   }) => ({
     firstName,
     surname,
@@ -36,13 +36,37 @@ class EditProfile extends React.Component {
     phoneNumber,
     description,
     languages,
-    interests
+    interests,
   });
 
   renderError = () => {
     const error = { message: "Something went wrong. Please try again later" };
     if (!isEmpty(this.props.error)) {
       return <Error error={error}></Error>;
+    }
+  };
+
+  renderProfilePict = (profilePict) => {
+    if (profilePict) {
+      return (
+        <Image
+          className={styles.image}
+          src={`http:\\\\localhost:8080\\${profilePict.imageData}`}
+          size="medium"
+          circular
+        />
+      );
+    } else {
+      return (
+        <Image
+          className={styles.image}
+          src={
+            "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+          }
+          size="medium"
+          circular
+        />
+      );
     }
   };
 
@@ -56,7 +80,6 @@ class EditProfile extends React.Component {
   }
 
   render() {
-    console.log(this.props.user)
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
         {this.renderError()}
@@ -66,15 +89,14 @@ class EditProfile extends React.Component {
         <Grid column={12} centered>
           {/* LEFT SIDE */}
           <Grid.Column width={3} textAlign="center">
-            <Image
-              className={styles.image}
-              src="https://react.semantic-ui.com/images/avatar/small/matt.jpg"
-              size="medium"
-              circular
-            />
-            <Label color="orange" size="large">
+            {this.renderProfilePict(this.props.user.profilePict)}
+            <Button
+              color="orange"
+              onClick={() => document.getElementById("imageInput").click()}
+            >
               Change profile picture
-            </Label>
+            </Button>
+            <input id='imageInput' hidden type="file" accept=".jpg, .jpeg, .png" onChange={e => this.props.changeProfilePict( this.props.match.params.id ,e.target.files)} />
           </Grid.Column>
 
           {/* RIGHT SIDE */}
@@ -91,12 +113,12 @@ class EditProfile extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user,
   auth: state.auth,
-  error: state.error
+  error: state.error,
 });
 
-export default connect(mapStateToProps, { getUserPrivate, editProfile })(
+export default connect(mapStateToProps, { changeProfilePict, getUserPrivate, editProfile })(
   withRouter(EditProfile)
 );

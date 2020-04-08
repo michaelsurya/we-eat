@@ -14,7 +14,7 @@ const fileFilter = (req, file, cb) => {
         cb(null, true);
     } else {
         // Invalid file format
-        cb(null, false)
+        cb(new Error('Invalid file type'))
     }
 }
 

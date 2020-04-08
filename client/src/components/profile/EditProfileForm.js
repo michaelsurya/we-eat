@@ -11,6 +11,8 @@ import RenderTextArea from "../reduxForm/TextArea";
 import RenderTextField from "../reduxForm/TextField";
 import TagInputField from "../reduxForm/TagInputField";
 
+import PhotoUpload from "../reduxForm/PhotoUpload";
+
 class EditProfileForm extends React.Component {
   onSubmit = (formValues) => {
     this.props.onSubmit(formValues);

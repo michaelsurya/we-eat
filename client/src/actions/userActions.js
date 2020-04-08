@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USER, GET_ERRORS } from "./type";
+import { GET_ERRORS, GET_NEW_PROFILE_PICT, GET_USER  } from "./type";
 
 export const editPhoneNumber = (id, phoneNumber) => async (dispatch) => {
   axios
@@ -63,6 +63,28 @@ export const sendEmailVerification = (id) => async (dispatch) => {
   axios
     .post(`/api/users/send/verification`, { id: id })
     .then((res) => {})
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const changeProfilePict = (id, files) => async (dispatch) => {
+  let image = new FormData();
+
+  image.append("imageName", `${id}${Date.now()}`);
+  image.append("imageData", files[0]);
+
+  axios
+    .post(`/api/uploads/profile/${id}`, image)
+    .then((result) => {
+      dispatch({
+        type: GET_NEW_PROFILE_PICT,
+        payload: result.data
+      })
+    })
     .catch((err) => {
       dispatch({
         type: GET_ERRORS,
