@@ -1,13 +1,13 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
 
-const TextField = ({ input, label, type, meta }) => {
+const TextField = ({ input, label, type, meta, placeholder }) => {
   return (
     <Form.Field>
       <label>{label}</label>
       <Form.Input
         {...input}
-        placeholder={label}
+        placeholder={placeholder ? placeholder : label}
         type={type}
         error={renderError(meta)}
       ></Form.Input>

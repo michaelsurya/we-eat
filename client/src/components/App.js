@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./auth/PrivateRoute";
 
+import CreateEvent from "./CreateEvent";
 import EditProfile from "./profile/EditProfile";
 import Home from "./Home";
 import Profile from "./Profile";
@@ -27,17 +28,14 @@ const DefaultContainer = () => (
   <div>
     <Nav></Nav>
     <Route path="/" exact component={Home} />
+    <Route path="/event/new/" exact component={CreateEvent}></Route>
     <Route path="/profile/:id" exact component={Profile} />
     <PrivateRoute
       path="/profile/edit/:id"
       exact
       component={EditProfile}
     ></PrivateRoute>
-    <PrivateRoute
-      path="/verify/:id"
-      exact
-      component={Verify}
-    ></PrivateRoute>
+    <PrivateRoute path="/verify/:id" exact component={Verify}></PrivateRoute>
     <Footer></Footer>
   </div>
 );

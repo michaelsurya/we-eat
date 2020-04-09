@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Icon, Input, Label } from "semantic-ui-react";
 
 const TagInputField = props => {
