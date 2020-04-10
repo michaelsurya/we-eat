@@ -52,7 +52,7 @@ class CreateEventForm extends React.Component {
             label="Approximate duration"
           />
           <Field
-            name="guests"
+            name="guestsRequired"
             component={TextField}
             label="Number of guests*"
             placeholder="e.g 5"

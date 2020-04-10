@@ -1,5 +1,6 @@
 const UserController = require('../controller/user_controller');
 const ImageController = require('../controller/image_controller');
+const EventController = require("../controller/event_controller");
 
 const upload = require("../config/multer");
 const passport = require("passport");
@@ -8,6 +9,8 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         res.send("It works!");
     });
+
+    app.post("/api/events", EventController.newEvent)
 
     app.get('/api/users/:id', UserController.getOnePublic);
     app.get('/api/users/private/:id', UserController.getOnePrivate)
@@ -20,6 +23,8 @@ module.exports = (app) => {
     app.post("/api/uploads/profile/:id", upload.single('imageData'), ImageController.uploadProfile)
 
     app.patch('/api/users/:id', UserController.edit)
+
+    
 
     
   };
