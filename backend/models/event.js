@@ -7,7 +7,7 @@ const CUISINES = [
   "African",
   "American",
   "British",
-  "Carribean",
+  "Caribbean",
   "Chinese",
   "East European",
   "French",
@@ -52,7 +52,7 @@ const EventSchema = new Schema({
   cuisine: [{ type: String, enum: CUISINES }],
   allergen: [{ type: String, enum: ALLERGENS }],
 
-  coverPict: ImageSchema,
+  pictures: [ImageSchema],
 
   host: {
     type: Schema.Types.ObjectId,

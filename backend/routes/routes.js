@@ -10,7 +10,7 @@ module.exports = (app) => {
         res.send("It works!");
     });
 
-    app.post("/api/events", EventController.newEvent)
+    app.post("/api/events", upload.any(), EventController.newEvent)
 
     app.get('/api/users/:id', UserController.getOnePublic);
     app.get('/api/users/private/:id', UserController.getOnePrivate)
@@ -20,11 +20,8 @@ module.exports = (app) => {
     app.post('/api/users/send/verification/', UserController.sendEmailVerification)
     app.get('/api/verify/:token', UserController.verifyEmail);
 
+    // app.post('/api/uploads/event/cover/:id', upload.single("imageData"), ImageController.uploadEventCoverPicture)
     app.post("/api/uploads/profile/:id", upload.single('imageData'), ImageController.uploadProfile)
 
     app.patch('/api/users/:id', UserController.edit)
-
-    
-
-    
   };

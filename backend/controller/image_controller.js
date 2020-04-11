@@ -23,7 +23,7 @@ module.exports = {
     };
 
     Event.findByIdAndUpdate(req.params.id, { coverPict: newImage })
-      .then(() => res.status(200).send())
+      .then((result) => res.status(200).send(result))
       .catch(next);
   },
 };
