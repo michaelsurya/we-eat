@@ -16,7 +16,6 @@ import {
   Segment,
 } from "semantic-ui-react";
 
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/semantic-ui.css";
 
 import styles from "../assets/css/verify.module.css";

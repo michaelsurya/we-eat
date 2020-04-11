@@ -1,16 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { resetError } from "../actions/errorActions";
+import { createEvent } from "../actions/eventActions";
 import { withRouter } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Segment,
-} from "semantic-ui-react";
+import { Container, Grid, Header } from "semantic-ui-react";
 
 import styles from "../assets/css/event.module.css";
 
@@ -18,7 +10,11 @@ import CreateEventForm from "./event/CreateEventForm";
 
 class CreateEvent extends React.Component {
   onSubmit = (formValues) => {
-    console.log(formValues)
+    this.props.createEvent(
+      this.props.auth.user.id,
+      formValues,
+      this.props.history
+    );
   };
 
   render() {
@@ -37,4 +33,10 @@ class CreateEvent extends React.Component {
   }
 }
 
-export default CreateEvent;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { createEvent })(
+  withRouter(CreateEvent)
+);

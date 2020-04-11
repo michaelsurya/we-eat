@@ -7,7 +7,7 @@ import CuisineOptions from "../reduxForm/CuisineOptions";
 import DateInput from "../reduxForm/DateInput";
 import MultipleSelectionDropdown from "../reduxForm/MultipleSelectionDropdown";
 import PhoneInputField from "../reduxForm/PhoneInput";
-import PhotoUpload from "../reduxForm/PhotoUpload";
+import PhotosUpload from "../reduxForm/PhotosUpload";
 import SexRadioButton from "../reduxForm/SexRadioButton";
 import ReadOnlyField from "../reduxForm/ReadOnlyField";
 import TextArea from "../reduxForm/TextArea";
@@ -25,12 +25,22 @@ class CreateEventForm extends React.Component {
       <Segment>
         <Form>
           <Field
-            name="coverPict"
-            component={PhotoUpload}
-            label="Cover picture*"
+            name="pictures"
+            component={PhotosUpload}
+            label="Event pictures* (Max 5)"
           />
-          <Field name="title" component={TextField} label="Experience Title*"  placeholder="e.g Roast Chicken Dinner"/>
-          <Field name="location" component={TextField} label="Location*" placeholder="e.g ..."/>
+          <Field
+            name="title"
+            component={TextField}
+            label="Experience Title*"
+            placeholder="e.g Roast Chicken Dinner"
+          />
+          <Field
+            name="location"
+            component={TextField}
+            label="Location*"
+            placeholder="e.g ..."
+          />
           <Form.Group widths="equal">
             <Field
               name="date"
@@ -52,7 +62,7 @@ class CreateEventForm extends React.Component {
             label="Approximate duration"
           />
           <Field
-            name="guestsRequired"
+            name="guestRequired"
             component={TextField}
             label="Number of guests*"
             placeholder="e.g 5"
@@ -90,4 +100,23 @@ class CreateEventForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: "createEventForm" })(CreateEventForm);
+const validate = ({ pictures }) => {
+  const errors = {};
+
+  if (pictures) {
+    // Check if user has entered the event pictures
+    if (pictures.length < 1) {
+      errors.pictures = "At least one pictures is needed";
+    }
+    // Check if the pictures uploaded are not more than 5
+    if (pictures.length > 5) {
+      errors.pictures = "Maximum of 5 pictures are allowed";
+    }
+
+    return errors;
+  }
+};
+
+export default reduxForm({ form: "createEventForm", validate: validate })(
+  CreateEventForm
+);

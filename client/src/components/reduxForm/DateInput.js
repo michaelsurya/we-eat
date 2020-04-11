@@ -18,6 +18,7 @@ const DateInput = (props) => {
         clearable
         clearIcon={<Icon name="remove" color="red" />}
         closable
+        dateFormat="DD/MM/YYYY"
         iconPosition="left"
         minDate={moment().add(1, "days")}
         onChange={(e, { value }) => onChange(value)}
