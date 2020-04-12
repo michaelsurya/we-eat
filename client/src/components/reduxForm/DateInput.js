@@ -2,11 +2,13 @@ import React from "react";
 import { Form, Icon } from "semantic-ui-react";
 import { DateInput as DI } from "semantic-ui-calendar-react";
 import moment from "moment";
+import styles from "../../assets/css/form.module.css";
 
 const DateInput = (props) => {
   const {
     input: { value, onChange },
     label: label,
+    meta: meta,
     placeholder: placeholder,
   } = props;
 
@@ -26,7 +28,15 @@ const DateInput = (props) => {
         preserveViewMode={false}
         value={value}
       ></DI>
+      {renderError(meta)}
     </Form.Field>
   );
 };
+
+function renderError({ error }) {
+  if (error) {
+    return <p className={styles.error}>{error}</p>;;
+  }
+}
+
 export default DateInput;

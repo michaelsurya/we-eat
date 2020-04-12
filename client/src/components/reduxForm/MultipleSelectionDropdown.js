@@ -1,17 +1,19 @@
 import React from "react";
 import { Dropdown, Form } from "semantic-ui-react";
+import styles from "../../assets/css/form.module.css";
 
-const MultipleSelectionDropdown = props => {
+const MultipleSelectionDropdown = (props) => {
   const {
     input: { value, onChange },
     label: label,
     meta: meta,
-    options: options
+    options: options,
   } = props;
 
   return (
     <Form.Field>
       <label>{label}</label>
+      {renderError(meta)}
       <Dropdown
         placeholder={label}
         fluid
@@ -21,15 +23,14 @@ const MultipleSelectionDropdown = props => {
         options={options}
         defaultValue={value}
         onChange={(e, { value }) => onChange(value)}
-        error={renderError(meta)}
       ></Dropdown>
     </Form.Field>
   );
 };
 
-function renderError({ error, touched }) {
-  if (touched && error) {
-    return error;
+function renderError({ error }) {
+  if (error) {
+    return <p className={styles.error}>{error}</p>;
   }
 }
 

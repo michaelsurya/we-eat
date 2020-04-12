@@ -65,6 +65,7 @@ class CreateEventForm extends React.Component {
             name="guestRequired"
             component={TextField}
             label="Number of guests*"
+            type="number"
             placeholder="e.g 5"
           />
           <Field
@@ -82,7 +83,7 @@ class CreateEventForm extends React.Component {
           <Field
             name="allergen"
             component={MultipleSelectionDropdown}
-            label="Allergen List*"
+            label="Allergen List"
             placeholder="Allergen"
             options={AllergenOptions}
           />
@@ -100,8 +101,65 @@ class CreateEventForm extends React.Component {
   }
 }
 
-const validate = ({ pictures }) => {
+const validate = ({
+  pictures,
+  title,
+  location,
+  date,
+  time,
+  duration,
+  guestRequired,
+  description,
+  cuisine,
+}) => {
   const errors = {};
+
+  const dateRegex = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+  const guestRequiredRegex = /^[1-9]\d*$/;
+  const timeRegex = /^\d{2}:\d{2}$/;
+
+  if (!title) {
+    errors.title = "Title is required";
+  }
+  // Check the title length
+  else if (title.length < 10 || title.length > 75) {
+    errors.title = "Invalid length";
+  }
+
+  if (!date) {
+    errors.date = "Date is required";
+  } else if (!dateRegex.test(date)) {
+    errors.date = "Invalid date format";
+  }
+
+  if (!time) {
+    errors.time = "Time is required";
+  } else if (!timeRegex.test(time)) {
+    errors.time = "Invalid time format";
+  }
+
+  if (duration && duration.length > 20) {
+    errors.duration = "Invalid length";
+  }
+
+  if (!guestRequired) {
+    errors.guestRequired =
+      "Please enter the number of guest required for the event";
+  } else if (!guestRequiredRegex.test(guestRequired)) {
+    errors.guestRequired = "Invalid number";
+  }
+
+  if (!description) {
+    errors.description = "Title is required";
+  }
+  // Check the title length
+  else if (description.length < 25 || description.length > 500) {
+    errors.description = "Invalid length";
+  }
+
+  if (!cuisine || cuisine.length < 1) {
+    errors.cuisine = "Please select at least one cuisine";
+  }
 
   if (pictures) {
     // Check if user has entered the event pictures
@@ -112,9 +170,8 @@ const validate = ({ pictures }) => {
     if (pictures.length > 5) {
       errors.pictures = "Maximum of 5 pictures are allowed";
     }
-
-    return errors;
   }
+  return errors;
 };
 
 export default reduxForm({ form: "createEventForm", validate: validate })(
