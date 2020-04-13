@@ -36,13 +36,11 @@ export const createEvent = (id, formData, history) => async (dispatch) => {
 
   axios
     .post(`/api/events/`, fd)
-    .then((result) => {
-      console.log(result);
-    })
+    .then((result) => history.push(`/event/${result.data._id}`))
     .catch((err) => {
-      //   dispatch({
-      //     type: GET_ERRORS,
-      //     payload: err.response.data,
-      //   });
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
     });
 };

@@ -18,9 +18,9 @@ module.exports = {
       duration: Joi.string().required(),
       guestRequired: Joi.number().required(),
       description: Joi.string().required(),
-      cuisine: Joi.array().items(Joi.any()),
+      cuisine: Joi.array().items(Joi.any()).required(),
       allergen: Joi.array().items(Joi.any()),
-      menu: Joi.array().items(Joi.any()),
+      menu: Joi.array().items(Joi.any()).required(),
 
       pictures: Joi.array(),
 
@@ -40,7 +40,7 @@ module.exports = {
       const newEvent = new Event(value);
       newEvent
         .save()
-        .then((result) => res.status(200).send())
+        .then((result) => res.status(200).send(result))
         .catch(next);
     }
   },
