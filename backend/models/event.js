@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ImageSchema = require("./image");
+const MenuSchema = require("./menu");
 
 const CUISINES = [
   "African",
@@ -51,6 +52,7 @@ const EventSchema = new Schema({
   description: { type: String, required: true },
   cuisine: [{ type: String, enum: CUISINES }],
   allergen: [{ type: String, enum: ALLERGENS }],
+  menu: [MenuSchema],
 
   pictures: [ImageSchema],
 

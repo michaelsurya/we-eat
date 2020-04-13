@@ -19,9 +19,10 @@ export const createEvent = (id, formData, history) => async (dispatch) => {
   for (let [key, value] of Object.entries(eventData)) {
     // Convert array to proper form data
     if (Array.isArray(value)) {
-      value.forEach((item, index) => {
-        fd.append(`${key}[${index}]`, item);
-      });
+      // value.forEach((item, index) => {
+      //   fd.append(`${key}[${index}]`, item);
+      // });
+      fd.append(key, JSON.stringify(value));
     }
     // Convert object (uploaded files) to proper form data
     else if (typeof value === "object" && value !== null) {
@@ -32,10 +33,6 @@ export const createEvent = (id, formData, history) => async (dispatch) => {
       fd.append(key, value);
     }
   }
-
-  // for (var pair of fd.entries()) {
-  //   console.log(pair[0] + ", " + pair[1]);
-  // }
 
   axios
     .post(`/api/events/`, fd)

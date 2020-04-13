@@ -5,6 +5,11 @@ const mongoose = require("mongoose");
 
 module.exports = {
   async newEvent(req, res, next) {
+    //Parse
+    if (req.body.menu) req.body.menu = JSON.parse(req.body.menu);
+    if (req.body.cuisine) req.body.cuisine = JSON.parse(req.body.cuisine);
+    if (req.body.allergen) req.body.allergen = JSON.parse(req.body.allergen);
+
     // Validation Schema
     const schema = Joi.object({
       title: Joi.string().required(),
@@ -13,8 +18,9 @@ module.exports = {
       duration: Joi.string().required(),
       guestRequired: Joi.number().required(),
       description: Joi.string().required(),
-      cuisine: Joi.array().items(Joi.string()),
-      allergen: Joi.array().items(Joi.string()),
+      cuisine: Joi.array().items(Joi.any()),
+      allergen: Joi.array().items(Joi.any()),
+      menu: Joi.array().items(Joi.any()),
 
       pictures: Joi.array(),
 
@@ -32,8 +38,10 @@ module.exports = {
       });
 
       const newEvent = new Event(value);
-      newEvent.save().then((result) => res.status(200).send(result));
-      res.status(200).send();
+      newEvent
+        .save()
+        .then((result) => res.status(200).send())
+        .catch(next);
     }
   },
 };
