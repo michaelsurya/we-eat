@@ -12,7 +12,7 @@ import {
   Label,
   Segment,
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import styles from "../assets/css/profile.module.css";
 
@@ -34,7 +34,7 @@ class Profile extends React.Component {
   // ];
 
   componentDidMount() {
-    this.props.getUser(this.props.match.params.id);
+    this.props.getUser(this.props.match.params.id, this.props.history);
   }
 
   renderEditButton = () => {
@@ -219,4 +219,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getUser })(Profile);
+export default connect(mapStateToProps, { getUser })(withRouter(Profile));

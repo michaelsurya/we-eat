@@ -25,7 +25,7 @@ export const editProfile = (id, userData, history) => async (dispatch) => {
     });
 };
 
-export const getUser = (id) => async (dispatch) => {
+export const getUser = (id, history) => async (dispatch) => {
   axios
     .get(`/api/users/${id}`)
     .then((res) => {
@@ -39,10 +39,11 @@ export const getUser = (id) => async (dispatch) => {
         type: GET_ERRORS,
         payload: err.response.data,
       });
+      history.push("/error")
     });
 };
 
-export const getUserPrivate = (id) => async (dispatch) => {
+export const getUserPrivate = (id, history) => async (dispatch) => {
   axios
     .get(`/api/users/private/${id}`)
     .then((res) => {
@@ -56,6 +57,7 @@ export const getUserPrivate = (id) => async (dispatch) => {
         type: GET_ERRORS,
         payload: err.response.data,
       });
+      history.push("/error")
     });
 };
 

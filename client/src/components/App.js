@@ -34,18 +34,19 @@ const App = () => {
 const DefaultContainer = () => (
   <div>
     <Nav></Nav>
-    <Route path="/" exact component={Home} />
-    <Route path="/event/new/" exact component={CreateEvent}></Route>
-    <Route path="/event/:id" exact component={Event}></Route>
-    <Route path="/profile/:id" exact component={Profile} />
-    <PrivateRoute
-      path="/profile/edit/:id"
-      exact
-      component={EditProfile}
-    ></PrivateRoute>
-    <PrivateRoute path="/verify/:id" exact component={Verify}></PrivateRoute>
-    <Route path="/error" exact component={Error}></Route>
-    <Redirect to="/error"></Redirect>
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Route path="/event/new/" exact component={CreateEvent}></Route>
+      <Route path="/event/:id" exact component={Event}></Route>
+      <Route path="/profile/:id" exact component={Profile} />
+      <PrivateRoute
+        path="/profile/edit/:id"
+        exact
+        component={EditProfile}
+      ></PrivateRoute>
+      <PrivateRoute path="/verify/:id" exact component={Verify}></PrivateRoute>
+      <Route component={Error}></Route>
+    </Switch>
     <Footer></Footer>
   </div>
 );

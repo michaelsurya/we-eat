@@ -75,7 +75,7 @@ class EditProfile extends React.Component {
     if (this.props.auth.user.id !== this.props.match.params.id) {
       this.props.history.push("/");
     } else {
-      this.props.getUserPrivate(this.props.match.params.id);
+      this.props.getUserPrivate(this.props.match.params.id, this.props.history);
     }
   }
 

@@ -30,7 +30,7 @@ class Verify extends React.Component {
   componentDidMount() {
     this.props.resetError();
     //Fetch user data
-    this.props.getUser(this.props.match.params.id);
+    this.props.getUser(this.props.match.params.id, this.props.history);
   }
 
   renderEmailVerification = () => {
