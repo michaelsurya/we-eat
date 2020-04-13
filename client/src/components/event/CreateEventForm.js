@@ -1,19 +1,16 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, FieldArray } from "redux-form";
 import { Button, Form, Grid, Segment } from "semantic-ui-react";
 
 import AllergenOptions from "../reduxForm/AllergenOptions";
 import CuisineOptions from "../reduxForm/CuisineOptions";
 import DateInput from "../reduxForm/DateInput";
+import MenuInput from "../reduxForm/MenuInput";
 import MultipleSelectionDropdown from "../reduxForm/MultipleSelectionDropdown";
-import PhoneInputField from "../reduxForm/PhoneInput";
 import PhotosUpload from "../reduxForm/PhotosUpload";
-import SexRadioButton from "../reduxForm/SexRadioButton";
-import ReadOnlyField from "../reduxForm/ReadOnlyField";
 import TextArea from "../reduxForm/TextArea";
 import TextField from "../reduxForm/TextField";
 import TimeInput from "../reduxForm/TimeInput";
-import TagInputField from "../reduxForm/TagInputField";
 
 class CreateEventForm extends React.Component {
   onSubmit = (formValues) => {
@@ -87,6 +84,7 @@ class CreateEventForm extends React.Component {
             placeholder="Allergen"
             options={AllergenOptions}
           />
+          <FieldArray name="menu" component={MenuInput}></FieldArray>
           <Button
             type="button"
             color="orange"
