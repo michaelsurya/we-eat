@@ -11,6 +11,7 @@ module.exports = (app) => {
     });
 
     app.post("/api/events", upload.any(), EventController.newEvent)
+    app.get("/api/events/:id", EventController.getOnePublic)
 
     app.get('/api/users/:id', UserController.getOnePublic);
     app.get('/api/users/private/:id', UserController.getOnePrivate)

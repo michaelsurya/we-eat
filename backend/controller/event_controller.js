@@ -44,6 +44,34 @@ module.exports = {
         .catch(next);
     }
   },
+
+  /*
+   * Function to get event details
+   * @path /users/:id
+   */
+  getOnePublic(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      id: Joi.string().required(),
+    });
+
+    const { error, value } = schema.validate(req.params);
+
+    if (error) {
+      return res.status(400).json(error.details);
+    }
+
+    Event.findById(value.id)
+      .then((event) => {
+        //If user is not found
+        if (!event) {
+          return res.status(404).json({ message: "Event not found" });
+        } else {
+          return res.send(event);
+        }
+      })
+      .catch(next);
+  },
 };
 
 // const session  = await mongoose.startSession();
