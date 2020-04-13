@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CREATE_EVENT, GET_ERRORS } from "./type";
+import { GET_ERRORS, GET_EVENT } from "./type";
 
 export const createEvent = (id, formData, history) => async (dispatch) => {
   //Prepare event data
@@ -9,9 +9,6 @@ export const createEvent = (id, formData, history) => async (dispatch) => {
   eventData.date = `${formData.date} ${formData.time}`;
   eventData.host = id;
   delete eventData.time;
-
-  // // Set coverPict
-  // eventData.
 
   // Initialise the form data
   let fd = new FormData();
@@ -42,5 +39,23 @@ export const createEvent = (id, formData, history) => async (dispatch) => {
         type: GET_ERRORS,
         payload: err.response.data,
       });
+    });
+};
+
+export const getEvent = (id, history) => async (dispatch) => {
+  axios
+    .get(`/api/events/${id}`)
+    .then((res) => {
+      dispatch({
+        type: GET_EVENT,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+      history.push("/error")
     });
 };
