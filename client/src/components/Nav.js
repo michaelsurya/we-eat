@@ -52,12 +52,12 @@ const Nav = props => {
         <Dropdown item text="£-GBP">
           <Dropdown.Menu>
             <Dropdown.Item>£-GBP</Dropdown.Item>
-            <Dropdown.Item>$-USD</Dropdown.Item>
+            {/* <Dropdown.Item>$-USD</Dropdown.Item> */}
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Menu>
 
-      <Menu.Item name="host">Become a host</Menu.Item>
+      <Menu.Item as={Link} name="host" to="/event/new">Become a host</Menu.Item>
 
       <Menu.Item as={Link} name="help" to="/help">
         Help
