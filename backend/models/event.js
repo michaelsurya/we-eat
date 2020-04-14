@@ -49,6 +49,7 @@ const EventSchema = new Schema({
   date: { type: Date, required: true },
   duration: { type: String },
   guestRequired: { type: Number, required: true },
+  price: { type: Number, required: true },
   description: { type: String, required: true },
   cuisine: [{ type: String, enum: CUISINES }],
   allergen: [{ type: String, enum: ALLERGENS }],

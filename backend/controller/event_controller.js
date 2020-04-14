@@ -17,6 +17,7 @@ module.exports = {
       date: Joi.date().format("DD/MM/YYYY HH:mm").required(),
       duration: Joi.string().required(),
       guestRequired: Joi.number().required(),
+      price: Joi.number().required(),
       description: Joi.string().required(),
       cuisine: Joi.array().items(Joi.any()).required(),
       allergen: Joi.array().items(Joi.any()),
@@ -62,10 +63,11 @@ module.exports = {
     }
 
     Event.findById(value.id)
+      .populate("host")
       .then((event) => {
         //If user is not found
         if (!event) {
-          return res.status(404).json({ message: "Event not found" });
+          return res.status(404).json({ error: "Event not found" });
         } else {
           return res.send(event);
         }

@@ -37,7 +37,7 @@ module.exports = {
       .then((user) => {
         // Check if user exists
         if (!user) {
-          return res.status(404).json({ message: "Invalid email or password" });
+          return res.status(404).json({ error: "User not found" });
         }
         // Check password
         bcrypt.compare(password, user.password).then((isMatch) => {
@@ -66,7 +66,7 @@ module.exports = {
           } else {
             return res
               .status(400)
-              .json({ message: "Invalid email or password" });
+              .json({ error: "Invalid email or password" });
           }
         });
       })
@@ -126,7 +126,7 @@ module.exports = {
       .then((user) => {
         //If user is not found
         if (!user) {
-          return res.status(404).json({ message: "User not found" });
+          return res.status(404).json({ error: "User not found" });
         } else {
           return res.send(user);
         }
@@ -155,7 +155,7 @@ module.exports = {
       .then((user) => {
         //If user is not found
         if (!user) {
-          return res.status(404).json({ message: "User not found" });
+          return res.status(404).json({ error: "User not found" });
         } else {
           return res.send(user);
         }
@@ -190,7 +190,7 @@ module.exports = {
       // Check if email is available
       User.findOne({ email: value.email }).then((user) => {
         if (user) {
-          return res.status(400).json({ message: "Email already exists" });
+          return res.status(400).json({ error: "Email already exists" });
         }
       });
 
@@ -280,7 +280,7 @@ module.exports = {
             }
           } else {
             // User does not exist
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ error: "User not found" });
           }
         })
         .catch(next);
@@ -301,19 +301,19 @@ module.exports = {
       Token.findOne({ token: value.token })
         .then((token) => {
           if (!token) {
-            res.status(404).json({ message: "Invalid/Expired token" });
+            res.status(404).json({ error: "Invalid/Expired token" });
           }
 
           User.findById(token.userId).then((user) => {
             if (!user) {
               res
                 .status(404)
-                .json({ message: "Unable to find user for this token." });
+                .json({ error: "Unable to find user for this token." });
             }
             if (user.verifiedEmail) {
               res
                 .status(400)
-                .json({ message: "This user has verified the email." });
+                .json({ error: "This user has verified the email." });
             }
             // Set user to verified and save
             user.verifiedEmail = true;
