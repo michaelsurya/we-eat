@@ -1,5 +1,6 @@
 import React from "react";
 import { Comment } from "semantic-ui-react";
+import moment from "moment";
 
 const ReviewCard = ({name, date, content}) => {
   return (
@@ -8,7 +9,7 @@ const ReviewCard = ({name, date, content}) => {
       <Comment.Content>
         <Comment.Author as="a">{name}</Comment.Author>
         <Comment.Metadata>
-          <div>{date}</div>
+          <div>{moment(date).format("DD MMMM YYYY")}</div>
         </Comment.Metadata>
         <Comment.Text>{content}</Comment.Text>
       </Comment.Content>

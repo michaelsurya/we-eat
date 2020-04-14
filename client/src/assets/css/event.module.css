@@ -1,7 +1,27 @@
 .container {
-    min-height: 80vh;
+  min-height: 80vh;
+}
+
+.float_right {
+  float: right !important;
+}
+
+.h4 {
+  font-size: 1.07142857rem;
+}
+
+.text_align_center {
+  text-align: center !important;
+}
+
+.top_margin_zero {
+  margin-top: 0px !important;
+}
+
+.bot_margin_zero {
+  margin-bottom: 0px !important;
 }
 
 .top_margin {
-    margin-top: 2rem !important;
+  margin-top: 2rem !important;
 }

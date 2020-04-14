@@ -21,7 +21,7 @@ const Interest = ({ interests }) => {
       return (
         <Label.Group>
           {interests.map((interest, index) => (
-            <Label color={colors[index]}>{interest}</Label>
+            <Label color={colors[index]} key={index}>{interest}</Label>
           ))}
         </Label.Group>
       );

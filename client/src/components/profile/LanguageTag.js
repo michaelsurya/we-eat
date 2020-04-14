@@ -21,7 +21,7 @@ const LanguageTag = ({ languages }) => {
       return (
         <Label.Group>
           {languages.map((language, index) => (
-            <Label color={colors[index]}>{language}</Label>
+            <Label color={colors[index]} key={index}>{language}</Label>
           ))}
         </Label.Group>
       );

@@ -8,6 +8,7 @@ import DateInput from "../reduxForm/DateInput";
 import MenuInput from "../reduxForm/MenuInput";
 import MultipleSelectionDropdown from "../reduxForm/MultipleSelectionDropdown";
 import PhotosUpload from "../reduxForm/PhotosUpload";
+import PriceInput from "../reduxForm/PriceInput";
 import TextArea from "../reduxForm/TextArea";
 import TextField from "../reduxForm/TextField";
 import TimeInput from "../reduxForm/TimeInput";
@@ -58,13 +59,20 @@ class CreateEventForm extends React.Component {
             placeholder="e.g 2 hours"
             label="Approximate duration"
           />
-          <Field
-            name="guestRequired"
-            component={TextField}
-            label="Number of guests*"
-            type="number"
-            placeholder="e.g 5"
-          />
+          <Form.Group widths="equal">
+            <Field
+              name="guestRequired"
+              component={TextField}
+              label="Number of guests*"
+              type="number"
+              placeholder="e.g 5"
+            />
+            <Field
+              name="price"
+              component={PriceInput}
+              label="Price per guest*"
+            />
+          </Form.Group>
           <Field
             name="description"
             component={TextArea}
@@ -107,6 +115,7 @@ const validate = ({
   time,
   duration,
   guestRequired,
+  price,
   description,
   cuisine,
 }) => {
@@ -145,6 +154,10 @@ const validate = ({
       "Please enter the number of guest required for the event";
   } else if (!guestRequiredRegex.test(guestRequired)) {
     errors.guestRequired = "Invalid number";
+  }
+
+  if(!price){
+    errors.price = "Please enter the event price"
   }
 
   if (!description) {

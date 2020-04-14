@@ -18,7 +18,7 @@ const MenuInput = ({ fields, meta }) => {
       <Header as="h5">Menu</Header>
 
       {fields.map((menu, index) => (
-        <Segment>
+        <Segment key={index}>
           <Header as="h5" floated="left">
             Menu {index + 1}
           </Header>

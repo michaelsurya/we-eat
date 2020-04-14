@@ -5,7 +5,7 @@ import isEmpty from "lodash/isEmpty";
 const Error = props => {
   if (!isEmpty(props.error)) {
     return (
-      <Message error header="Error" content={props.error.message}></Message>
+      <Message error header="Error" content={props.error.error}></Message>
     );
   }else{
     return null;
