@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_NEW_PROFILE_PICT, GET_USER  } from "./type";
+import { GET_ERRORS, GET_NEW_PROFILE_PICT, GET_USER, FETCHING } from "./type";
 
 export const editPhoneNumber = (id, phoneNumber) => async (dispatch) => {
   axios
@@ -39,7 +39,7 @@ export const getUser = (id, history) => async (dispatch) => {
         type: GET_ERRORS,
         payload: err.response.data,
       });
-      history.push("/error")
+      history.push("/error");
     });
 };
 
@@ -57,7 +57,7 @@ export const getUserPrivate = (id, history) => async (dispatch) => {
         type: GET_ERRORS,
         payload: err.response.data,
       });
-      history.push("/error")
+      history.push("/error");
     });
 };
 
@@ -84,8 +84,8 @@ export const changeProfilePict = (id, files) => async (dispatch) => {
     .then((result) => {
       dispatch({
         type: GET_NEW_PROFILE_PICT,
-        payload: result.data
-      })
+        payload: result.data,
+      });
     })
     .catch((err) => {
       dispatch({

@@ -22,17 +22,6 @@ import ReviewList from "./review/ReviewList";
 import Statistics from "./profile/Statistics";
 
 class Profile extends React.Component {
-  //To be deleted
-  // reviews = [
-  //   {
-  //     name: "joe",
-  //     date: "25 March 2020",
-  //     content:
-  //       "Michael is a lovely host, the food was delicious and the venue delightful, thank you do much!"
-  //   },
-  //   { name: "Amir", date: "25 March 2020", content: "Great host great food" }
-  // ];
-
   componentDidMount() {
     this.props.getUser(this.props.match.params.id, this.props.history);
   }

@@ -9,8 +9,9 @@ export default (state = INTIIAL_STATE, action) => {
     case GET_NEW_PROFILE_PICT:
       return {
         ...state,
-        profilePict: action.payload
-      }
+        isFetching: false,
+        profilePict: action.payload,
+      };
     default:
       return state;
   }

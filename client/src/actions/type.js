@@ -1,4 +1,5 @@
-export const CREATE_EVENT = "CREATE_EVENT"
+export const CREATE_EVENT = "CREATE_EVENT";
+export const FETCHING = "FETCHING";
 export const GET_ERRORS = "GET_ERRORS";
 export const GET_EVENT = "GET_EVENT";
 export const GET_NEW_PROFILE_PICT = "GET_NEW_PROFILE_PICT";
