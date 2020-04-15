@@ -22,7 +22,7 @@ const MenuInput = ({ fields, meta }) => {
           <Header as="h5" floated="left">
             Menu {index + 1}
           </Header>
-          <Button icon floated="right">
+          <Button icon floated="right" onClick={() => fields.remove(index)}>
             <Icon name="close" color="red"></Icon>
           </Button>
 
