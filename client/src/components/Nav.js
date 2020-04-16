@@ -18,6 +18,15 @@ const Nav = props => {
               <Dropdown.Item as={Link} to={`/profile/${user.id}`}>
                 <Header as="h4">My Profile</Header>
               </Dropdown.Item>
+              <Dropdown.Item as={Link} to={`/profile/edit/${user.id}`}>
+                <Header as="h4">Edit Profile</Header>
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to={`/user/events`}>
+                <Header as="h4">My Events</Header>
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to={`/user/reservations`}>
+                <Header as="h4">Reservations</Header>
+              </Dropdown.Item>
               <Dropdown.Item onClick={()=>props.logOutUser(props.history)}>
                 <Header as="h4" color="red">
                   Sign Out

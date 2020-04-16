@@ -56,6 +56,23 @@ export const getEvent = (id, history) => (dispatch) => {
         type: GET_ERRORS,
         payload: err.response.data,
       });
-      history.push("/error")
+      history.push("/error");
+    });
+};
+
+export const getMyEvents = (id) => (dispatch) => {
+  axios
+    .get(`/api/myevents/${id}`)
+    .then((res) => {
+      dispatch({
+        type: GET_EVENT,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
     });
 };

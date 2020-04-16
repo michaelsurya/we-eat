@@ -8,7 +8,7 @@ import styles from "../../assets/css/profile.module.css";
 const PhoneInputField = (props) => {
   const {
     input: { value, onChange },
-    label: label,
+    label,
     meta: { touched, error },
   } = props;
   return (

@@ -28,7 +28,7 @@ const Footer = () => {
                   <List.Item as={Link} to="/">
                     Explore
                   </List.Item>
-                  <List.Item as={Link} to="/">
+                  <List.Item as={Link} to="/event/new">
                     Become a host
                   </List.Item>
                 </List>

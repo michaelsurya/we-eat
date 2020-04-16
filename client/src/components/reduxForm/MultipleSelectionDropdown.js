@@ -5,9 +5,9 @@ import styles from "../../assets/css/form.module.css";
 const MultipleSelectionDropdown = (props) => {
   const {
     input: { value, onChange },
-    label: label,
-    meta: meta,
-    options: options,
+    label,
+    meta,
+    options,
   } = props;
 
   return (
