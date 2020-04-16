@@ -64,9 +64,7 @@ module.exports = {
               }
             );
           } else {
-            return res
-              .status(400)
-              .json({ error: "Invalid email or password" });
+            return res.status(400).json({ error: "Invalid email or password" });
           }
         });
       })
@@ -123,6 +121,9 @@ module.exports = {
     }
 
     User.findById(value.id)
+      .populate({
+        path: "reviews.user",
+      })
       .then((user) => {
         //If user is not found
         if (!user) {

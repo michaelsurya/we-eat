@@ -63,7 +63,12 @@ module.exports = {
     }
 
     Event.findById(value.id)
-      .populate("host")
+      .populate({
+        path: "host",
+        populate: {
+          path: "reviews.user",
+        },
+      })
       .then((event) => {
         //If user is not found
         if (!event) {
