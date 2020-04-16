@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getEvent } from "../actions/eventActions";
+import { createReservation } from "../actions/reservationActions";
 import {
   Container,
   Divider,
@@ -62,6 +63,16 @@ class Event extends React.Component {
         />
       );
     }
+  };
+
+  handleClick = () => {
+    console.log("triggered")
+    this.props.createReservation(
+      this.props.event._id,
+      this.props.event.host._id,
+      this.props.auth.user.id,
+      this.props.history
+    );
   };
 
   render() {
@@ -159,7 +170,7 @@ class Event extends React.Component {
 
             {/* Right Part */}
             <Grid.Column width={4}>
-              <BookingCard price={price}></BookingCard>
+              <BookingCard price={price} handleClick={this.handleClick}></BookingCard>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -174,4 +185,6 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getEvent })(withRouter(Event));
+export default connect(mapStateToProps, { createReservation, getEvent })(
+  withRouter(Event)
+);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { GET_ERRORS, GET_EVENT } from "./type";
 
-export const createEvent = (id, formData, history) => async (dispatch) => {
+export const createEvent = (id, formData, history) => (dispatch) => {
   //Prepare event data
   const eventData = Object.assign({}, formData);
 
@@ -42,7 +42,7 @@ export const createEvent = (id, formData, history) => async (dispatch) => {
     });
 };
 
-export const getEvent = (id, history) => async (dispatch) => {
+export const getEvent = (id, history) => (dispatch) => {
   axios
     .get(`/api/events/${id}`)
     .then((res) => {
