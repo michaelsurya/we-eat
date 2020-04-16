@@ -1,3 +1,4 @@
+const Event = require("../models/event");
 const Reservation = require("../models/reservation");
 
 const Joi = require("@hapi/joi").extend(require("@hapi/joi-date"));
@@ -22,7 +23,17 @@ module.exports = {
       const newReservation = new Reservation(value);
       newReservation
         .save()
-        .then((result) => res.status(200).send(result))
+        .then((result) =>
+          Event.findByIdAndUpdate(
+            { _id: result.event },
+            {
+              $push: { reservation: result._id },
+            }
+          )
+        )
+        .then((result) => {
+          res.send(result);
+        })
         .catch(next);
     }
   },
