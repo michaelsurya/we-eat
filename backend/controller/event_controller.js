@@ -1,7 +1,7 @@
 const Event = require("../models/event");
 
 const Joi = require("@hapi/joi").extend(require("@hapi/joi-date"));
-Joi.objectId = require('joi-objectid')(Joi);
+Joi.objectId = require("joi-objectid")(Joi);
 const mongoose = require("mongoose");
 
 module.exports = {
@@ -61,24 +61,45 @@ module.exports = {
 
     if (error) {
       return res.status(400).json(error.details);
+    } else {
+      Event.findById(value.id)
+        .populate({
+          path: "host",
+          populate: {
+            path: "reviews.user",
+          },
+        })
+        .then((event) => {
+          //If user is not found
+          if (!event) {
+            return res.status(404).json({ error: "Event not found" });
+          } else {
+            return res.send(event);
+          }
+        })
+        .catch(next);
     }
+  },
 
-    Event.findById(value.id)
-      .populate({
-        path: "host",
-        populate: {
-          path: "reviews.user",
-        },
-      })
-      .then((event) => {
-        //If user is not found
-        if (!event) {
-          return res.status(404).json({ error: "Event not found" });
-        } else {
-          return res.send(event);
-        }
-      })
-      .catch(next);
+  /*
+   * Function to get all events belonging to a host
+   * @path /myevents/:id
+   */
+  getMyEvents(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      id: Joi.string().required(),
+    });
+
+    const { error, value } = schema.validate(req.params);
+
+    if (error) {
+      return res.status(400).json(error.details);
+    } else {
+      Event.find({ host: value.id })
+        .then((result) => res.send(result))
+        .catch(next);
+    }
   },
 };
 
