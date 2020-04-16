@@ -95,16 +95,18 @@ class Event extends React.Component {
           <Grid.Row>
             {/* Left Part */}
             <Grid.Column width={10}>
-              <div className={`${styles.float_right}`}>
+              <Link
+                to={host ? `/profile/${host._id}` : null}
+                className={`${styles.float_right}`}
+              >
                 {this.renderProfilePict(host ? host.profilePict : null)}
                 <Header
                   className={`${styles.text_align_center}`}
                   textAlign="center"
-                  to={host ? `/profile/${host._id}` : null}
                 >
                   {host ? host.firstName : null}
                 </Header>
-              </div>
+              </Link>
               <div>
                 <Header as="h1">
                   {title}
@@ -153,7 +155,6 @@ class Event extends React.Component {
                 <Header as="h4">What people say</Header>
               </Divider>
               <ReviewList reviews={host ? host.reviews : null}></ReviewList>
-              <p>{description}</p>
             </Grid.Column>
 
             {/* Right Part */}

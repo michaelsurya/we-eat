@@ -11,7 +11,7 @@ const BookingCard = ({ price }) => {
         <Header as="h2" textAlign="right">
           £{price} <span className={`${styles.h4}`}>per guest</span>
         </Header>
-        <p>Currently there are <b>3</b> confirmed reservation(s) for this event.</p>
+        <p>Currently there are <b>0</b> confirmed reservation(s) for this event.</p>
         <p>Once you press the <b>Reserve</b> button below, your reservation request will be forwarded to the host.</p>
       </Card.Content>
       <Card.Content textAlign="center" extra>

@@ -10,7 +10,7 @@ const ReviewList = ({ reviews }) => {
   if (reviews && !isEmpty(reviews)) {
     commentList = reviews.map(review => (
       <ReviewCard
-        name={review.name}
+        user={review.user}
         date={review.date}
         content={review.content}
       ></ReviewCard>

@@ -26,6 +26,12 @@ class Profile extends React.Component {
     this.props.getUser(this.props.match.params.id, this.props.history);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.props.getUser(this.props.match.params.id, this.props.history);
+    }
+  }
+
   renderEditButton = () => {
     const profileId = this.props.match.params.id;
 
@@ -89,7 +95,7 @@ class Profile extends React.Component {
   };
 
   renderProfilePict = (profilePict) => {
-    if  (profilePict) {
+    if (profilePict) {
       return (
         <Image
           className={styles.image}
@@ -102,11 +108,13 @@ class Profile extends React.Component {
       return (
         <Image
           className={styles.image}
-          src={"https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
+          src={
+            "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+          }
           size="medium"
           circular
         />
-      )
+      );
     }
   };
 
@@ -176,7 +184,7 @@ class Profile extends React.Component {
             <Divider></Divider>
             <Statistics
               eatCount={5}
-              reviewCount={reviews ? reviews.length : 0}
+              reviewCount={reviews ? reviews.length : "N/A"}
               rating={5}
             ></Statistics>
             <Divider></Divider>

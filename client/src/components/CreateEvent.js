@@ -12,9 +12,6 @@ import CreateEventForm from "./event/CreateEventForm";
 class CreateEvent extends React.Component {
   componentDidMount() {
     this.props.getUser(this.props.auth.user.id);
-    if (!this.props.user.isVerified) {
-      this.props.history.push(`/verify/${this.props.auth.user.id}`);
-    }
   }
 
   componentDidUpdate() {

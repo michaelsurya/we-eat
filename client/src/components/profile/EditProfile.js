@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { changeProfilePict, getUserPrivate, editProfile } from "../../actions/userActions";
+import { resetError } from "../../actions/errorActions";
+import {
+  changeProfilePict,
+  getUserPrivate,
+  editProfile,
+} from "../../actions/userActions";
 import { Button, Container, Grid, Header, Image } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
@@ -71,6 +76,7 @@ class EditProfile extends React.Component {
   };
 
   componentDidMount() {
+    this.props.resetError();
     // Error handling
     if (this.props.auth.user.id !== this.props.match.params.id) {
       this.props.history.push("/");
@@ -96,7 +102,18 @@ class EditProfile extends React.Component {
             >
               Change profile picture
             </Button>
-            <input id='imageInput' hidden type="file" accept=".jpg, .jpeg, .png" onChange={e => this.props.changeProfilePict( this.props.match.params.id ,e.target.files)} />
+            <input
+              id="imageInput"
+              hidden
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              onChange={(e) =>
+                this.props.changeProfilePict(
+                  this.props.match.params.id,
+                  e.target.files
+                )
+              }
+            />
           </Grid.Column>
 
           {/* RIGHT SIDE */}
@@ -119,6 +136,9 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { changeProfilePict, getUserPrivate, editProfile })(
-  withRouter(EditProfile)
-);
+export default connect(mapStateToProps, {
+  changeProfilePict,
+  editProfile,
+  getUserPrivate,
+  resetError,
+})(withRouter(EditProfile));
