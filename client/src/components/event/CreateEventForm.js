@@ -118,6 +118,7 @@ const validate = ({
   price,
   description,
   cuisine,
+  menu,
 }) => {
   const errors = {};
 
@@ -156,8 +157,8 @@ const validate = ({
     errors.guestRequired = "Invalid number";
   }
 
-  if(!price){
-    errors.price = "Please enter the event price"
+  if (!price) {
+    errors.price = "Please enter the event price";
   }
 
   if (!description) {
@@ -180,6 +181,13 @@ const validate = ({
     // Check if the pictures uploaded are not more than 5
     if (pictures.length > 5) {
       errors.pictures = "Maximum of 5 pictures are allowed";
+    }
+  }
+
+  if (menu) {
+    // Check if user has entered at least one menu
+    if (menu.length < 1) {
+      errors.menu = { _error: "At least one menu must be entered" };
     }
   }
   return errors;

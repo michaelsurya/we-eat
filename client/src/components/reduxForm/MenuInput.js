@@ -5,18 +5,18 @@ import {
   Form,
   Header,
   Icon,
-  Input,
-  Label,
   Segment,
 } from "semantic-ui-react";
 import TextArea from "./TextArea";
 import TextField from "./TextField";
 
+import styles from "../../assets/css/form.module.css";
+
 const MenuInput = ({ fields, meta }) => {
   return (
     <Form.Field>
       <Header as="h5">Menu</Header>
-
+      {renderError(meta)}
       {fields.map((menu, index) => (
         <Segment key={index}>
           <Header as="h5" floated="left">
@@ -39,16 +39,18 @@ const MenuInput = ({ fields, meta }) => {
           />
         </Segment>
       ))}
-      <Button
-        icon
-        labelPosition="left"
-        onClick={() => fields.push({})}
-      >
-        <Icon name="add" color="orange"/>
+      <Button icon labelPosition="left" onClick={() => fields.push({})}>
+        <Icon name="add" color="orange" />
         Add Menu
       </Button>
     </Form.Field>
   );
 };
+
+function renderError({ error }) {
+  if (error) {
+    return <p className={styles.error}>{error}</p>;
+  }
+}
 
 export default MenuInput;

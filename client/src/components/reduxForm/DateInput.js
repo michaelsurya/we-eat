@@ -7,9 +7,9 @@ import styles from "../../assets/css/form.module.css";
 const DateInput = (props) => {
   const {
     input: { value, onChange },
-    label: label,
-    meta: meta,
-    placeholder: placeholder,
+    label,
+    meta,
+    placeholder,
   } = props;
 
   return (
@@ -35,7 +35,7 @@ const DateInput = (props) => {
 
 function renderError({ error }) {
   if (error) {
-    return <p className={styles.error}>{error}</p>;;
+    return <p className={styles.error}>{error}</p>;
   }
 }
 
