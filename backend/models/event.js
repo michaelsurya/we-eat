@@ -62,6 +62,10 @@ const EventSchema = new Schema({
     required: true,
     ref: "user",
   },
+
+  reservation: [
+    { type: Schema.Types.ObjectId, required: true, ref: "reservation" },
+  ],
 });
 
 const Event = mongoose.model("event", EventSchema);

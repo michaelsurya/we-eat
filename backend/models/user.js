@@ -20,7 +20,6 @@ const UserSchema = new mongoose.Schema({
   profilePict: ImageSchema,
 
   description: { type: String },
-  events: {},
   reviews: [ReviewSchema],
   rating: { type: Number },
 
@@ -51,7 +50,7 @@ UserSchema.pre("save", function (next) {
 
   if (this.isModified("verifiedEmail")) {
     const object = this;
-    if(object.verifiedEmail && object.verifiedPhone){
+    if (object.verifiedEmail && object.verifiedPhone) {
       object.isVerified = true;
       next();
     }

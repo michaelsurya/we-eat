@@ -1,10 +1,11 @@
 const Event = require("../models/event");
 
 const Joi = require("@hapi/joi").extend(require("@hapi/joi-date"));
+Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require("mongoose");
 
 module.exports = {
-  async newEvent(req, res, next) {
+  newEvent(req, res, next) {
     //Parse
     if (req.body.menu) req.body.menu = JSON.parse(req.body.menu);
     if (req.body.cuisine) req.body.cuisine = JSON.parse(req.body.cuisine);
@@ -25,7 +26,7 @@ module.exports = {
 
       pictures: Joi.array(),
 
-      host: Joi.string().required(),
+      host: Joi.objectId().required(),
     });
 
     const { error, value } = schema.validate(req.body);
