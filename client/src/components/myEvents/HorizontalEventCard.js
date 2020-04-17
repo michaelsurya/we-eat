@@ -22,7 +22,6 @@ const HorizontalEventCard = ({
 
   return (
     <Segment>
-      {console.log(title)}
       <Item.Group>
         <Item>
           <Item.Image size="medium">

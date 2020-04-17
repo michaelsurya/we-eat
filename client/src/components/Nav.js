@@ -14,7 +14,7 @@ const Nav = props => {
       return (
         <>
           <Dropdown text={user.firstName} className="link item">
-            <Dropdown.Menu>
+            <Dropdown.Menu >
               <Dropdown.Item as={Link} to={`/profile/${user.id}`}>
                 <Header as="h4">My Profile</Header>
               </Dropdown.Item>

@@ -10,7 +10,7 @@ export const createReservation = (eventID, hostID, userID, history) => (
       host: hostID,
       user: userID,
     })
-    .then((result) => history.push(`/reservation/${result.data._id}`))
+    .then((result) => history.push(`/user/reservations`))
     .catch((err) => {
       dispatch({
         type: GET_ERRORS,

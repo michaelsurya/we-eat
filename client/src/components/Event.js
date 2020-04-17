@@ -66,7 +66,6 @@ class Event extends React.Component {
   };
 
   handleClick = () => {
-    console.log("triggered")
     this.props.createReservation(
       this.props.event._id,
       this.props.event.host._id,

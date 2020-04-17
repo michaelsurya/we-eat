@@ -1,11 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getMyEvents } from "../actions/eventActions";
-import { Container, Header, Item, Segment } from "semantic-ui-react";
+import { Container, Header, Item, Segment, Card } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
+
+import filter from "lodash/filter";
 
 import styles from "../assets/css/reservation.module.css";
 
+import ActionCard from "./myEvents/ActionCard";
+import ApprovedReservationCard from "./myEvents/ApprovedReservationCard";
 import HorizontalEventCard from "./myEvents/HorizontalEventCard";
 
 class MyEvents extends React.Component {
@@ -14,18 +18,62 @@ class MyEvents extends React.Component {
   }
 
   renderEvents() {
-    if (this.props.events && Array.isArray(this.props.events)) {
+    if (Array.isArray(this.props.events) && this.props.events.length > 0) {
       return this.props.events.map((event, index) => {
         return (
           <>
-            <HorizontalEventCard event={event} key={index}></HorizontalEventCard>
+            <HorizontalEventCard
+              event={event}
+              key={index}
+            ></HorizontalEventCard>
+            <Segment>
+              {/* <Item>
+                <Item.Header as="h3">Confirmed reservations: 3</Item.Header>
+                <Item.Header as="h3">Pending reservations: 0</Item.Header>
+              </Item> */}
+              <Header as="h3">Approved reservations</Header>
+              {this.renderConfirmed(
+                filter(event.reservation, { status: "confirmed" })
+              )}
+              <Header as="h3">Pending reservations</Header>
+              {this.renderActions(
+                filter(event.reservation, { status: "pending" })
+              )}
+            </Segment>
           </>
         );
       });
     } else {
-      return <Header as="h3">You have no event.</Header>;
+      return <Segment>You have no event.</Segment>;
     }
   }
+
+  renderActions = (reservations) => {
+    if (Array.isArray(reservations) && reservations.length > 0) {
+      return reservations.map((reservation, index) => (
+        <Card.Group centered>
+          <ActionCard key={index} user={reservation.user}></ActionCard>
+        </Card.Group>
+      ));
+    } else {
+      return <p>No pending reservation</p>;
+    }
+  };
+
+  renderConfirmed = (reservations) => {
+    if (Array.isArray(reservations) && reservations.length > 0) {
+      return reservations.map((reservation, index) => (
+        <Card.Group centered>
+          <ApprovedReservationCard
+            key={index}
+            user={reservation.user}
+          ></ApprovedReservationCard>
+        </Card.Group>
+      ));
+    } else {
+      return <p>No confirmed reservation</p>;
+    }
+  };
 
   render() {
     return (
@@ -35,12 +83,6 @@ class MyEvents extends React.Component {
         </Header>
         <Segment.Group horizontal raised>
           {this.renderEvents()}
-          <Segment>
-            <Item>
-              <Item.Header as="h3">Confirmed reservations: 3</Item.Header>
-              <Item.Header as="h3">Pending reservations: 0</Item.Header>
-            </Item>
-          </Segment>
         </Segment.Group>
       </Container>
     );

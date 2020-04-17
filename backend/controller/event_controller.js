@@ -97,6 +97,12 @@ module.exports = {
       return res.status(400).json(error.details);
     } else {
       Event.find({ host: value.id })
+        .populate({
+          path: "reservation",
+          populate: {
+            path: "user",
+          },
+        })
         .then((result) => res.send(result))
         .catch(next);
     }

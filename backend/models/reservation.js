@@ -9,7 +9,7 @@ const ReservationSchema = new Schema({
   user:  { type: Schema.Types.ObjectId, required: true, ref: "user" },
   status: {type: String, required: true, enum: STATUS},
   reservationDate: {type: Date, required:true, default: Date.now},
-  confirmationDate: {type: Date},
+  approvedDate: {type: Date},
 });
 
 const Reservation = mongoose.model("reservation", ReservationSchema);
