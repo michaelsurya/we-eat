@@ -21,7 +21,6 @@ return(
         <Card.Meta>{`Approved on ${moment(approvedDate).format(
           "DD MMM YYYY"
         )}`}</Card.Meta>
-        <Card.Description>{`${firstName} ${surname} requested to join your event`}</Card.Description>
       </Card.Content>
     </Card>
 )

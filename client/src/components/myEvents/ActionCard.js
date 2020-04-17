@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 const ActionCard = ({
   user: { _id, firstName, surname, reservationDate, profilePict },
+  event,
+  handleAction,
 }) => {
   return (
     <Card>
@@ -25,10 +27,18 @@ const ActionCard = ({
       </Card.Content>
       <Card.Content extra>
         <div className="ui two buttons">
-          <Button basic color="green">
+          <Button
+            basic
+            color="green"
+            onClick={() => handleAction(event, _id, "confirmed")}
+          >
             Approve
           </Button>
-          <Button basic color="red">
+          <Button
+            basic
+            color="red"
+            onClick={() => handleAction(event, _id, "rejected")}
+          >
             Decline
           </Button>
         </div>

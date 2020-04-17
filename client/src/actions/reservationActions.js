@@ -18,3 +18,24 @@ export const createReservation = (eventID, hostID, userID, history) => (
       });
     });
 };
+
+export const editReservation = (eventID, hostID, userID, status) => (
+  dispatch
+) => {
+  axios
+    .patch(`/api/reservations/`, {
+      event: eventID,
+      host: hostID,
+      user: userID,
+      status: status
+    })
+    .then((result) => window.location.reload())
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+

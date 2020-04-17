@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getMyEvents } from "../actions/eventActions";
+import { editReservation } from "../actions/reservationActions";
 import { Container, Header, Item, Segment, Card } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 
@@ -27,10 +28,6 @@ class MyEvents extends React.Component {
               key={index}
             ></HorizontalEventCard>
             <Segment>
-              {/* <Item>
-                <Item.Header as="h3">Confirmed reservations: 3</Item.Header>
-                <Item.Header as="h3">Pending reservations: 0</Item.Header>
-              </Item> */}
               <Header as="h3">Approved reservations</Header>
               {this.renderConfirmed(
                 filter(event.reservation, { status: "confirmed" })
@@ -52,7 +49,12 @@ class MyEvents extends React.Component {
     if (Array.isArray(reservations) && reservations.length > 0) {
       return reservations.map((reservation, index) => (
         <Card.Group centered>
-          <ActionCard key={index} user={reservation.user}></ActionCard>
+          <ActionCard
+            key={index}
+            user={reservation.user}
+            event={reservation.event}
+            handleAction={this.handleAction}
+          ></ActionCard>
         </Card.Group>
       ));
     } else {
@@ -75,6 +77,10 @@ class MyEvents extends React.Component {
     }
   };
 
+  handleAction = (event, user, status) => {
+    this.props.editReservation(event, this.props.auth.user.id, user, status);
+  };
+
   render() {
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
@@ -94,4 +100,6 @@ const mapStateToProps = (state) => ({
   events: state.event,
 });
 
-export default connect(mapStateToProps, { getMyEvents })(MyEvents);
+export default connect(mapStateToProps, { editReservation, getMyEvents })(
+  MyEvents
+);

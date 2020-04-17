@@ -37,4 +37,25 @@ module.exports = {
         .catch(next);
     }
   },
+
+  editReservation(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      event: Joi.objectId().required(),
+      host: Joi.objectId().required(),
+      user: Joi.objectId().required(),
+      status: Joi.string().valid("confirmed", "rejected").required(),
+    });
+
+    const { error, value } = schema.validate(req.body);
+    // Check validation, input sanitation
+    if (error) {
+      res.status(400).json(error.details);
+    } else {
+      Reservation.findOneAndUpdate(
+        { event: value.event, host: value.host, user: value.user },
+        { status: value.status }
+      ).then((result) => res.send(result));
+    }
+  },
 };
