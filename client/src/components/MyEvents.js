@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getMyEvents } from "../actions/eventActions";
 import { editReservation } from "../actions/reservationActions";
-import { Container, Header, Item, Segment, Card } from "semantic-ui-react";
-import { Link, withRouter } from "react-router-dom";
+import { Container, Header, Segment, Card } from "semantic-ui-react";
 
 import filter from "lodash/filter";
 

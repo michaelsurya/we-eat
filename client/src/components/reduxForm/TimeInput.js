@@ -1,15 +1,14 @@
 import React from "react";
 import { Form, Icon } from "semantic-ui-react";
 import { TimeInput as TI } from "semantic-ui-calendar-react";
-import moment from "moment";
 import styles from "../../assets/css/form.module.css";
 
 const TimeInput = (props) => {
   const {
     input: { value, onChange },
-    label: label,
-    meta: meta,
-    placeholder: placeholder,
+    label,
+    meta,
+    placeholder,
   } = props;
 
   return (

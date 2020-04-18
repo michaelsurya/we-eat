@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, reduxForm, FieldArray } from "redux-form";
-import { Button, Form, Grid, Segment } from "semantic-ui-react";
+import { Button, Form, Segment } from "semantic-ui-react";
 
 import AllergenOptions from "../reduxForm/AllergenOptions";
 import CuisineOptions from "../reduxForm/CuisineOptions";

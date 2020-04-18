@@ -1,10 +1,10 @@
 import React from "react";
-import { Form, Icon, Input, Label } from "semantic-ui-react";
+import { Form, Icon, Label } from "semantic-ui-react";
 
 const TagInputField = props => {
   const {
     input: { value, onChange },
-    label: label
+    label
   } = props;
 
   const addTag = e => {

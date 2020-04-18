@@ -13,6 +13,7 @@ const HorizontalEventCard = ({
     if (pictures) {
       return pictures.map((picture, index) => (
         <img
+          alt={pictures.imageName}
           src={`http:\\\\localhost:8080\\${picture.imageData}`}
           key={index}
         ></img>

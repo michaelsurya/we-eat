@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Header, Item } from "semantic-ui-react";
+import { Button, Form, Item } from "semantic-ui-react";
 
 import styles from "../../assets/css/form.module.css";
 
@@ -12,7 +12,7 @@ const PhotosUpload = ({ input, meta, label }) => {
     input.onChange(e.target.files);
 
     let picturesURL = [];
-    for (let [key, value] of Object.entries(e.target.files)) {
+    for (let [value] of Object.entries(e.target.files)) {
       picturesURL.push(URL.createObjectURL(value));
     }
 

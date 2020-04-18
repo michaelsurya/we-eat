@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_NEW_PROFILE_PICT, GET_USER, FETCHING } from "./type";
+import { GET_ERRORS, GET_NEW_PROFILE_PICT, GET_USER } from "./type";
 
 export const editPhoneNumber = (id, phoneNumber) => async (dispatch) => {
   axios

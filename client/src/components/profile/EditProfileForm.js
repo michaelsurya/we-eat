@@ -11,8 +11,6 @@ import RenderTextArea from "../reduxForm/TextArea";
 import RenderTextField from "../reduxForm/TextField";
 import TagInputField from "../reduxForm/TagInputField";
 
-import PhotoUpload from "../reduxForm/PhotoUpload";
-
 class EditProfileForm extends React.Component {
   onSubmit = (formValues) => {
     this.props.onSubmit(formValues);
@@ -72,7 +70,6 @@ const validate = ({ firstName, surname, sex, phoneNumber, description }) => {
   const errors = {};
 
   const nameRegex = /^[a-z ,.'-]+$/i;
-  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i;
   const numberRegex = /^[0-9]*$/;
 
   // Check if user has entered their first name

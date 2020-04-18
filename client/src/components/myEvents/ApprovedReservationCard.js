@@ -1,12 +1,12 @@
 import React from "react";
-import { Button, Card, Image } from "semantic-ui-react";
+import { Card, Image } from "semantic-ui-react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
 const ApprovedReservationCard = ({
-    user: { _id, firstName, surname, approvedDate, profilePict },
-  }) => {
-return(
+  user: { _id, firstName, surname, approvedDate, profilePict },
+}) => {
+  return (
     <Card>
       <Card.Content>
         <Image
@@ -23,7 +23,7 @@ return(
         )}`}</Card.Meta>
       </Card.Content>
     </Card>
-)
-}
+  );
+};
 
 export default ApprovedReservationCard;

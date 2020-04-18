@@ -156,7 +156,6 @@ class Profile extends React.Component {
 
   render() {
     const {
-      events,
       firstName,
       interests,
       isVerified,
@@ -173,12 +172,6 @@ class Profile extends React.Component {
         <Grid column={9} centered>
           {/* LEFT SIDE */}
           <Grid.Column width={3} textAlign="center">
-            {/* <Image
-              className={styles.image}
-              src="https://react.semantic-ui.com/images/avatar/small/matt.jpg"
-              size="medium"
-              circular
-            /> */}
             {this.renderProfilePict(profilePict)}
             {this.renderVerified(isVerified)}
             <Divider></Divider>
@@ -202,6 +195,7 @@ class Profile extends React.Component {
             {this.renderSexLabel(sex)}
             {this.renderDescription(description)}
             <Header as="h1">Upcoming events</Header>
+            <p>This is not implemented yet</p>
             <Header as="h1">Reviews</Header>
             <ReviewList reviews={reviews}></ReviewList>
           </Grid.Column>
