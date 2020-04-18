@@ -14,9 +14,12 @@ const BookingCard = ({
     if (confirmedCount < limit) {
       if (hasBooked) {
         return (
+          <>
+          <p>You have already made a reservation for this event.</p>
           <Button color="orange" disabled>
-            You have booked this event
+            Reserve
           </Button>
+          </>
         );
       } else {
         return (

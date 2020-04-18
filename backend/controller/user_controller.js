@@ -267,7 +267,7 @@ module.exports = {
                 // Send the email
                 transporter.sendMail(mailOptions, function (err) {
                   if (err) {
-                    return res.status(500).send({ msg: err.message });
+                    return res.status(500).send({ message: err.message });
                   }
                   res
                     .status(200)
