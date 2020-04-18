@@ -3,7 +3,37 @@ import { Button, Card, Header } from "semantic-ui-react";
 
 import styles from "../../assets/css/event.module.css";
 
-const BookingCard = ({ confirmedCount, limit, price, handleClick }) => {
+const BookingCard = ({
+  confirmedCount,
+  handleClick,
+  hasBooked,
+  limit,
+  price
+}) => {
+  const renderButton = () => {
+    if (confirmedCount < limit) {
+      if (hasBooked) {
+        return (
+          <Button color="orange" disabled>
+            You have booked this event
+          </Button>
+        );
+      } else {
+        return (
+          <Button color="orange" onClick={() => handleClick()}>
+            Reserve
+          </Button>
+        );
+      }
+    } else {
+      return (
+        <Button color="orange" disabled>
+          Event Full
+        </Button>
+      );
+    }
+  };
+
   return (
     <Card>
       <Card.Content textAlign="center" header="Event Reservation" />
@@ -21,15 +51,7 @@ const BookingCard = ({ confirmedCount, limit, price, handleClick }) => {
         </p>
       </Card.Content>
       <Card.Content textAlign="center" extra>
-        {confirmedCount < limit ? (
-          <Button color="orange" onClick={() => handleClick()}>
-            Reserve
-          </Button>
-        ) : (
-          <Button color="orange" disabled>
-            Event Full
-          </Button>
-        )}
+        {renderButton()}
       </Card.Content>
     </Card>
   );

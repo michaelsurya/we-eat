@@ -13,6 +13,7 @@ import {
 import { Link, withRouter } from "react-router-dom";
 import moment from "moment";
 import filter from "lodash/filter";
+import some from "lodash/some";
 
 import styles from "../assets/css/event.module.css";
 
@@ -93,7 +94,8 @@ class Event extends React.Component {
     } = this.props.event;
 
     const confirmedCount = filter(reservation, { status: "confirmed" }).length;
-    const pendingCount = filter(reservation, {status: "pending"}).length;
+    const pendingCount = filter(reservation, { status: "pending" }).length;
+    const hasBooked = some(reservation, { user: this.props.auth.user.id });
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
         <Grid centered>
@@ -185,6 +187,7 @@ class Event extends React.Component {
                 <BookingCard
                   price={price}
                   handleClick={this.handleClick}
+                  hasBooked={hasBooked}
                   confirmedCount={confirmedCount}
                   limit={guestRequired}
                 ></BookingCard>

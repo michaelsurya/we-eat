@@ -8,8 +8,9 @@ const ReviewList = ({ reviews }) => {
   let commentList;
 
   if (reviews && !isEmpty(reviews)) {
-    commentList = reviews.map(review => (
+    commentList = reviews.map((review, index) => (
       <ReviewCard
+        key={index}
         user={review.user}
         date={review.date}
         content={review.content}
@@ -18,8 +19,7 @@ const ReviewList = ({ reviews }) => {
     return <Comment.Group size="large">{commentList}</Comment.Group>;
   }
 
-  return (<p>No reviews</p>)
-  
+  return <p>No reviews</p>;
 };
 
 export default ReviewList;
