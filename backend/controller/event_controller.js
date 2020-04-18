@@ -69,6 +69,9 @@ module.exports = {
             path: "reviews.user",
           },
         })
+        .populate({
+          path: "reservation"
+        })
         .then((event) => {
           //If user is not found
           if (!event) {

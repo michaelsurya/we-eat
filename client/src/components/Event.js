@@ -12,6 +12,7 @@ import {
 } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import moment from "moment";
+import filter from "lodash/filter";
 
 import styles from "../assets/css/event.module.css";
 
@@ -29,6 +30,15 @@ class Event extends React.Component {
   componentDidMount() {
     this.props.getEvent(this.props.match.params.id, this.props.history);
   }
+
+  handleClick = () => {
+    this.props.createReservation(
+      this.props.event._id,
+      this.props.event.host._id,
+      this.props.auth.user.id,
+      this.props.history
+    );
+  };
 
   renderPictures = (pictures) => {
     if (pictures) {
@@ -65,15 +75,6 @@ class Event extends React.Component {
     }
   };
 
-  handleClick = () => {
-    this.props.createReservation(
-      this.props.event._id,
-      this.props.event.host._id,
-      this.props.auth.user.id,
-      this.props.history
-    );
-  };
-
   render() {
     const {
       allergen,
@@ -85,8 +86,11 @@ class Event extends React.Component {
       menu,
       pictures,
       price,
+      reservation,
       title,
     } = this.props.event;
+
+    const confirmedCount = filter(reservation, { status: "confirmed" }).length;
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
         <Grid centered>
@@ -169,7 +173,11 @@ class Event extends React.Component {
 
             {/* Right Part */}
             <Grid.Column width={4}>
-              <BookingCard price={price} handleClick={this.handleClick}></BookingCard>
+              <BookingCard
+                price={price}
+                handleClick={this.handleClick}
+                confirmedCount={confirmedCount}
+              ></BookingCard>
             </Grid.Column>
           </Grid.Row>
         </Grid>

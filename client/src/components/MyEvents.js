@@ -28,7 +28,7 @@ class MyEvents extends React.Component {
               key={index}
             ></HorizontalEventCard>
             <Segment>
-              <Header as="h3">Approved reservations</Header>
+              <Header as="h3">Confirmed reservations</Header>
               {this.renderConfirmed(
                 filter(event.reservation, { status: "confirmed" })
               )}

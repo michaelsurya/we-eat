@@ -4,7 +4,7 @@ import { Header, List } from "semantic-ui-react";
 const AllergenList = ({ allergens }) => {
   const list = () => {
     if (allergens) {
-      return allergens.map((allergen) => <List.Item>{allergen}</List.Item>);
+      return allergens.map((allergen, index) => <List.Item key={index}>{allergen}</List.Item>);
     } else {
       return null;
     }
