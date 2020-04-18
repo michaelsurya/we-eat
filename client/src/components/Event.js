@@ -24,6 +24,7 @@ import BookingCard from "./event/BookingCard";
 import Interest from "./profile/Interest";
 import LanguageTag from "./profile/LanguageTag";
 import MenuList from "./event/MenuList";
+import ReservationStatusCard from "./event/ReservationStatusCard";
 import ReviewList from "./review/ReviewList";
 
 class Event extends React.Component {
@@ -92,6 +93,7 @@ class Event extends React.Component {
     } = this.props.event;
 
     const confirmedCount = filter(reservation, { status: "confirmed" }).length;
+    const pendingCount = filter(reservation, {status: "pending"}).length;
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
         <Grid centered>
@@ -174,11 +176,19 @@ class Event extends React.Component {
 
             {/* Right Part */}
             <Grid.Column width={4}>
-              <BookingCard
-                price={price}
-                handleClick={this.handleClick}
-                confirmedCount={confirmedCount}
-              ></BookingCard>
+              {this.props.auth.user.id === (host ? host._id : null) ? (
+                <ReservationStatusCard
+                  confirmedCount={confirmedCount}
+                  pendingCount={pendingCount}
+                ></ReservationStatusCard>
+              ) : (
+                <BookingCard
+                  price={price}
+                  handleClick={this.handleClick}
+                  confirmedCount={confirmedCount}
+                  limit={guestRequired}
+                ></BookingCard>
+              )}
             </Grid.Column>
           </Grid.Row>
         </Grid>

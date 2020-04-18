@@ -3,15 +3,15 @@ import { Button, Card, Header } from "semantic-ui-react";
 
 import styles from "../../assets/css/event.module.css";
 
-const ReservationStatusCard = ({ confirmedCount, price, handleClick }) => {
+const ReservationStatusCard = ({ confirmedCount, pendingCount }) => {
   return (
     <Card>
       <Card.Content textAlign="center" header="Reservation Status" />
       <Card.Content>
         <p>You are the host of this event</p>
         <p>
-          Currently there are <b>{confirmedCount}</b> confirmed reservation(s)
-          for this event.
+          Currently there are <b>{confirmedCount}</b> confirmed and{" "}
+          <b>{pendingCount}</b> pending reservation(s) for this event.
         </p>
         <p>Editing and cancelling your event is not yet implemented</p>
       </Card.Content>
