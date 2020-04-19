@@ -1,11 +1,7 @@
 import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./auth/PrivateRoute";
 
 import CreateEvent from "./CreateEvent";
@@ -13,8 +9,9 @@ import EditProfile from "./profile/EditProfile";
 import Error from "./Error";
 import Event from "./Event";
 import Home from "./Home";
-import Profile from "./Profile";
 import MyEvents from "./MyEvents";
+import Profile from "./Profile";
+import Reservation from "./Reservation";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Verify from "./Verify";
@@ -52,7 +49,7 @@ const DefaultContainer = () => (
       <PrivateRoute
         path="/user/reservations/"
         exact
-        component={MyEvents}
+        component={Reservation}
       ></PrivateRoute>
       <PrivateRoute path="/verify/:id" exact component={Verify}></PrivateRoute>
       <Route component={Error}></Route>

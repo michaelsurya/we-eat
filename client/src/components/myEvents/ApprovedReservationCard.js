@@ -9,11 +9,11 @@ const ApprovedReservationCard = ({
   return (
     <Card>
       <Card.Content>
-        <Image
+        {/* <Image
           floated="left"
           size="tiny"
           src={`http:\\\\localhost:8080\\${profilePict.imageData}`}
-        />
+        /> */}
         <Card.Header
           as={Link}
           to={`/profile/${_id}`}

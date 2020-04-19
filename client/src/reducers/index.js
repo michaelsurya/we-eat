@@ -3,6 +3,7 @@ import { reducer as formReducer } from "redux-form";
 import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import eventReducer from "./eventReducer";
+import reservationReducer from "./reservationReducer";
 import userReducer from "./userReducer";
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   error: errorReducer,
   event: eventReducer,
   form: formReducer,
+  reservation :reservationReducer,
   user: userReducer,
 });
