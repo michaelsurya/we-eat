@@ -15,6 +15,7 @@ module.exports = (app) => {
   app.get("/api/events/:id", EventController.getOnePublic);
 
   app.get("/api/myevents/:id", EventController.getMyEvents);
+  app.get("/api/myreservations/:id", ReservationController.getMyReservations)
 
   app.post("/api/reservations", ReservationController.newReservation);
   app.patch("/api/reservations", ReservationController.editReservation);

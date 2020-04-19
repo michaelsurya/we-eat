@@ -9,6 +9,64 @@ const filter = require("lodash/filter");
 const nodemailer = require("nodemailer");
 
 module.exports = {
+  editReservation(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      event: Joi.objectId().required(),
+      host: Joi.objectId().required(),
+      user: Joi.objectId().required(),
+      status: Joi.string().valid("confirmed", "rejected").required(),
+    });
+
+    const { error, value } = schema.validate(req.body);
+    // Check validation, input sanitation
+    if (error) {
+      res.status(400).json(error.details);
+    } else {
+      Reservation.findOneAndUpdate(
+        { event: value.event, host: value.host, user: value.user },
+        { status: value.status }
+      )
+        .then((result) => res.send(result))
+        .catch(next);
+    }
+  },
+
+  getMyReservations(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      id: Joi.string().required(),
+    });
+
+    const { error, value } = schema.validate(req.params);
+
+    if (error) {
+      return res.status(400).json(error.details);
+    } else {
+      Reservation.find({ user: value.id })
+        .populate({
+          path: "event",
+        })
+        .then((data) =>
+          Promise.all(
+            data.map((d) =>
+              d.status === "confirmed"
+                ? Reservation.populate(d, {
+                    path: "host",
+                    select: "firstName surname phoneNumber email",
+                  })
+                : Reservation.populate(d, {
+                    path: "host",
+                    select: "firstName surname",
+                  })
+            )
+          )
+        )
+        .then((result) => res.send(result))
+        .catch(next);
+    }
+  },
+
   async newReservation(req, res, next) {
     // Validation Schema
     const schema = Joi.object({
@@ -24,7 +82,7 @@ module.exports = {
       res.status(400).json(error.details);
     } else {
       //Initial check
-      if (!await canEventBeBooked(value.event)) {
+      if (!(await canEventBeBooked(value.event))) {
         return res
           .status(400)
           .send({ message: "Reservation could not be completed" });
@@ -88,29 +146,6 @@ module.exports = {
 
           res.status(200).send();
         })
-        .catch(next);
-    }
-  },
-
-  editReservation(req, res, next) {
-    // Validation Schema
-    const schema = Joi.object({
-      event: Joi.objectId().required(),
-      host: Joi.objectId().required(),
-      user: Joi.objectId().required(),
-      status: Joi.string().valid("confirmed", "rejected").required(),
-    });
-
-    const { error, value } = schema.validate(req.body);
-    // Check validation, input sanitation
-    if (error) {
-      res.status(400).json(error.details);
-    } else {
-      Reservation.findOneAndUpdate(
-        { event: value.event, host: value.host, user: value.user },
-        { status: value.status }
-      )
-        .then((result) => res.send(result))
         .catch(next);
     }
   },
