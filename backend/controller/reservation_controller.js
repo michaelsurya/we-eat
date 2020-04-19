@@ -27,7 +27,42 @@ module.exports = {
         { event: value.event, host: value.host, user: value.user },
         { status: value.status }
       )
-        .then((result) => res.send(result))
+        .then((result) =>
+          Reservation.findById(result._id).populate("user").populate("host")
+        )
+        .then((reservation) => {
+          // Prepare nodemailer transporter
+          let transporter = nodemailer.createTransport({
+            service: "Sendgrid",
+            auth: {
+              user: process.env.SENDGRID_USERNAME,
+              pass: process.env.SENDGRID_PASSWORD,
+            },
+          });
+
+          // Construct the email
+          let guestMail = {
+            from: "no-reply@weeat.com",
+            to: reservation.user.email,
+            subject: `Reservation: ${reservation._id}`,
+          };
+
+          if ((reservation.status = "rejected")) {
+            guestMail.text = `Hello, ${reservation.user.firstName}\n\nUnfortunately, your reservation request has been rejected by the host.\n\nRegards,\nWeEAT`;
+          }
+          if ((reservation.status = "confirmed")) {
+            guestMail.text = `Hello, ${reservation.user.firstName}\n\Congratulation, your reservation request has been confirmed by the host.\nYou can check the host information in "My Reservations" page.\n\nRegards,\nWeEAT`;
+          }
+
+          // Send the emails
+          transporter.sendMail(guestMail, (err) => {
+            if (err) {
+              return res.status(500).send({ message: err.message });
+            }
+          });
+
+          return res.status(200).send();
+        })
         .catch(next);
     }
   },
@@ -144,7 +179,7 @@ module.exports = {
             }
           });
 
-          res.status(200).send();
+          return res.status(200).send();
         })
         .catch(next);
     }
@@ -157,7 +192,7 @@ function canEventBeBooked(eventID) {
       .populate("reservation")
       .then((result) => {
         if (
-          result.guestRequired <=
+          result.guestRequired >=
           filter(result.reservation, { status: "confirmed" }).length + 1
         ) {
           return resolve(true);
