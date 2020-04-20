@@ -6,7 +6,7 @@ import { Container, Header, Segment, Card } from "semantic-ui-react";
 
 import filter from "lodash/filter";
 
-import styles from "../assets/css/reservation.module.css";
+import styles from "../assets/css/myEvents.module.css";
 
 import ActionCard from "./myEvents/ActionCard";
 import ApprovedReservationCard from "./myEvents/ApprovedReservationCard";
@@ -26,14 +26,21 @@ class MyEvents extends React.Component {
               event={event}
               key={index}
             ></HorizontalEventCard>
-            <Segment>
+            <Segment className={styles.scrollable}>
               <Header as="h3">Confirmed reservations</Header>
               {this.renderConfirmed(
                 filter(event.reservation, { status: "confirmed" })
               )}
               <Header as="h3">Pending reservations</Header>
-              {this.renderActions(
-                filter(event.reservation, { status: "pending" })
+              {filter(event.reservation, { status: "confirmed" }).length <
+              event.guestRequired ? (
+                this.renderActions(
+                  filter(event.reservation, { status: "pending" })
+                )
+              ) : (
+                <p>
+                  Event full
+                </p>
               )}
             </Segment>
           </>
@@ -84,7 +91,7 @@ class MyEvents extends React.Component {
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
         <Header as="h1" textAlign="center">
-          My events
+          My Events
         </Header>
         <Segment.Group horizontal raised>
           {this.renderEvents()}

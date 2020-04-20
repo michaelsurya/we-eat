@@ -12,7 +12,7 @@ const PhotosUpload = ({ input, meta, label }) => {
     input.onChange(e.target.files);
 
     let picturesURL = [];
-    for (let [value] of Object.entries(e.target.files)) {
+    for (let [key, value] of Object.entries(e.target.files)) {
       picturesURL.push(URL.createObjectURL(value));
     }
 

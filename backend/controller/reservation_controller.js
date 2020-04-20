@@ -51,7 +51,7 @@ module.exports = {
             guestMail.text = `Hello, ${reservation.user.firstName}\n\nUnfortunately, your reservation request has been rejected by the host.\n\nRegards,\nWeEAT`;
           }
           if ((reservation.status = "confirmed")) {
-            guestMail.text = `Hello, ${reservation.user.firstName}\n\Congratulation, your reservation request has been confirmed by the host.\nYou can check the host information in "My Reservations" page.\n\nRegards,\nWeEAT`;
+            guestMail.text = `Hello, ${reservation.user.firstName}\n\\nCongratulation, your reservation request has been confirmed by the host.\nYou can check the host information in "My Reservations" page.\n\nRegards,\nWeEAT`;
           }
 
           // Send the emails

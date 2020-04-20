@@ -1,0 +1,15 @@
+.top_margin {
+    margin-top: 2rem !important;
+}
+.carousel {
+    display: block !important;
+}
+
+.container {
+    min-height: 80vh;
+}
+
+.scrollable {
+    overflow-y: scroll;
+    height: 40vh !important;
+}

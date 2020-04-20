@@ -13,8 +13,6 @@ const ReservationCard = ({
     title,
     location,
     date,
-    guestRequired,
-    description,
   },
   reservation: {
     _id: reservationID,
@@ -45,6 +43,9 @@ const ReservationCard = ({
             <Icon color="green" name="check"></Icon>
           </span>
           <Header.Subheader>
+            ReservationID: {reservationID}
+          </Header.Subheader>
+          <Header.Subheader>
             Reserved on: {moment(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
           <Header.Subheader>
@@ -62,6 +63,9 @@ const ReservationCard = ({
             <Icon name="clock outline"></Icon>
           </span>
           <Header.Subheader>
+            ReservationID: {reservationID}
+          </Header.Subheader>
+          <Header.Subheader>
             Reserved on: {moment(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
         </Header>
@@ -74,6 +78,9 @@ const ReservationCard = ({
           <span>
             <Icon color="red" name="close"></Icon>
           </span>
+          <Header.Subheader>
+            ReservationID: {reservationID}
+          </Header.Subheader>
           <Header.Subheader>
             Reserved on: {moment(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
@@ -121,7 +128,7 @@ const ReservationCard = ({
                   </Header.Subheader>
                   <Header.Subheader>
                     <Icon name="calendar alternate outline" />
-                    {moment(date).format("dddd, DD MMMM  YYYY")}
+                    {moment(date).format("dddd, DD MMMM YYYY")}
                   </Header.Subheader>
                   <Header.Subheader>
                     <Icon name="clock outline" />
@@ -134,7 +141,7 @@ const ReservationCard = ({
           </Item>
         </Item.Group>
       </Grid.Column>
-      <Grid.Column width={4}>{renderStatus()}</Grid.Column>
+      <Grid.Column width={5}>{renderStatus()}</Grid.Column>
     </Grid>
   );
 };

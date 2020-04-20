@@ -14,7 +14,11 @@ const ActionCard = ({
         <Image
           floated="left"
           size="tiny"
-          src={`http:\\\\localhost:8080\\${profilePict.imageData}`}
+          src={
+            profilePict
+              ? `http:\\\\localhost:8080\\${profilePict.imageData}`
+              : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+          }
         />
         <Card.Header
           as={Link}
