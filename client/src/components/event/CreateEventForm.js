@@ -5,6 +5,7 @@ import { Button, Form, Segment } from "semantic-ui-react";
 import AllergenOptions from "../reduxForm/AllergenOptions";
 import CuisineOptions from "../reduxForm/CuisineOptions";
 import DateInput from "../reduxForm/DateInput";
+import Map from "../reduxForm/Map";
 import MenuInput from "../reduxForm/MenuInput";
 import MultipleSelectionDropdown from "../reduxForm/MultipleSelectionDropdown";
 import PhotosUpload from "../reduxForm/PhotosUpload";
@@ -14,6 +15,14 @@ import TextField from "../reduxForm/TextField";
 import TimeInput from "../reduxForm/TimeInput";
 
 class CreateEventForm extends React.Component {
+  state = { lat: null, lng: null };
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      this.setState({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+    });
+  }
+
   onSubmit = (formValues) => {
     this.props.onSubmit(formValues);
   };
@@ -35,7 +44,12 @@ class CreateEventForm extends React.Component {
           />
           <Field
             name="location"
-            component={TextField}
+            component={Map}
+            center={{
+              lat: this.state.lat ? this.state.lat : 54.966667,
+              lng: this.state.lng ? this.state.lng : -1.6,
+            }}
+            height="300px"
             label="Location*"
             placeholder="e.g ..."
           />
