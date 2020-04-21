@@ -81,6 +81,8 @@ class Event extends React.Component {
   render() {
     const {
       allergen,
+      city,
+      country,
       date,
       description,
       guestRequired,
@@ -89,6 +91,7 @@ class Event extends React.Component {
       menu,
       pictures,
       price,
+      state,
       reservation,
       title,
     } = this.props.event;
@@ -131,7 +134,7 @@ class Event extends React.Component {
                   {title}
                   <Header.Subheader>
                     <Icon name="map marker alternate" />
-                    {location}
+                    {`${city}, ${state}, ${country}`}
                   </Header.Subheader>
                   <Header.Subheader>
                     <Icon name="calendar alternate outline" />

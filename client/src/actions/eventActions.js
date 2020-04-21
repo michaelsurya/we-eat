@@ -15,14 +15,21 @@ export const createEvent = (id, formData, history) => (dispatch) => {
   // Populate the form data based on the redux form value
   for (let [key, value] of Object.entries(eventData)) {
     // Convert array to proper form data
-    if (Array.isArray(value)) {
+    if (
+      (Array.isArray(value) || typeof value === "object") &&
+      key !== "pictures"
+    ) {
       // value.forEach((item, index) => {
       //   fd.append(`${key}[${index}]`, item);
       // });
       fd.append(key, JSON.stringify(value));
     }
     // Convert object (uploaded files) to proper form data
-    else if (typeof value === "object" && value !== null) {
+    else if (
+      key === "pictures" &&
+      typeof value === "object" &&
+      value !== null
+    ) {
       for (let [index, value] of Object.entries(value)) {
         fd.append(`${key}[${index}]`, value);
       }

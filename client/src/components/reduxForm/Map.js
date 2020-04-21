@@ -126,7 +126,7 @@ class Map extends React.Component {
     for (let i = 0; i < addressArray.length; i++) {
       if (
         addressArray[i].types[0] &&
-        "administrative_area_level_2" === addressArray[i].types[0]
+        "postal_town" === addressArray[i].types[0]
       ) {
         city = addressArray[i].long_name;
         return city;
@@ -146,7 +146,7 @@ class Map extends React.Component {
       for (let i = 0; i < addressArray.length; i++) {
         if (
           addressArray[i].types[0] &&
-          "administrative_area_level_1" === addressArray[i].types[0]
+          "administrative_area_level_2" === addressArray[i].types[0]
         ) {
           state = addressArray[i].long_name;
           return state;
@@ -211,6 +211,7 @@ class Map extends React.Component {
    */
   onPlaceChanged = () => {
     const place = this.autocomplete.getPlace();
+    console.log(place)
 
     const addressArray = place.address_components,
       address = this.getAddress(addressArray),
@@ -250,7 +251,6 @@ class Map extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <Segment>
         <Form.Field>

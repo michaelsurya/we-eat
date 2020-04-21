@@ -7,14 +7,17 @@ const mongoose = require("mongoose");
 module.exports = {
   newEvent(req, res, next) {
     //Parse
-    if (req.body.menu) req.body.menu = JSON.parse(req.body.menu);
-    if (req.body.cuisine) req.body.cuisine = JSON.parse(req.body.cuisine);
     if (req.body.allergen) req.body.allergen = JSON.parse(req.body.allergen);
+    if (req.body.cuisine) req.body.cuisine = JSON.parse(req.body.cuisine);
+    if (req.body.location) req.body.location = JSON.parse(req.body.location);
+    if (req.body.menu) req.body.menu = JSON.parse(req.body.menu);
+
+    console.log(req.body);
 
     // Validation Schema
     const schema = Joi.object({
       title: Joi.string().required(),
-      location: Joi.string().required(),
+      location: Joi.any().required(),
       date: Joi.date().format("DD/MM/YYYY HH:mm").required(),
       duration: Joi.string().required(),
       guestRequired: Joi.number().required(),
@@ -38,6 +41,15 @@ module.exports = {
       value.pictures = req.files.map((file) => {
         return { imageName: file.filename, imageData: file.path };
       });
+      value.address = value.location.address;
+      value.city = value.location.city;
+      value.state = value.location.state;
+      value.postcode = value.location.postcode;
+      value.country = value.location.country;
+      value.location = {
+        type: "Point",
+        coordinates: [value.location.coords.lng, value.location.coords.lat],
+      };
 
       const newEvent = new Event(value);
       newEvent
@@ -70,7 +82,7 @@ module.exports = {
           },
         })
         .populate({
-          path: "reservation"
+          path: "reservation",
         })
         .then((event) => {
           //If user is not found
