@@ -21,11 +21,12 @@ class MyEvents extends React.Component {
     if (Array.isArray(this.props.events) && this.props.events.length > 0) {
       return this.props.events.map((event, index) => {
         return (
-          <>
+          <Segment.Group horizontal raised>
             <HorizontalEventCard
               event={event}
               key={index}
             ></HorizontalEventCard>
+
             <Segment className={styles.scrollable}>
               <Header as="h3">Confirmed reservations</Header>
               {this.renderConfirmed(
@@ -38,12 +39,10 @@ class MyEvents extends React.Component {
                   filter(event.reservation, { status: "pending" })
                 )
               ) : (
-                <p>
-                  Event full
-                </p>
+                <p>Event full</p>
               )}
             </Segment>
-          </>
+          </Segment.Group>
         );
       });
     } else {
@@ -93,9 +92,7 @@ class MyEvents extends React.Component {
         <Header as="h1" textAlign="center">
           My Events
         </Header>
-        <Segment.Group horizontal raised>
-          {this.renderEvents()}
-        </Segment.Group>
+        {this.renderEvents()}
       </Container>
     );
   }

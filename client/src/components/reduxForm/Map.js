@@ -211,7 +211,6 @@ class Map extends React.Component {
    */
   onPlaceChanged = () => {
     const place = this.autocomplete.getPlace();
-    console.log(place)
 
     const addressArray = place.address_components,
       address = this.getAddress(addressArray),
