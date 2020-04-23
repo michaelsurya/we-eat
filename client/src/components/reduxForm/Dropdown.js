@@ -4,7 +4,7 @@ import styles from "../../assets/css/form.module.css";
 
 const Dropdown = (props) => {
   const {
-    input: { onChange },
+    input: { value, onChange },
     label,
     meta,
     options,
@@ -19,6 +19,7 @@ const Dropdown = (props) => {
         fluid
         selection
         options={options}
+        value={value}
         onChange={(e, { value }) => onChange(value)}
       ></DD>
     </Form.Field>
