@@ -2,7 +2,8 @@ const Event = require("../models/event");
 
 const Joi = require("@hapi/joi").extend(require("@hapi/joi-date"));
 Joi.objectId = require("joi-objectid")(Joi);
-const mongoose = require("mongoose");
+
+const moment = require("moment");
 
 module.exports = {
   newEvent(req, res, next) {
@@ -122,6 +123,65 @@ module.exports = {
         .catch(next);
     }
   },
+
+  /*
+   * Function to search for events
+   * @path /myevents/:id
+   */
+  search(req, res, next) {
+    console.log(req.query)
+    Event.find(buildQuery(req.query))
+    .then(result => res.send(result))
+    .catch(next)
+  },
+};
+
+const buildQuery = (criteria) => {
+  const query = {};
+
+  // When max guest is specified
+  if (criteria.guestRequired) {
+    query.guestRequired = {
+      $lte: criteria.guestRequired,
+    };
+  }
+
+  // Exclude event with specified allergens
+  if (criteria.allergen) {
+    query.allergen = {
+      $nin: criteria.allergen,
+    };
+  }
+
+  // Event must have the specified cuisine
+  if (criteria.cuisine) {
+    query.cuisine = {
+      $in: criteria.cuisine,
+    };
+  }
+
+  // Price range
+  if(criteria.price) {
+    query.price = {
+      $gte: criteria.price[0],
+      $lte: criteria.price[1]
+    }
+  }
+
+  if (criteria.date) {
+    query.date = {
+      $gte: moment.utc(criteria.date, "DD/MM/YYYY").startOf("day").toDate(),
+      $lte: moment.utc(criteria.date, "DD/MM/YYYY").endOf("day").toDate(),
+    };
+  } else {
+    query.date = {
+      $gte: moment().utc().startOf("day").toDate(),
+    }
+  }
+
+  console.log(query)
+
+  return query;
 };
 
 // const session  = await mongoose.startSession();

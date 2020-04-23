@@ -12,6 +12,7 @@ module.exports = (app) => {
   });
 
   app.post("/api/events", upload.any(), EventController.newEvent);
+  app.get("/api/events/", EventController.search);
   app.get("/api/events/:id", EventController.getOnePublic);
 
   app.get("/api/myevents/:id", EventController.getMyEvents);
