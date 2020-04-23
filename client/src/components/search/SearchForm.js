@@ -29,14 +29,14 @@ class SearchForm extends React.Component {
             label="Guests"
             type="number"
           />
-          <Button
-            compact
-            color="orange"
-            onClick={this.props.handleSubmit(this.onSubmit)}
-          >
-            Search
-          </Button>
         </Form.Group>
+        <Button
+          color="orange"
+          fluid
+          onClick={this.props.handleSubmit(this.onSubmit)}
+        >
+          Search
+        </Button>
       </Form>
     );
   }

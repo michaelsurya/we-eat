@@ -1,39 +1,71 @@
 import React from "react";
 import styles from "../../assets/css/home.module.css";
-import { Card, Icon, Image} from "semantic-ui-react";
+import { Card, Header, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
-const EventCard = (title, location, date, time, rating, desc, price, host) => {
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+
+const EventCard = ({ event }) => {
+  const {
+    _id,
+    title,
+    city,
+    country,
+    date,
+    description,
+    price,
+    host,
+    guestRequired,
+    pictures,
+  } = event;
+  const renderPictures = (pictures) => {
+    if (pictures) {
+      return pictures.map((picture, index) => (
+        <img
+          alt={pictures.imageName}
+          src={`http:\\\\localhost:8080\\${picture.imageData}`}
+          key={index}
+        ></img>
+      ));
+    }
+  };
   return (
-    <Card className={styles.event_card}>
-      <Image
-        src="https://react.semantic-ui.com/images/wireframe/image.png"
-        wrapped
-        ui={false}
-        size="small"
-      />
+    <Card raised>
+      <Carousel infiniteLoop={true} showThumbs={false} dynamicHeight={true}>
+        {renderPictures(pictures)}
+      </Carousel>
       <Card.Content>
-        <p>
-          <Icon name="map marker alternate"></Icon>Newcastle upon Tyne
-        </p>
-        <Card.Header>Roast Chicken Dinner</Card.Header>
-        <p>
-          <Icon name="calendar outline"></Icon>22 January 2020
-        </p>
-        <p>
-          <Icon name="clock outline"></Icon>1pm - 2.30pm
-        </p>
-        <p>
-          A classic roast chicken based on my mum recipe. Rest assured, you
-          would definitely love it!
-        </p>
-        <Card.Header textAlign="right">£ 12.95</Card.Header>
-        <p className={styles.rating}>
-          <Icon name="star" color="orange"></Icon>4.5/5 (139)
-        </p>
+        <Link to={`/event/${_id}`}>
+          <Header as="h3">
+            {title}
+            <Header.Subheader>
+              <Icon name="map marker alternate" />
+              {`${city}, ${country}`}
+            </Header.Subheader>
+            <Header.Subheader>
+              <Icon name="calendar alternate outline" />
+              {moment(date).format("dddd, DD MMMM  YYYY")}
+            </Header.Subheader>
+            <Header.Subheader>
+              <Icon name="clock outline" />
+              {moment(date).format("hh:mm")}
+            </Header.Subheader>
+            <Header.Subheader>
+              <Icon name="male" />
+              {guestRequired}
+            </Header.Subheader>
+          </Header>
+        </Link>
+        <p style={{overflow: "hidden", textOverflow: "ellipsis"}}>{description}</p>
+        <Header className={styles.top_margin_zero}>{`£ ${parseFloat(
+          price
+        ).toFixed(2)}`}</Header>
       </Card.Content>
       <Card.Content extra>
         <Card.Meta>Host</Card.Meta>
-        <Card.Header>Michael Surya</Card.Header>
+        <Card.Header>{host ? host.firstName : "Host"}</Card.Header>
       </Card.Content>
     </Card>
   );

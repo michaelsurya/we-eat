@@ -3,6 +3,7 @@ export const CREATE_RESERVATION = "CREATE_RESERVATION";
 export const FETCHING = "FETCHING";
 export const GET_ERRORS = "GET_ERRORS";
 export const GET_EVENT = "GET_EVENT";
+export const GET_EVENTS = "GET_EVENTS";
 export const GET_NEW_PROFILE_PICT = "GET_NEW_PROFILE_PICT";
 export const GET_RESERVATION = "GET_RESERVATION"
 export const GET_USER = "GET_USER";

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_EVENT } from "./type";
+import { GET_ERRORS, GET_EVENT, GET_EVENTS } from "./type";
 
 export const createEvent = (id, formData, history) => (dispatch) => {
   //Prepare event data
@@ -83,3 +83,20 @@ export const getMyEvents = (id) => (dispatch) => {
       });
     });
 };
+
+export const searchEvent = (searchQuery) => dispatch => {
+  axios
+    .get(`/api/events/${searchQuery}`)
+    .then((res) => {
+      dispatch({
+        type: GET_EVENTS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+}

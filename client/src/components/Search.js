@@ -1,24 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Container, Divider } from "semantic-ui-react";
+import { searchEvent } from "../actions/eventActions";
+import { Container, Divider, Header } from "semantic-ui-react";
 import qs from "query-string";
 
 import styles from "../assets/css/search.module.css";
 
 import AdvancedSearchForm from "./search/AdvancedSearchForm";
+import EventGrid from "./home/EventGrid";
 
 class Search extends React.Component {
   state = { search: {} };
 
   componentDidMount() {
     this.setState({ search: this.parseURL() });
+    this.props.searchEvent(this.props.location.search);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.location.search !== this.props.location.search) {
-      this.setState({
-        search: this.parseURL(),
-      });
+      this.props.searchEvent(this.props.location.search);
     }
   }
 
@@ -37,7 +38,6 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Container className={`${styles.container}`}>
         <AdvancedSearchForm
@@ -46,6 +46,8 @@ class Search extends React.Component {
           enableReinitialize="true"
         ></AdvancedSearchForm>
         <Divider></Divider>
+        <Header>Result(s)</Header>
+        <EventGrid events={this.props.event}></EventGrid>
       </Container>
     );
   }
@@ -53,6 +55,7 @@ class Search extends React.Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  event: state.event,
 });
 
-export default connect(mapStateToProps)(Search);
+export default connect(mapStateToProps, { searchEvent })(Search);

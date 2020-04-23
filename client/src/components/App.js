@@ -3,6 +3,7 @@ import Nav from "./Nav";
 import Footer from "./Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./auth/PrivateRoute";
+import ScrollToTop from "./util/ScrollToTop";
 
 import CreateEvent from "./CreateEvent";
 import EditProfile from "./profile/EditProfile";
@@ -20,6 +21,7 @@ import Verify from "./Verify";
 const App = () => {
   return (
     <Router>
+      <ScrollToTop/>
       <Switch>
         <Route exact path="/login" component={SignIn} />
         <Route exact path="/register" component={SignUp} />

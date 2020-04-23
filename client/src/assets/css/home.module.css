@@ -20,16 +20,16 @@
     
 }
 
+.top_margin_zero {
+    margin-top: 0px !important;
+  }
+
 .explore_container {
     margin-top: 3rem !important;
 }
 
 .show_more {
     margin-top: 1rem !important;
-}
-
-.event_card {
-    margin: auto !important;
 }
 
 .rating {

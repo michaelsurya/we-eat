@@ -1,34 +1,19 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Card } from "semantic-ui-react";
 import EventCard from "./EventCard";
 
-const EventGrid = () => {
-  return (
-      <Grid columns={3}>
-        <Grid.Row>
-          <Grid.Column>
-            <EventCard></EventCard>
-          </Grid.Column>
-          <Grid.Column>
-            <EventCard></EventCard>
-          </Grid.Column>
-          <Grid.Column>
-            <EventCard></EventCard>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <EventCard></EventCard>
-          </Grid.Column>
-          <Grid.Column>
-            <EventCard></EventCard>
-          </Grid.Column>
-          <Grid.Column>
-            <EventCard></EventCard>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-  );
+const EventGrid = ({ events }) => {
+  const render = () => {
+    if (Array.isArray(events)) {
+      return events.map((event, index) => {
+        return <EventCard key={index} event={event}></EventCard>;
+      });
+    } else {
+      return <p>No events found</p>;
+    }
+  };
+
+  return <Card.Group itemsPerRow={3}>{render()}</Card.Group>;
 };
 
 export default EventGrid;
