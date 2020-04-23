@@ -5,3 +5,7 @@
 .error {
     color: #b46463;
 }
+
+.float_right {
+    float: right !important;
+}

@@ -8,6 +8,7 @@ const DateTimeInput = (props) => {
     input: { value, onChange },
     label: label,
     placeholder: placeholder,
+    width,
   } = props;
 
   return (

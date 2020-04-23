@@ -14,7 +14,6 @@ const PrinceInput = ({ input, meta, label }) => {
         defaultValue={0}
         fixedDecimalScale={true}
         onValueChange={(val) => input.onChange(val.value)}
-        onFocus={() => console.log("focused")}
         thousandSeparator={true}
         prefix={"£"}
       ></NumberFormat>

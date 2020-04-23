@@ -12,6 +12,7 @@ import Home from "./Home";
 import MyEvents from "./MyEvents";
 import Profile from "./Profile";
 import Reservation from "./Reservation";
+import Search from "./Search";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Verify from "./Verify";
@@ -41,6 +42,7 @@ const DefaultContainer = () => (
         exact
         component={EditProfile}
       ></PrivateRoute>
+      <Route path="/search/" component={Search}></Route>
       <PrivateRoute
         path="/user/events/"
         exact
