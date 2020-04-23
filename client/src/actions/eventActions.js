@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import { GET_ERRORS, GET_EVENT, GET_EVENTS } from "./type";
 
 export const createEvent = (id, formData, history) => (dispatch) => {
@@ -7,8 +8,11 @@ export const createEvent = (id, formData, history) => (dispatch) => {
 
   // Set date to correct format
   eventData.date = `${formData.date} ${formData.time}`;
+  eventData.time = moment(eventData.time, "HH:mm").diff(
+    moment().startOf("day"),
+    "seconds"
+  );
   eventData.host = id;
-  delete eventData.time;
 
   // Initialise the form data
   let fd = new FormData();
@@ -84,7 +88,7 @@ export const getMyEvents = (id) => (dispatch) => {
     });
 };
 
-export const searchEvent = (searchQuery) => dispatch => {
+export const searchEvent = (searchQuery) => (dispatch) => {
   axios
     .get(`/api/events/${searchQuery}`)
     .then((res) => {
@@ -99,4 +103,4 @@ export const searchEvent = (searchQuery) => dispatch => {
         payload: err.response.data,
       });
     });
-}
+};

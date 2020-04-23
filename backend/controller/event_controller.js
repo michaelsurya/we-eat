@@ -20,6 +20,7 @@ module.exports = {
       title: Joi.string().required(),
       location: Joi.any().required(),
       date: Joi.date().format("DD/MM/YYYY HH:mm").required(),
+      time: Joi.number().required(),
       duration: Joi.string().required(),
       guestRequired: Joi.number().required(),
       price: Joi.number().required(),
@@ -38,7 +39,7 @@ module.exports = {
     if (error) {
       res.status(400).json(error.details);
     } else {
-      // sonstruct the pictures
+      // Construct the pictures
       value.pictures = req.files.map((file) => {
         return { imageName: file.filename, imageData: file.path };
       });
@@ -129,10 +130,10 @@ module.exports = {
    * @path /myevents/:id
    */
   search(req, res, next) {
-    console.log(req.query)
+    console.log(req.query);
     Event.find(buildQuery(req.query))
-    .then(result => res.send(result))
-    .catch(next)
+      .then((result) => res.send(result))
+      .catch(next);
   },
 };
 
@@ -161,25 +162,53 @@ const buildQuery = (criteria) => {
   }
 
   // Price range
-  if(criteria.price) {
+  if (criteria.price) {
     query.price = {
       $gte: criteria.price[0],
-      $lte: criteria.price[1]
-    }
-  }
-
-  if (criteria.date) {
-    query.date = {
-      $gte: moment.utc(criteria.date, "DD/MM/YYYY").startOf("day").toDate(),
-      $lte: moment.utc(criteria.date, "DD/MM/YYYY").endOf("day").toDate(),
+      $lte: criteria.price[1],
     };
-  } else {
-    query.date = {
-      $gte: moment().utc().startOf("day").toDate(),
+  }
+
+  // Date
+  if (criteria.date) {
+    // The user specified a time frame
+    if (criteria.time) {
+      let start = `${criteria.date} ${criteria.time[0]}`;
+      let end = `${criteria.date} ${criteria.time[1]}`;
+      query.date = {
+        $gte: moment.utc(start, "DD/MM/YYYY HH:mm").toDate(),
+        $lte: moment.utc(end, "DD/MM/YYYY HH:mm").toDate(),
+      };
+    }
+    //No specified time frame
+    else {
+      query.date = {
+        $gte: moment.utc(criteria.date, "DD/MM/YYYY").startOf("day").toDate(),
+        $lte: moment.utc(criteria.date, "DD/MM/YYYY").endOf("day").toDate(),
+      };
+    }
+  }
+  // No specified date
+  else {
+    // No specified date but specified time frame
+    if (criteria.time) {
+      let sotd = moment().startOf("day");
+      let start = moment(criteria.time[0], "HH:mm").diff(sotd, "seconds");
+      let end = moment(criteria.time[1], "HH:mm").diff(sotd, "seconds");
+      query.time = {
+        $gte: start,
+        $lt: end
+      };
+    }
+    // Default
+    else {
+      query.date = {
+        $gte: moment.utc().startOf("day").toDate(),
+      };
     }
   }
 
-  console.log(query)
+  console.log(query);
 
   return query;
 };

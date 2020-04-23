@@ -14,9 +14,10 @@ import Slider from "../reduxForm/Slider";
 import TextField from "../reduxForm/TextField";
 
 const TIME_OPTIONS = [
-  { key: "6AM-12PM", text: "6AM-12PM", value: "06.00-12.00" },
-  { key: "12PM-5PM", text: "12PM-5PM", value: "12.00-17.00" },
-  { key: "5PM-11PM", text: "5PM-11PM", value: "17.00-23.00" },
+  { key: "None", text: "None", value: null },
+  { key: "6AM-12PM", text: "6AM-12PM", value: ["06:00", "12:00"] },
+  { key: "12PM-5PM", text: "12PM-5PM", value: ["12:00", "17:00"] },
+  { key: "5PM-11PM", text: "5PM-11PM", value: ["17:00", "23:00"] },
 ];
 
 class AdvancedSearchForm extends React.Component {
