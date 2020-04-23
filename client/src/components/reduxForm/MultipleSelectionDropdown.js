@@ -21,7 +21,7 @@ const MultipleSelectionDropdown = (props) => {
         selection
         search
         options={options}
-        defaultValue={value}
+        value={value}
         onChange={(e, { value }) => onChange(value)}
       ></Dropdown>
     </Form.Field>
