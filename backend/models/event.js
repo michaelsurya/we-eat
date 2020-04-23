@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ImageSchema = require("./image");
 const MenuSchema = require("./menu");
-const PointSchema = require("./pointSchema")
+const PointSchema = require("./pointSchema");
 
 const CUISINES = [
   "African",
@@ -46,13 +46,14 @@ const ALLERGENS = [
 
 const EventSchema = new Schema({
   title: { type: String, required: true },
-  address: {type: String, required: true, select:false},
-  city: {type: String, required: true},
-  state: {type: String, required: true},
-  country: {type: String, required: true},
-  postcode: {type: String, required: true, select: false},
-  location: { type: PointSchema, required: true, select:false },
+  address: { type: String, required: true, select: false },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  country: { type: String, required: true },
+  postcode: { type: String, required: true, select: false },
+  location: { type: PointSchema, required: true, select: false },
   date: { type: Date, required: true },
+  time: { type: Number, required: true, min: 0, max: 86400 },
   duration: { type: String },
   guestRequired: { type: Number, required: true },
   price: { type: Number, required: true },
@@ -73,8 +74,6 @@ const EventSchema = new Schema({
     { type: Schema.Types.ObjectId, required: true, ref: "reservation" },
   ],
 });
-
-
 
 const Event = mongoose.model("event", EventSchema);
 
