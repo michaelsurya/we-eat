@@ -139,14 +139,18 @@ module.exports = {
       })
       .sort({ date: 1, time: 1, price: 1 });
 
-      if(req.query.limit){
-        operation = operation.limit(parseInt(req.query.limit))
-      }
+    if (req.query.limit) {
+      operation = operation.limit(parseInt(req.query.limit));
+    }
 
-      operation
+    operation
       .then((result) => {
         if (req.query.language) {
-          return filter(result, { host: { languages: req.query.language } });
+          return filter(result, (event) =>
+            event.host.languages.some((language) =>
+              req.query.language.includes(language)
+            )
+          );
         } else {
           return result;
         }
