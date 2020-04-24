@@ -16,13 +16,11 @@ module.exports = {
     if (req.body.location) req.body.location = JSON.parse(req.body.location);
     if (req.body.menu) req.body.menu = JSON.parse(req.body.menu);
 
-    console.log(req.body);
-
     // Validation Schema
     const schema = Joi.object({
       title: Joi.string().required(),
       location: Joi.any().required(),
-      date: Joi.date().format("DD/MM/YYYY HH:mm").required(),
+      date: Joi.date().format("DD/MM/YYYY HH:mm").utc().required(),
       time: Joi.number().required(),
       duration: Joi.string().required(),
       guestRequired: Joi.number().required(),
@@ -46,6 +44,8 @@ module.exports = {
       value.pictures = req.files.map((file) => {
         return { imageName: file.filename, imageData: file.path };
       });
+      // Set date to be timezone agnostic
+      value.date = moment.utc(value.date, "DD/MM/YYYY HH:mm")
       value.address = value.location.address;
       value.city = value.location.city;
       value.state = value.location.state;
@@ -141,7 +141,7 @@ module.exports = {
       .sort({ date: 1, time: 1, price: 1 })
       .then((result) => {
         if (req.query.language) {
-          return filter(result, { host: { languages: req.query.language }});
+          return filter(result, { host: { languages: req.query.language } });
         } else {
           return result;
         }
@@ -222,23 +222,20 @@ const buildQuery = (criteria) => {
     }
   }
 
-  // //Host
-  // if (criteria.language) {
-  //   await User.find({ languages: { $in: criteria.language } })
-  //     .select("_id")
-  //     .then((results) => {
-  //       let arr = results.map((result) => result._id);
-  //       query.host = {
-  //         $in: arr,
-  //       };
-  //     });
-  // }
-
-  console.log(query);
+  if (criteria.location) {
+    query.location = {
+      $nearSphere: {
+        $geometry: {
+          type: "Point",
+          coordinates: [criteria.location[1], criteria.location[0]],
+        },
+        $maxDistance: 20000, //20km
+      },
+    };
+  }
 
   return query;
 };
-
 
 // const session  = await mongoose.startSession();
 

@@ -8,6 +8,7 @@ import AllergenOptions from "../reduxForm/AllergenOptions";
 import CuisineOptions from "../reduxForm/CuisineOptions";
 import DateInput from "../reduxForm/DateInput";
 import Dropdown from "../reduxForm/Dropdown";
+import GooglePlacesInput from "../reduxForm/GooglePlacesInput";
 import LanguageOptions from "../reduxForm/LanguageOptions";
 import MultipleSelectionDropdown from "../reduxForm/MultipleSelectionDropdown";
 import Slider from "../reduxForm/Slider";
@@ -29,7 +30,7 @@ class AdvancedSearchForm extends React.Component {
     return (
       <Form className={`${styles.top_margin}`}>
         <Form.Group>
-          <Field name="location" component={TextField} label="Location" />
+          <Field name="location" component={GooglePlacesInput} label="Location" />
           <Field
             name="date"
             component={DateInput}

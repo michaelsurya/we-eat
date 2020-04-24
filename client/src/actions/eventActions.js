@@ -8,8 +8,8 @@ export const createEvent = (id, formData, history) => (dispatch) => {
 
   // Set date to correct format
   eventData.date = `${formData.date} ${formData.time}`;
-  eventData.time = moment(eventData.time, "HH:mm").diff(
-    moment().startOf("day"),
+  eventData.time = moment.utc(formData.time, "HH:mm").diff(
+    moment.utc().startOf("day"),
     "seconds"
   );
   eventData.host = id;
