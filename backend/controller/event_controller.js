@@ -132,6 +132,8 @@ module.exports = {
   search(req, res, next) {
     console.log(req.query);
     Event.find(buildQuery(req.query))
+      .populate("host")
+      .sort({date: 1, time: 1, price: 1})
       .then((result) => res.send(result))
       .catch(next);
   },
@@ -197,7 +199,7 @@ const buildQuery = (criteria) => {
       let end = moment(criteria.time[1], "HH:mm").diff(sotd, "seconds");
       query.time = {
         $gte: start,
-        $lt: end
+        $lt: end,
       };
     }
     // Default

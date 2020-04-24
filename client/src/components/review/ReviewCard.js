@@ -15,7 +15,7 @@ const ReviewCard = ({ user, date, content }) => {
       <Comment.Content>
         <Comment.Author as="a">{`${user.firstName} ${user.surname}`}</Comment.Author>
         <Comment.Metadata>
-          <div>{moment(date).format("DD MMMM YYYY")}</div>
+          <div>{moment.utc(date).format("DD MMMM YYYY")}</div>
         </Comment.Metadata>
         <Comment.Text>{content}</Comment.Text>
       </Comment.Content>

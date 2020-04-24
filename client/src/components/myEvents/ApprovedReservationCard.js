@@ -18,7 +18,7 @@ const ApprovedReservationCard = ({
           as={Link}
           to={`/profile/${_id}`}
         >{`${firstName} ${surname}`}</Card.Header>
-        <Card.Meta>{`Approved on ${moment(approvedDate).format(
+        <Card.Meta>{`Approved on ${moment.utc(approvedDate).format(
           "DD MMM YYYY"
         )}`}</Card.Meta>
       </Card.Content>

@@ -51,11 +51,11 @@ const EventCard = ({ event }) => {
             </Header.Subheader>
             <Header.Subheader>
               <Icon name="calendar alternate outline" />
-              {moment(date).format("dddd, DD MMMM  YYYY")}
+              {moment.utc(date).format("dddd, DD MMMM  YYYY")}
             </Header.Subheader>
             <Header.Subheader>
               <Icon name="clock outline" />
-              {moment(date).format("hh:mm")}
+              {moment.utc(date).format("HH:mm")}
             </Header.Subheader>
             <Header.Subheader>
               <Icon name="male" />

@@ -46,11 +46,11 @@ const ReservationCard = ({
             ReservationID: {reservationID}
           </Header.Subheader>
           <Header.Subheader>
-            Reserved on: {moment(reservationDate).format("dddd, DD MMMM  YYYY")}
+            Reserved on: {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
           <Header.Subheader>
             Confirmed on:{" "}
-            {moment(confirmationDate).format("dddd, DD MMMM  YYYY")}
+            {moment.utc(confirmationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
         </Header>
       );
@@ -66,7 +66,7 @@ const ReservationCard = ({
             ReservationID: {reservationID}
           </Header.Subheader>
           <Header.Subheader>
-            Reserved on: {moment(reservationDate).format("dddd, DD MMMM  YYYY")}
+            Reserved on: {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
         </Header>
       );
@@ -82,7 +82,7 @@ const ReservationCard = ({
             ReservationID: {reservationID}
           </Header.Subheader>
           <Header.Subheader>
-            Reserved on: {moment(reservationDate).format("dddd, DD MMMM  YYYY")}
+            Reserved on: {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
         </Header>
       );
@@ -128,11 +128,11 @@ const ReservationCard = ({
                   </Header.Subheader>
                   <Header.Subheader>
                     <Icon name="calendar alternate outline" />
-                    {moment(date).format("dddd, DD MMMM YYYY")}
+                    {moment.utc(date).format("dddd, DD MMMM YYYY")}
                   </Header.Subheader>
                   <Header.Subheader>
                     <Icon name="clock outline" />
-                    {moment(date).format("hh:mm")}
+                    {moment.utc(date).format("HH:mm")}
                   </Header.Subheader>
                 </Header>
               </Link>
