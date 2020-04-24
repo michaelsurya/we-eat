@@ -11,7 +11,9 @@ const ReservationCard = ({
     _id: eventID,
     pictures,
     title,
-    location,
+    city,
+    state,
+    country,
     date,
   },
   reservation: {
@@ -124,7 +126,7 @@ const ReservationCard = ({
                   {title}
                   <Header.Subheader>
                     <Icon name="map marker alternate" />
-                    {location}
+                    {`${city}, ${state}, ${country}`}
                   </Header.Subheader>
                   <Header.Subheader>
                     <Icon name="calendar alternate outline" />

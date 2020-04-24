@@ -7,7 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
 const HorizontalEventCard = ({
-  event: { _id, pictures, title, location, date, guestRequired, description },
+  event: { _id, pictures, title, city, state, country, date, guestRequired, description },
 }) => {
   const renderPictures = (pictures) => {
     if (pictures) {
@@ -40,7 +40,7 @@ const HorizontalEventCard = ({
                 {title}
                 <Header.Subheader>
                   <Icon name="map marker alternate" />
-                  {location}
+                  {`${city}, ${state}, ${country}`}
                 </Header.Subheader>
                 <Header.Subheader>
                   <Icon name="calendar alternate outline" />
