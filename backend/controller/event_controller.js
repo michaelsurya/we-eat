@@ -1,7 +1,10 @@
 const Event = require("../models/event");
+const User = require("../models/user");
 
 const Joi = require("@hapi/joi").extend(require("@hapi/joi-date"));
 Joi.objectId = require("joi-objectid")(Joi);
+
+const filter = require("lodash/filter");
 
 const moment = require("moment");
 
@@ -132,8 +135,17 @@ module.exports = {
   search(req, res, next) {
     console.log(req.query);
     Event.find(buildQuery(req.query))
-      .populate("host")
-      .sort({date: 1, time: 1, price: 1})
+      .populate({
+        path: "host",
+      })
+      .sort({ date: 1, time: 1, price: 1 })
+      .then((result) => {
+        if (req.query.language) {
+          return filter(result, { host: { languages: req.query.language }});
+        } else {
+          return result;
+        }
+      })
       .then((result) => res.send(result))
       .catch(next);
   },
@@ -210,10 +222,23 @@ const buildQuery = (criteria) => {
     }
   }
 
+  // //Host
+  // if (criteria.language) {
+  //   await User.find({ languages: { $in: criteria.language } })
+  //     .select("_id")
+  //     .then((results) => {
+  //       let arr = results.map((result) => result._id);
+  //       query.host = {
+  //         $in: arr,
+  //       };
+  //     });
+  // }
+
   console.log(query);
 
   return query;
 };
+
 
 // const session  = await mongoose.startSession();
 
