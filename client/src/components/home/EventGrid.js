@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Card } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import EventCard from "./EventCard";
 
 const EventGrid = ({ events }) => {

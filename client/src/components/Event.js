@@ -89,7 +89,6 @@ class Event extends React.Component {
       description,
       guestRequired,
       host,
-      location,
       menu,
       pictures,
       price,

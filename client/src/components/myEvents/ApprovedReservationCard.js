@@ -1,19 +1,14 @@
 import React from "react";
-import { Card, Image } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
 const ApprovedReservationCard = ({
-  user: { _id, firstName, surname, approvedDate, profilePict },
+  user: { _id, firstName, surname, approvedDate},
 }) => {
   return (
     <Card>
       <Card.Content>
-        {/* <Image
-          floated="left"
-          size="tiny"
-          src={`http:\\\\localhost:8080\\${profilePict.imageData}`}
-        /> */}
         <Card.Header
           as={Link}
           to={`/profile/${_id}`}

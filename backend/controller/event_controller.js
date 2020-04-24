@@ -45,7 +45,7 @@ module.exports = {
         return { imageName: file.filename, imageData: file.path };
       });
       // Set date to be timezone agnostic
-      value.date = moment.utc(value.date, "DD/MM/YYYY HH:mm")
+      value.date = moment.utc(value.date, "DD/MM/YYYY HH:mm");
       value.address = value.location.address;
       value.city = value.location.city;
       value.state = value.location.state;
@@ -133,12 +133,17 @@ module.exports = {
    * @path /myevents/:id
    */
   search(req, res, next) {
-    console.log(req.query);
-    Event.find(buildQuery(req.query))
+    let operation = Event.find(buildQuery(req.query))
       .populate({
         path: "host",
       })
-      .sort({ date: 1, time: 1, price: 1 })
+      .sort({ date: 1, time: 1, price: 1 });
+
+      if(req.query.limit){
+        operation = operation.limit(parseInt(req.query.limit))
+      }
+
+      operation
       .then((result) => {
         if (req.query.language) {
           return filter(result, { host: { languages: req.query.language } });

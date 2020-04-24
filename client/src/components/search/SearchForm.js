@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { Button, Form, Header, Segment } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 
 import styles from "../../assets/css/search.module.css";
 

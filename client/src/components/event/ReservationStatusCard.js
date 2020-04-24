@@ -1,7 +1,5 @@
 import React from "react";
-import { Button, Card, Header } from "semantic-ui-react";
-
-import styles from "../../assets/css/event.module.css";
+import { Button, Card } from "semantic-ui-react";
 
 const ReservationStatusCard = ({ confirmedCount, pendingCount }) => {
   return (

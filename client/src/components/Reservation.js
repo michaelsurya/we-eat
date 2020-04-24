@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getMyReservations } from "../actions/reservationActions";
-import { Container, Header, Segment, Card } from "semantic-ui-react";
+import { Container, Header, Segment } from "semantic-ui-react";
 
 import styles from "../assets/css/reservation.module.css";
 

@@ -1,13 +1,13 @@
 import React from "react";
 import { LoadScript } from "@react-google-maps/api";
 import Autocomplete from "react-google-autocomplete";
-import { Form, Icon} from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 
 const LIBRARIES = ["places"];
 
 const GooglePlacesInput = (props) => {
   const {
-    input: { value, onChange },
+    input: { onChange },
     label,
   } = props;
   return (
@@ -25,6 +25,7 @@ const GooglePlacesInput = (props) => {
               place.geometry.location.lng(),
             ])
           }
+          onChange={(e) => e.target.value === "" ? onChange(null) : null}
           types={["geocode"]}
         />
         

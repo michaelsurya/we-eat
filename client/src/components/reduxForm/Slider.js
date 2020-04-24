@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Header, Label, Grid, GridColumn } from "semantic-ui-react";
+import React from "react";
+import { Form, Label, Grid, GridColumn } from "semantic-ui-react";
 import { Slider as SS } from "react-semantic-ui-range";
 import styles from "../../assets/css/form.module.css";
 
@@ -25,7 +25,12 @@ const Slider = (props) => {
       <label>{label}</label>
       <Grid>
         <Grid.Column>
-          <Label>£{value ? parseFloat(value[0]).toFixed(1)  : parseFloat(min).toFixed(1) }</Label>
+          <Label>
+            £
+            {value
+              ? parseFloat(value[0]).toFixed(1)
+              : parseFloat(min).toFixed(1)}
+          </Label>
         </Grid.Column>
         <GridColumn></GridColumn>
         <Grid.Column width={11}>
@@ -34,7 +39,10 @@ const Slider = (props) => {
         <GridColumn></GridColumn>
         <Grid.Column>
           <Label className={styles.float_right}>
-            £{value ? parseFloat(value[1]).toFixed(1) : parseFloat(max).toFixed(1) }
+            £
+            {value
+              ? parseFloat(value[1]).toFixed(1)
+              : parseFloat(max).toFixed(1)}
           </Label>
         </Grid.Column>
       </Grid>
