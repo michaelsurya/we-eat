@@ -45,7 +45,7 @@ class AdvancedSearchForm extends React.Component {
           <Field
             name="guestRequired"
             component={TextField}
-            label="Guests"
+            label="Max Guests"
             type="number"
           />
           <Field

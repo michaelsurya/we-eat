@@ -22,6 +22,7 @@ import { Carousel } from "react-responsive-carousel";
 
 import AllergenList from "./event/AllergenList";
 import BookingCard from "./event/BookingCard";
+import CuisineTag from "./event/CuisineTag";
 import Interest from "./profile/Interest";
 import LanguageTag from "./profile/LanguageTag";
 import MenuList from "./event/MenuList";
@@ -83,6 +84,7 @@ class Event extends React.Component {
       allergen,
       city,
       country,
+      cuisine,
       date,
       description,
       guestRequired,
@@ -132,6 +134,7 @@ class Event extends React.Component {
               <div>
                 <Header as="h1">
                   {title}
+                  <CuisineTag cuisines={cuisine}></CuisineTag>
                   <Header.Subheader>
                     <Icon name="map marker alternate" />
                     {`${city}, ${state}, ${country}`}
