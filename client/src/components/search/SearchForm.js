@@ -5,6 +5,7 @@ import { Button, Form } from "semantic-ui-react";
 import styles from "../../assets/css/search.module.css";
 
 import DateInput from "../reduxForm/DateInput";
+import GooglePlacesInput from "../reduxForm/GooglePlacesInput";
 import TextField from "../reduxForm/TextField";
 
 class SearchForm extends React.Component {
@@ -15,7 +16,12 @@ class SearchForm extends React.Component {
   render() {
     return (
       <Form className={`${styles.top_margin}`}>
-        <Field name="location" component={TextField} label="Location" />
+        <Field
+          name="location"
+          component={GooglePlacesInput}
+          label="Location"
+          width={16}
+        />
         <Form.Group>
           <Field
             name="date"
@@ -42,4 +48,16 @@ class SearchForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: "searchForm" })(SearchForm);
+const validate = ({ location }) => {
+  const errors = {};
+
+  if (!location) {
+    errors.location = "Location is required";
+  }
+
+  return errors;
+};
+
+export default reduxForm({ form: "searchForm", validate: validate })(
+  SearchForm
+);

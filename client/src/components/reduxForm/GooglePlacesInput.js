@@ -3,15 +3,19 @@ import { LoadScript } from "@react-google-maps/api";
 import Autocomplete from "react-google-autocomplete";
 import { Form } from "semantic-ui-react";
 
+import styles from "../../assets/css/form.module.css";
+
 const LIBRARIES = ["places"];
 
 const GooglePlacesInput = (props) => {
   const {
-    input: { onChange },
+    input: { value, onChange },
     label,
+    meta,
+    width
   } = props;
   return (
-    <Form.Field width={6}>
+    <Form.Field width={width ? width : 6} >
       <label>{label}</label>
       <LoadScript
         id="script-loader"
@@ -26,12 +30,19 @@ const GooglePlacesInput = (props) => {
             ])
           }
           onChange={(e) => e.target.value === "" ? onChange(null) : null}
+          placeholder={value}
           types={["geocode"]}
         />
-        
       </LoadScript>
+      {renderError(meta)}
     </Form.Field>
   );
 };
+
+function renderError({ error, touched }) {
+  if (error && touched) {
+    return <p className={styles.error}>{error}</p>;;
+  }
+}
 
 export default GooglePlacesInput;
