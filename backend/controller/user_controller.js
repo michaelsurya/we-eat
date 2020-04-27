@@ -39,6 +39,9 @@ module.exports = {
         if (!user) {
           return res.status(404).json({ error: "User not found" });
         }
+        if(!user.verifiedEmail){
+          return res.status(400).json({ error: "Please verify your email address" });
+        }
         // Check password
         bcrypt.compare(password, user.password).then((isMatch) => {
           if (isMatch) {
