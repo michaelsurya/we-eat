@@ -17,6 +17,7 @@ import Search from "./Search";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Verify from "./Verify";
+import VerifyEmail from "./verify/VerifyEmail";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
       <Switch>
         <Route exact path="/login" component={SignIn} />
         <Route exact path="/register" component={SignUp} />
+        <Route path="/verify/email/" exact component={VerifyEmail}></Route>
         <Route component={DefaultContainer} />
       </Switch>
     </Router>

@@ -73,6 +73,18 @@ export const sendEmailVerification = (id) => async (dispatch) => {
     });
 };
 
+export const resendEmailVerification = (email, history) => (dispatch) => {
+  axios
+    .post(`/api/users/resend/verification`, email)
+    .then((res) => history.push("/login"))
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
 export const changeProfilePict = (id, files) => async (dispatch) => {
   let image = new FormData();
 
