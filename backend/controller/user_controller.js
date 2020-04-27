@@ -252,6 +252,10 @@ module.exports = {
           return res
             .status(404)
             .json({ error: "This email is not associated with any user." });
+        } else if (user.verifiedEmail) {
+          return res
+            .status(400)
+            .json({ error: "This account is already verified." });
         }
         sendVerificationEmail(user._id, req, res, next);
       });
