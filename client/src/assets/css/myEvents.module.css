@@ -11,5 +11,13 @@
 
 .scrollable {
     overflow-y: scroll;
-    height: 40vh !important;
+    height: 30vh !important;
 }
+
+.line_clamp {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }

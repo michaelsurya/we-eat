@@ -6,8 +6,20 @@ import { Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
+import styles from "../../assets/css/reservation.module.css";
+
 const HorizontalEventCard = ({
-  event: { _id, pictures, title, city, state, country, date, guestRequired, description },
+  event: {
+    _id,
+    pictures,
+    title,
+    city,
+    state,
+    country,
+    date,
+    guestRequired,
+    description,
+  },
 }) => {
   const renderPictures = (pictures) => {
     if (pictures) {
@@ -56,7 +68,9 @@ const HorizontalEventCard = ({
                 </Header.Subheader>
               </Header>
             </Link>
-            <Item.Description>{description}</Item.Description>
+            <Item.Description className={styles.line_clamp} style={{maxWidth: "40vh"}}>
+              {description}
+            </Item.Description>
           </Item.Content>
         </Item>
       </Item.Group>

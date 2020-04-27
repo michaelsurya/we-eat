@@ -63,7 +63,7 @@ const EventCard = ({ event }) => {
             </Header.Subheader>
           </Header>
         </Link>
-        <p style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
+        <p className={styles.line_clamp}>
           {description}
         </p>
         <Header className={styles.top_margin_zero}>{`£ ${parseFloat(

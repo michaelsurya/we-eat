@@ -1,37 +1,44 @@
 .with_background {
-    height: 50vh;
-    background-image: url(../img/black-frying-pan-with-spaghetti-sauce-near-brown-wooden.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+  height: 50vh;
+  background-image: url(../img/black-frying-pan-with-spaghetti-sauce-near-brown-wooden.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .search_card {
-    min-width: 30%;
-    position: absolute !important;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 10% !important;
-    opacity: 0.9;
+  min-width: 30%;
+  position: absolute !important;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 10% !important;
+  opacity: 0.9;
 }
 
 .vertical_helper {
-    position: relative;
-    height: 100%;
-    
+  position: relative;
+  height: 100%;
 }
 
 .top_margin_zero {
-    margin-top: 0px !important;
-  }
+  margin-top: 0px !important;
+}
 
 .explore_container {
-    margin-top: 3rem !important;
+  margin-top: 3rem !important;
 }
 
 .show_more {
-    margin-top: 1rem !important;
+  margin-top: 1rem !important;
 }
 
 .rating {
-    text-align: right;
+  text-align: right;
+}
+
+.line_clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
