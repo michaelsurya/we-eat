@@ -39,8 +39,10 @@ module.exports = {
         if (!user) {
           return res.status(404).json({ error: "User not found" });
         }
-        if(!user.verifiedEmail){
-          return res.status(400).json({ error: "Please verify your email address" });
+        if (!user.verifiedEmail) {
+          return res
+            .status(400)
+            .json({ error: "Please verify your email address" });
         }
         // Check password
         bcrypt.compare(password, user.password).then((isMatch) => {
@@ -204,7 +206,7 @@ module.exports = {
         .save()
         .then((result) => {
           if (result) {
-            res.status(200).send();
+            sendVerificationEmail(result._id, req, res, next);
           }
         })
         .catch(next);
@@ -226,71 +228,14 @@ module.exports = {
     if (error) {
       return res.status(400).json(error.details);
     } else {
-      User.findById(value.id)
-        .then((user) => {
-          if (user) {
-            //Check if user exsists
-            if (user.verifiedEmail) {
-              // Has the user verify the email?
-              return res
-                .status(400)
-                .json({ message: "Email has been verified" });
-            } else {
-              // Generate the token
-              let token = new Token({
-                userId: value.id,
-                token: crypto.randomBytes(16).toString("hex"),
-              });
-
-              // Save the token in the DB
-              token.save().then(() => {
-                // Prepare nodemailer transporter
-                let transporter = nodemailer.createTransport({
-                  service: "Sendgrid",
-                  auth: {
-                    user: process.env.SENDGRID_USERNAME,
-                    pass: process.env.SENDGRID_PASSWORD,
-                  },
-                });
-
-                // Construct the email
-                var mailOptions = {
-                  from: "no-reply@weeat.com",
-                  to: user.email,
-                  subject: "Account Verification Token",
-                  text:
-                    "Hello,\n\n" +
-                    "Please verify your account by clicking the link: \nhttp://" +
-                    req.headers.host +
-                    "/api/verify/" +
-                    token.token +
-                    "\n",
-                };
-
-                // Send the email
-                transporter.sendMail(mailOptions, function (err) {
-                  if (err) {
-                    return res.status(500).send({ message: err.message });
-                  }
-                  res
-                    .status(200)
-                    .send(
-                      "A verification email has been sent to " +
-                        user.email +
-                        "."
-                    );
-                });
-              });
-            }
-          } else {
-            // User does not exist
-            return res.status(404).json({ error: "User not found" });
-          }
-        })
-        .catch(next);
+      sendVerificationEmail(userID, req, res, next);
     }
   },
 
+  /*
+   * Function to verify user email
+   * @path /verify/:token
+   */
   verifyEmail(req, res, next) {
     // Validation Schema
     const schema = Joi.object({
@@ -332,3 +277,64 @@ module.exports = {
     }
   },
 };
+
+function sendVerificationEmail(userID, req, res, next) {
+  User.findById(userID)
+    .then((user) => {
+      if (user) {
+        //Check if user exsists
+        if (user.verifiedEmail) {
+          // Has the user verify the email?
+          return res.status(400).json({ message: "Email has been verified" });
+        } else {
+          // Generate the token
+          let token = new Token({
+            userId: userID,
+            token: crypto.randomBytes(16).toString("hex"),
+          });
+
+          // Save the token in the DB
+          token.save().then(() => {
+            // Prepare nodemailer transporter
+            let transporter = nodemailer.createTransport({
+              service: "Sendgrid",
+              auth: {
+                user: process.env.SENDGRID_USERNAME,
+                pass: process.env.SENDGRID_PASSWORD,
+              },
+            });
+
+            // Construct the email
+            var mailOptions = {
+              from: "no-reply@weeat.com",
+              to: user.email,
+              subject: "Account Verification Token",
+              text:
+                "Hello,\n\n" +
+                "Please verify your account by clicking the link: \nhttp://" +
+                req.headers.host +
+                "/api/verify/" +
+                token.token +
+                "\n",
+            };
+
+            // Send the email
+            transporter.sendMail(mailOptions, function (err) {
+              if (err) {
+                return res.status(500).send({ message: err.message });
+              }
+              res
+                .status(200)
+                .send(
+                  "A verification email has been sent to " + user.email + "."
+                );
+            });
+          });
+        }
+      } else {
+        // User does not exist
+        return res.status(404).json({ error: "User not found" });
+      }
+    })
+    .catch(next);
+}
