@@ -8,12 +8,10 @@ import {
 } from "../../actions/userActions";
 import { Button, Container, Grid, Header, Image } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
-import isEmpty from "lodash/isEmpty";
 
 import styles from "../../assets/css/profile.module.css";
 
 import EditProfileForm from "./EditProfileForm";
-import Error from "../util/Error";
 
 class EditProfile extends React.Component {
   onSubmit = (formValues) => {
@@ -43,13 +41,6 @@ class EditProfile extends React.Component {
     languages,
     interests,
   });
-
-  renderError = () => {
-    const error = { message: "Something went wrong. Please try again later" };
-    if (!isEmpty(this.props.error)) {
-      return <Error error={error}></Error>;
-    }
-  };
 
   renderProfilePict = (profilePict) => {
     if (profilePict) {

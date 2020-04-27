@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
-import { resetError } from "../actions/errorActions";
 import { Header, Icon, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
@@ -9,20 +8,11 @@ import styles from "../assets/css/auth.module.css";
 
 import logo from "../assets/img/Logo.png";
 import SignInForm from "./auth/SignInForm";
-import Error from "./util/Error";
 
 class SignIn extends React.Component {
-  onSubmit = formValues => {
+  onSubmit = (formValues) => {
     this.props.loginUser(formValues);
   };
-
-  componentDidMount() {
-    this.props.resetError();
-    // If user is already logged in, redirec to the homepage
-    if (this.props.auth.isSignedIn) {
-      this.props.history.push("/");
-    }
-  }
 
   componentDidUpdate() {
     if (this.props.auth.isSignedIn) {
@@ -46,16 +36,14 @@ class SignIn extends React.Component {
             <Header.Content>Back to Home</Header.Content>
           </Header>
         </div>
-        <Error error={this.props.error}></Error>
         <SignInForm onSubmit={this.onSubmit}></SignInForm>
       </Segment>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  error: state.error
 });
 
-export default connect(mapStateToProps, { loginUser, resetError })(SignIn);
+export default connect(mapStateToProps, { loginUser })(SignIn);
