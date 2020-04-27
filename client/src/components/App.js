@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./auth/PrivateRoute";
 import ScrollToTop from "./util/ScrollToTop";
+import { ToastContainer } from "react-toastify";
 
 import CreateEvent from "./CreateEvent";
 import EditProfile from "./profile/EditProfile";
@@ -19,10 +20,12 @@ import SignUp from "./SignUp";
 import Verify from "./Verify";
 import VerifyEmail from "./verify/VerifyEmail";
 
+
 const App = () => {
   return (
     <Router>
       <ScrollToTop/>
+      <ToastContainer position="top-center" autoClose={2000} />
       <Switch>
         <Route exact path="/login" component={SignIn} />
         <Route exact path="/register" component={SignUp} />

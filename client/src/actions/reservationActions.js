@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GET_ERRORS, GET_RESERVATION } from "./type";
+import { toast } from "react-toastify";
 
 export const createReservation = (eventID, hostID, userID, history) => (
   dispatch
@@ -10,12 +11,12 @@ export const createReservation = (eventID, hostID, userID, history) => (
       host: hostID,
       user: userID,
     })
-    .then((result) => history.push(`/user/reservations`))
+    .then((result) => {
+      history.push(`/user/reservations`);
+      toast.success("Reservation request has been sent to the host.");
+    })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      toast.error(err.response.data.error);
     });
 };
 
@@ -27,14 +28,11 @@ export const editReservation = (eventID, hostID, userID, status) => (
       event: eventID,
       host: hostID,
       user: userID,
-      status: status
+      status: status,
     })
     .then((result) => window.location.reload())
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      toast.error(err.response.data.error);
     });
 };
 
@@ -48,11 +46,6 @@ export const getMyReservations = (id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      toast.error(err.response.data.error);
     });
 };
-
-

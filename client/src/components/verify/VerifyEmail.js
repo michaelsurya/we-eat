@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { resendEmailVerification } from "../../actions/userActions";
 import { Header, Icon, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 import styles from "../../assets/css/auth.module.css";
 
@@ -24,8 +25,13 @@ class VerifyEmail extends React.Component {
           image={logo}
           content="Email verification"
         ></Header>
-        <div className={styles.back_button} >
-          <Header size="small" color="orange" as={Link} onClick={this.props.history.goBack}>
+        <div className={styles.back_button}>
+          <Header
+            size="small"
+            color="orange"
+            as={Link}
+            onClick={this.props.history.goBack}
+          >
             <Icon name="arrow left" />
             <Header.Content>Back</Header.Content>
           </Header>
@@ -41,4 +47,6 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { resendEmailVerification })(VerifyEmail);
+export default connect(mapStateToProps, { resendEmailVerification })(
+  VerifyEmail
+);

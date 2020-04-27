@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import { GET_ERRORS, GET_EVENT, GET_EVENTS } from "./type";
+import { toast } from "react-toastify";
 
 export const createEvent = (id, formData, history) => (dispatch) => {
   //Prepare event data
@@ -8,10 +9,9 @@ export const createEvent = (id, formData, history) => (dispatch) => {
 
   // Set date to correct format
   eventData.date = `${formData.date} ${formData.time}`;
-  eventData.time = moment.utc(formData.time, "HH:mm").diff(
-    moment.utc().startOf("day"),
-    "seconds"
-  );
+  eventData.time = moment
+    .utc(formData.time, "HH:mm")
+    .diff(moment.utc().startOf("day"), "seconds");
   eventData.host = id;
 
   // Initialise the form data
@@ -44,12 +44,12 @@ export const createEvent = (id, formData, history) => (dispatch) => {
 
   axios
     .post(`/api/events/`, fd)
-    .then((result) => history.push(`/event/${result.data._id}`))
+    .then((result) => {
+      history.push(`/event/${result.data._id}`);
+      toast.success("Event created");
+    })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      toast.error(err.response.data.error);
     });
 };
 
@@ -81,10 +81,7 @@ export const getMyEvents = (id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      toast.error(err.response.data.error);
     });
 };
 
@@ -98,9 +95,6 @@ export const searchEvent = (searchQuery) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      toast.error(err.response.data.error);
     });
 };
