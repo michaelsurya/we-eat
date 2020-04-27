@@ -190,11 +190,12 @@ class Event extends React.Component {
                 ></ReservationStatusCard>
               ) : (
                 <BookingCard
-                  price={price}
-                  handleClick={this.handleClick}
-                  hasBooked={hasBooked}
-                  confirmedCount={confirmedCount}
-                  limit={guestRequired}
+                confirmedCount={confirmedCount}
+                handleClick={this.handleClick}
+                hasBooked={hasBooked}
+                isSignedIn={this.props.auth.isSignedIn}
+                limit={guestRequired}
+                price={price}
                 ></BookingCard>
               )}
             </Grid.Column>

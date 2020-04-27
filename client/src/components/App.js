@@ -36,7 +36,7 @@ const DefaultContainer = () => (
     <Nav></Nav>
     <Switch>
       <Route path="/" exact component={Home} />
-      <Route path="/event/new/" exact component={CreateEvent}></Route>
+      <PrivateRoute path="/event/new/" exact component={CreateEvent}></PrivateRoute>
       <Route path="/event/:id" exact component={Event}></Route>
       <Route path="/profile/:id" exact component={Profile} />
       <PrivateRoute
