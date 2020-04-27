@@ -30,6 +30,10 @@ module.exports = (app) => {
     "/api/users/send/verification/",
     UserController.sendEmailVerification
   );
+  app.post(
+    "/api/users/resend/verification/",
+    UserController.resendEmailVerification
+  );
   app.get("/api/verify/:token", UserController.verifyEmail);
 
   // app.post('/api/uploads/event/cover/:id', upload.single("imageData"), ImageController.uploadEventCoverPicture)

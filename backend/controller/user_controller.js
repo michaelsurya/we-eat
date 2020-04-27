@@ -215,7 +215,7 @@ module.exports = {
 
   /*
    * Function to send email verification
-   * @path /users/verify/email/:id
+   * @path /users/send/verification/
    */
   sendEmailVerification(req, res, next) {
     // Validation Schema
@@ -229,6 +229,32 @@ module.exports = {
       return res.status(400).json(error.details);
     } else {
       sendVerificationEmail(userID, req, res, next);
+    }
+  },
+
+  /*
+   * Resend email verification by email
+   * @path /users/resend/verification/
+   */
+  resendEmailVerification(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      email: Joi.string().email().required(),
+    });
+
+    const { error, value } = schema.validate(req.body);
+
+    if (error) {
+      return res.status(400).json(error.details);
+    } else {
+      User.findOne({ email: value.email }).then((user) => {
+        if (!user) {
+          return res
+            .status(404)
+            .json({ error: "This email is not associated with any user." });
+        }
+        sendVerificationEmail(user._id, req, res, next);
+      });
     }
   },
 
