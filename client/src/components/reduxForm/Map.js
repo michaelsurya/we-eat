@@ -1,12 +1,10 @@
 import React from "react";
-import {
-  Autocomplete,
-  GoogleMap,
-  LoadScript,
-  Marker,
-} from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import Autocomplete from "react-google-autocomplete";
 import Geocode from "react-geocode";
 import { Form, Segment } from "semantic-ui-react";
+
+import InlineEditable from "./InlineEditable";
 
 Geocode.setApiKey("AIzaSyDTbkTz6jmv4J-L_vdIF7OjVxqeC7Ghkps");
 
@@ -41,7 +39,7 @@ class Map extends React.Component {
     ) {
       this.getDataFromLatLng(this.props.center.lat, this.props.center.lng);
     }
-    this.props.input.onChange(this.state)
+    this.props.input.onChange(this.state);
   }
 
   getDataFromLatLng(lat, lng) {
@@ -198,20 +196,10 @@ class Map extends React.Component {
   };
 
   /**
-   * To load the autocomplete component
-   * @param event
-   */
-  autocompleteOnLoad = (autocomplete) => {
-    this.autocomplete = autocomplete;
-  };
-
-  /**
    * When the user types an address in the search box
    * @param place
    */
-  onPlaceChanged = () => {
-    const place = this.autocomplete.getPlace();
-
+  onPlaceChanged = (place) => {
     const addressArray = place.address_components,
       address = this.getAddress(addressArray),
       city = this.getCity(addressArray),
@@ -270,61 +258,46 @@ class Map extends React.Component {
                 lng: this.state.coords.lng,
               }}
             >
-              <Autocomplete
-                onLoad={this.autocompleteOnLoad}
-                onPlaceChanged={this.onPlaceChanged}
-              >
-                <Form.Input
-                  type="text"
-                  placeholder="Type your address/postcode"
-                  style={{
-                    width: `70%`,
-                    outline: `none`,
-                    textOverflow: `ellipses`,
-                    position: "absolute",
-                    left: "50%",
-                    marginLeft: `-35%`,
-                    bottom: 0,
-                    marginBottom: `1em`,
-                  }}
-                />
-              </Autocomplete>
               <Marker
                 draggable={true}
                 position={this.state.coords}
                 onDragEnd={this.onMarkerDragEnd}
               />
             </GoogleMap>
+            <label>Search your location here:</label>
+            <Autocomplete
+              onPlaceSelected={this.onPlaceChanged}
+              types={""}
+              placeholder="Please enter a location or a postcode Eg: Newcsatle or NE1 6EA"
+            />
           </LoadScript>
-          <Form.Input
-            label="Address"
-            value={this.state.address}
-            onChange={(e) => this.inputOnChange("address", e.target.value)}
-          ></Form.Input>
-          <Form.Group widths="equal">
-            <Form.Input
-              label="City"
-              value={this.state.city}
-              readOnly
-            ></Form.Input>
-            <Form.Input
-              label="State"
-              value={this.state.state}
-              readOnly
-            ></Form.Input>
-          </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Input
-              label="Country"
-              value={this.state.country}
-              readOnly
-            ></Form.Input>
-            <Form.Input
-              label="Postcode"
-              value={this.state.postcode}
-              readOnly
-            ></Form.Input>
-          </Form.Group>
+          <Segment>
+            <InlineEditable
+              label="Address"
+              value={this.state.address}
+              onChange={(val) => this.inputOnChange("address", val)}
+            ></InlineEditable>
+            <Form.Group widths="equal">
+              <Form.Field>
+                <label>City</label>
+                <p>{this.state.city}</p>
+              </Form.Field>
+              <Form.Field>
+                <label>State</label>
+                <p>{this.state.state}</p>
+              </Form.Field>
+            </Form.Group>
+            <Form.Group widths="equal">
+              <Form.Field>
+                <label>Country</label>
+                <p>{this.state.country}</p>
+              </Form.Field>
+              <Form.Field>
+                <label>Postcode</label>
+                <p>{this.state.postcode}</p>
+              </Form.Field>
+            </Form.Group>
+          </Segment>
         </Form.Field>
       </Segment>
     );

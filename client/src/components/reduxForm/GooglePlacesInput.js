@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadScript } from "@react-google-maps/api";
 import Autocomplete from "react-google-autocomplete";
-import { Form } from "semantic-ui-react";
+import { Form, Icon } from "semantic-ui-react";
 
 import styles from "../../assets/css/form.module.css";
 
@@ -12,11 +12,20 @@ const GooglePlacesInput = (props) => {
     input: { value, onChange },
     label,
     meta,
-    width
+    width,
   } = props;
+
   return (
-    <Form.Field width={width ? width : 6} >
-      <label>{label}</label>
+    <Form.Field width={width ? width : 6}>
+      <label>
+        {label}
+        <Icon
+          name="close"
+          color="red"
+          style={{ float: "right" }}
+          onClick={() => onChange(null)}
+        ></Icon>
+      </label>
       <LoadScript
         id="script-loader"
         googleMapsApiKey="AIzaSyDTbkTz6jmv4J-L_vdIF7OjVxqeC7Ghkps"
@@ -29,8 +38,8 @@ const GooglePlacesInput = (props) => {
               place.geometry.location.lng(),
             ])
           }
-          onChange={(e) => e.target.value === "" ? onChange(null) : null}
-          placeholder={value}
+          onChange={(e) => onChange(e.target.value)}
+          value={value}
           types={["geocode"]}
         />
       </LoadScript>
@@ -41,7 +50,7 @@ const GooglePlacesInput = (props) => {
 
 function renderError({ error, touched }) {
   if (error && touched) {
-    return <p className={styles.error}>{error}</p>;;
+    return <p className={styles.error}>{error}</p>;
   }
 }
 
