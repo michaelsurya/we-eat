@@ -1,22 +1,32 @@
-import React, { useState } from "react";
-import { Button, Form, Item } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Icon, Item } from "semantic-ui-react";
 
 import styles from "../../assets/css/form.module.css";
 
 const PhotosUpload = ({ input, meta, label }) => {
   delete input.value;
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState([]);
+  const [picsURL, setPicsURL] = useState([]);
+
+  useEffect(() => {
+    input.onChange(file)
+  }, [file])
 
   const handleChange = (e) => {
-    input.onChange(e.target.files);
+    let newURL = [];
 
-    let picturesURL = [];
     for (let [key, value] of Object.entries(e.target.files)) {
-      picturesURL.push(URL.createObjectURL(value));
+      newURL.push({ key: value.name, url: URL.createObjectURL(value) });
     }
+    setFile([...file, ...e.target.files]);
+    setPicsURL([...picsURL, ...newURL]);
+  };
 
-    setFile(picturesURL);
+  const remove = (key) => {
+    URL.revokeObjectURL(picsURL.filter(p => p.key === key).url)
+    setFile(file.filter((f) => f.name !== key));
+    setPicsURL(picsURL.filter((p) => p.key !== key));
   };
 
   const renderError = () => {
@@ -26,8 +36,21 @@ const PhotosUpload = ({ input, meta, label }) => {
   };
 
   const renderImage = () => {
-    if (file) {
-      return file.map((src) => <Item.Image key={src} src={src} size="small" />);
+    if (picsURL && picsURL.length > 0) {
+      return picsURL.map((src) => {
+        return (
+          <span key={src.key}>
+            <Item.Image src={src.url} size="small" />
+            <Icon
+              link
+              name="close"
+              color="red"
+              style={{ position: "relative" }}
+              onClick={() => remove(src.key)}
+            />
+          </span>
+        );
+      });
     } else {
       return (
         <Item.Image
@@ -41,7 +64,6 @@ const PhotosUpload = ({ input, meta, label }) => {
   return (
     <Form.Field>
       <label>{label}</label>
-      <p>Use ctrl or shift to select multiple files</p>
       {renderError()}
       <Item>
         {renderImage()}
