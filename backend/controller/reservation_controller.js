@@ -6,10 +6,11 @@ Joi.objectId = require("joi-objectid")(Joi);
 
 const filter = require("lodash/filter");
 
+const moment = require("moment");
 const nodemailer = require("nodemailer");
 
 module.exports = {
-  editReservation(req, res, next) {
+  async editReservation(req, res, next) {
     // Validation Schema
     const schema = Joi.object({
       event: Joi.objectId().required(),
@@ -23,6 +24,17 @@ module.exports = {
     if (error) {
       res.status(400).json(error.details);
     } else {
+      let updatedField = {};
+      //Set the reservation status accordingly
+      updatedField.status = value.status;
+
+      //If reservation is accepted then make the review token
+      const event = await Event.findById(value.event);
+      updatedField.reviewToken = {
+        validStart: moment(event.date).add(1, "days").startOf("day"),
+        validEnd: moment(event.date).add(4, "days").startOf("day"),
+      };
+
       Reservation.findOneAndUpdate(
         { event: value.event, host: value.host, user: value.user },
         { status: value.status }
@@ -82,6 +94,7 @@ module.exports = {
         .populate({
           path: "event",
         })
+        .sort({ reservationDate: 1 })
         .then((data) =>
           Promise.all(
             data.map((d) =>

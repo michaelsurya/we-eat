@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ReviewTokenSchema = require("./reviewToken");
 
 const STATUS = ["confirmed", "pending", "rejected"];
 
@@ -9,6 +10,7 @@ const ReservationSchema = new Schema({
   user:  { type: Schema.Types.ObjectId, required: true, ref: "user" },
   status: {type: String, required: true, enum: STATUS},
   reservationDate: {type: Date, required:true, default: Date.now},
+  reviewToken: ReviewTokenSchema,
   approvedDate: {type: Date},
 });
 
