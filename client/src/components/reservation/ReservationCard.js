@@ -1,29 +1,35 @@
-import React from "react";
-import { Grid, Header, Icon, Item } from "semantic-ui-react";
-import moment from "moment";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { writeReview } from "../../actions/userActions";
+import { Button, Grid, Header, Icon, Item, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
+import WriteReviewForm from "../review/WriteReviewForm";
+
 const ReservationCard = ({
-  event: {
-    _id: eventID,
-    pictures,
-    title,
-    city,
-    state,
-    country,
-    date,
-  },
+  event: { _id: eventID, pictures, title, city, state, country, date },
   reservation: {
     _id: reservationID,
     host,
     status,
     reservationDate,
+    reviewToken,
     confirmationDate,
   },
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const onSubmit = (formValues) => {
+    dispatch(writeReview(auth.user.id, host._id, formValues.review));
+  };
+
   const renderPictures = (pictures) => {
     if (pictures) {
       return pictures.map((picture, index) => (
@@ -44,11 +50,10 @@ const ReservationCard = ({
           <span>
             <Icon color="green" name="check"></Icon>
           </span>
+          <Header.Subheader>ReservationID: {reservationID}</Header.Subheader>
           <Header.Subheader>
-            ReservationID: {reservationID}
-          </Header.Subheader>
-          <Header.Subheader>
-            Reserved on: {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
+            Reserved on:{" "}
+            {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
           <Header.Subheader>
             Confirmed on:{" "}
@@ -64,11 +69,10 @@ const ReservationCard = ({
           <span>
             <Icon name="clock outline"></Icon>
           </span>
+          <Header.Subheader>ReservationID: {reservationID}</Header.Subheader>
           <Header.Subheader>
-            ReservationID: {reservationID}
-          </Header.Subheader>
-          <Header.Subheader>
-            Reserved on: {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
+            Reserved on:{" "}
+            {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
         </Header>
       );
@@ -80,11 +84,10 @@ const ReservationCard = ({
           <span>
             <Icon color="red" name="close"></Icon>
           </span>
+          <Header.Subheader>ReservationID: {reservationID}</Header.Subheader>
           <Header.Subheader>
-            ReservationID: {reservationID}
-          </Header.Subheader>
-          <Header.Subheader>
-            Reserved on: {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
+            Reserved on:{" "}
+            {moment.utc(reservationDate).format("dddd, DD MMMM  YYYY")}
           </Header.Subheader>
         </Header>
       );
@@ -99,10 +102,45 @@ const ReservationCard = ({
           <Link
             to={`/profile/${host._id}`}
           >{`${host.firstName} ${host.surname}`}</Link>
-          <Header.Subheader>Email: {host.email ? host.email : "Available once confirmed"}</Header.Subheader>
-          <Header.Subheader>Phone: {host.phoneNumber ? host.phoneNumber : "Available once confirmed"}</Header.Subheader>
+          <Header.Subheader>
+            Email: {host.email ? host.email : "Available once confirmed"}
+          </Header.Subheader>
+          <Header.Subheader>
+            Phone:{" "}
+            {host.phoneNumber ? host.phoneNumber : "Available once confirmed"}
+          </Header.Subheader>
         </Header>
       );
+    }
+  };
+
+  const renderCommentButton = () => {
+    if (reviewToken) {
+      const start = moment(reviewToken.validStart);
+      const end = moment(reviewToken.validEnd);
+      if (moment.utc().isBetween(start, end)) {
+        return (
+          <>
+            <Button
+              color="orange"
+              inverted
+              onClick={() => setIsModalOpen(true)}
+            >
+              Write a review
+            </Button>
+            <Modal open={isModalOpen}>
+              <Header content="Write a review" />
+              <Modal.Content>
+                <Header>{`Host: ${host ? host.firstName : null}`}</Header>
+                <WriteReviewForm
+                  close={() => setIsModalOpen(false)}
+                  onSubmit={onSubmit}
+                ></WriteReviewForm>
+              </Modal.Content>
+            </Modal>
+          </>
+        );
+      }
     }
   };
 
@@ -143,7 +181,10 @@ const ReservationCard = ({
           </Item>
         </Item.Group>
       </Grid.Column>
-      <Grid.Column width={5}>{renderStatus()}</Grid.Column>
+      <Grid.Column width={5}>
+        {renderStatus()}
+        {renderCommentButton()}
+      </Grid.Column>
     </Grid>
   );
 };

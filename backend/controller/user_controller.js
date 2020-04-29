@@ -6,7 +6,9 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
 const Joi = require("@hapi/joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
+const moment = require("moment");
 const nodemailer = require("nodemailer");
 
 module.exports = {
@@ -303,6 +305,32 @@ module.exports = {
             });
           });
         })
+        .catch(next);
+    }
+  },
+
+  writeReview(req, res, next) {
+    // Validation Schema
+    const schema = Joi.object({
+      user: Joi.objectId().required(),
+      target: Joi.objectId().required(),
+      review: Joi.string().required(),
+    });
+
+    const { error, value } = schema.validate(req.body);
+
+    if (error) {
+      res.status(400).json(error.details);
+    } else {
+      //Create the review schema
+      const review = {
+        user: value.user,
+        date: moment.utc(),
+        content: value.review,
+      };
+
+      User.findByIdAndUpdate({ _id: value.target }, { $push: { reviews: review } })
+        .then(() => res.status(200).send())
         .catch(next);
     }
   },

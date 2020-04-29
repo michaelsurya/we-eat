@@ -2,6 +2,25 @@ import axios from "axios";
 import { GET_ERRORS, GET_NEW_PROFILE_PICT, GET_USER } from "./type";
 import { toast } from "react-toastify";
 
+export const changeProfilePict = (id, files) => (dispatch) => {
+  let image = new FormData();
+
+  image.append("imageName", `${id}${Date.now()}`);
+  image.append("imageData", files[0]);
+
+  axios
+    .post(`/api/uploads/profile/${id}`, image)
+    .then((result) => {
+      dispatch({
+        type: GET_NEW_PROFILE_PICT,
+        payload: result.data,
+      });
+    })
+    .catch((err) => {
+      toast.error(err.response.data.error);
+    });
+};
+
 export const editPhoneNumber = (id, phoneNumber) => async (dispatch) => {
   axios
     .patch(`/api/users/${id}`, phoneNumber)
@@ -78,19 +97,11 @@ export const resendEmailVerification = (email, history) => () => {
     });
 };
 
-export const changeProfilePict = (id, files) => (dispatch) => {
-  let image = new FormData();
-
-  image.append("imageName", `${id}${Date.now()}`);
-  image.append("imageData", files[0]);
-
+export const writeReview = (user, target, review) => () => {
   axios
-    .post(`/api/uploads/profile/${id}`, image)
-    .then((result) => {
-      dispatch({
-        type: GET_NEW_PROFILE_PICT,
-        payload: result.data,
-      });
+    .post(`/api/users/review`, { user: user, target: target, review: review })
+    .then((res) => {
+      toast.success("Thank you for writing a review.");
     })
     .catch((err) => {
       toast.error(err.response.data.error);

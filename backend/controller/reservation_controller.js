@@ -29,15 +29,18 @@ module.exports = {
       updatedField.status = value.status;
 
       //If reservation is accepted then make the review token
-      const event = await Event.findById(value.event);
-      updatedField.reviewToken = {
-        validStart: moment(event.date).add(1, "days").startOf("day"),
-        validEnd: moment(event.date).add(4, "days").startOf("day"),
-      };
-
+      if(value.status === "confirmed"){
+        const event = await Event.findById(value.event);
+        updatedField.reviewToken = {
+          validStart: moment.utc(event.date).add(1, "days").startOf("day"),
+          validEnd: moment.utc(event.date).add(4, "days").startOf("day"),
+        };
+        updatedField.approvedDate = moment.utc();
+      }
+      
       Reservation.findOneAndUpdate(
         { event: value.event, host: value.host, user: value.user },
-        { status: value.status }
+        updatedField
       )
         .then((result) =>
           Reservation.findById(result._id).populate("user").populate("host")

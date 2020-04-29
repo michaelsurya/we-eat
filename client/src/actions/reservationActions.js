@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_RESERVATION } from "./type";
+import { GET_RESERVATION } from "./type";
 import { toast } from "react-toastify";
 
 export const createReservation = (eventID, hostID, userID, history) => (
