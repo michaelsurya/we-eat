@@ -74,6 +74,7 @@ class MyEvents extends React.Component {
           <ApprovedReservationCard
             key={index}
             user={reservation.user}
+            reservation={reservation}
           ></ApprovedReservationCard>
         </Card.Group>
       ));

@@ -24,7 +24,7 @@ export const changeProfilePict = (id, files) => (dispatch) => {
 export const editPhoneNumber = (id, phoneNumber) => async (dispatch) => {
   axios
     .patch(`/api/users/${id}`, phoneNumber)
-    .then((res) => window.location.reload(false))
+    .then(() => window.location.reload(false))
     .catch((err) => {
       toast.error(err.response.data.error);
     });
@@ -106,6 +106,7 @@ export const writeReview = (user, target, reservation, review) => () => {
       review: review,
     })
     .then((res) => {
+      window.location.reload(false)
       toast.success("Thank you for writing a review.");
     })
     .catch((err) => {
