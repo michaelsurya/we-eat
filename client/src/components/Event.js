@@ -157,14 +157,14 @@ class Event extends React.Component {
                 >
                   Host Languages:
                 </Header>
-                <LanguageTag languages={["English", "Mandarin"]}></LanguageTag>
+                <LanguageTag languages={host ? host.languages : []}></LanguageTag>
                 <Header
                   as="h3"
                   className={`${styles.top_margin_zero} ${styles.bot_margin_zero}`}
                 >
                   Host Interests:
                 </Header>
-                <Interest interests={["English", "Mandarin"]}></Interest>
+                <Interest interests={host ? host.interests : []}></Interest>
               </div>
 
               <Divider horizontal>
