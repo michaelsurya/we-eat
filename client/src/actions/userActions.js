@@ -97,9 +97,14 @@ export const resendEmailVerification = (email, history) => () => {
     });
 };
 
-export const writeReview = (user, target, review) => () => {
+export const writeReview = (user, target, reservation, review) => () => {
   axios
-    .post(`/api/users/review`, { user: user, target: target, review: review })
+    .post(`/api/users/review`, {
+      user: user,
+      target: target,
+      reservation: reservation,
+      review: review,
+    })
     .then((res) => {
       toast.success("Thank you for writing a review.");
     })

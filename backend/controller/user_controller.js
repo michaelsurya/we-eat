@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Token = require("../models/token");
+const Reservation = require("../models/reservation");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -314,6 +315,7 @@ module.exports = {
     const schema = Joi.object({
       user: Joi.objectId().required(),
       target: Joi.objectId().required(),
+      reservation: Joi.objectId().required(),
       review: Joi.string().required(),
     });
 
@@ -329,7 +331,16 @@ module.exports = {
         content: value.review,
       };
 
-      User.findByIdAndUpdate({ _id: value.target }, { $push: { reviews: review } })
+      User.findByIdAndUpdate(
+        { _id: value.target },
+        { $push: { reviews: review } }
+      )
+        .then(() =>
+          Reservation.findByIdAndUpdate(
+            { _id: value.reservation },
+            { $push: { reviewers: value.user } }
+          )
+        )
         .then(() => res.status(200).send())
         .catch(next);
     }

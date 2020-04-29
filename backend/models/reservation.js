@@ -11,6 +11,7 @@ const ReservationSchema = new Schema({
   status: {type: String, required: true, enum: STATUS},
   reservationDate: {type: Date, required:true, default: Date.now},
   reviewToken: ReviewTokenSchema,
+  reviewers: [{type: Schema.Types.ObjectId, ref: "user"}],
   approvedDate: {type: Date},
 });
 

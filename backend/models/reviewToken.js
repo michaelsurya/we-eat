@@ -9,7 +9,7 @@ const ReviewTokenSchema = new Schema({
   validEnd: {
       type: Date,
       required: true
-  }
+  },
 });
 
 module.exports = ReviewTokenSchema;

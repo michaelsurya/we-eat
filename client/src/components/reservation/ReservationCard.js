@@ -19,6 +19,7 @@ const ReservationCard = ({
     reservationDate,
     reviewToken,
     confirmationDate,
+    reviewers,
   },
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +28,9 @@ const ReservationCard = ({
   const dispatch = useDispatch();
 
   const onSubmit = (formValues) => {
-    dispatch(writeReview(auth.user.id, host._id, formValues.review));
+    dispatch(
+      writeReview(auth.user.id, host._id, reservationID, formValues.review)
+    );
   };
 
   const renderPictures = (pictures) => {
@@ -116,6 +119,9 @@ const ReservationCard = ({
 
   const renderCommentButton = () => {
     if (reviewToken) {
+      if (reviewers.includes(auth.user.id)) {
+        return <Button disabled>You have written a review</Button>;
+      }
       const start = moment(reviewToken.validStart);
       const end = moment(reviewToken.validEnd);
       if (moment.utc().isBetween(start, end)) {
