@@ -1,0 +1,8 @@
+.container {
+    min-height: 80vh;
+    width: 40vw !important;
+}
+
+.top_margin {
+    margin-top: 2rem !important;
+}

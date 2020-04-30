@@ -11,6 +11,7 @@ import EditProfile from "./profile/EditProfile";
 import Error from "./Error";
 import Event from "./Event";
 import Home from "./Home";
+import Help from "./Help"
 import MyEvents from "./MyEvents";
 import Profile from "./Profile";
 import Reservation from "./Reservation";
@@ -43,6 +44,7 @@ const DefaultContainer = () => (
       <Route path="/" exact component={Home} />
       <PrivateRoute path="/event/new/" exact component={CreateEvent}></PrivateRoute>
       <Route path="/event/:id" exact component={Event}></Route>
+      <Route path="/help" exact component={Help}></Route>
       <Route path="/profile/:id" exact component={Profile} />
       <PrivateRoute
         path="/profile/edit/:id"

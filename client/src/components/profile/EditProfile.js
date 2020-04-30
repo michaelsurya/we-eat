@@ -79,7 +79,6 @@ class EditProfile extends React.Component {
   render() {
     return (
       <Container className={`${styles.top_margin} ${styles.container}`}>
-        {this.renderError()}
         <Header as="h1" textAlign="center">
           Edit Profile
         </Header>
