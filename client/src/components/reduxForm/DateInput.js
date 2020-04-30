@@ -15,6 +15,7 @@ const DateInput = (props) => {
   return (
     <Form.Field>
       <label>{label}</label>
+      {console.log(moment().add(1, "days"))}
       <DI
         animation="none"
         clearable
@@ -22,6 +23,7 @@ const DateInput = (props) => {
         closable
         dateFormat="DD/MM/YYYY"
         iconPosition="left"
+        initialDate={moment().add(1, "days")}
         minDate={moment().add(1, "days")}
         onChange={(e, { value }) => onChange(value)}
         placeholder={placeholder}
