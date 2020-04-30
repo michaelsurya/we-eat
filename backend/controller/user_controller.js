@@ -89,10 +89,8 @@ module.exports = {
     const schema = Joi.object({
       firstName: Joi.string(),
       surname: Joi.string(),
-      email: Joi.string().email(),
       description: Joi.string(),
       phoneNumber: Joi.string().allow(""),
-      sex: Joi.string().valid("M", "F"),
       languages: Joi.array(),
       interests: Joi.array(),
     });
@@ -197,19 +195,18 @@ module.exports = {
       res.status(400).json(error.details);
     } else {
       // Check if email is available
-      User.findOne({ email: value.email }).then((user) => {
-        if (user) {
-          return res.status(400).json({ error: "Email already exists" });
-        }
-      });
-
-      // Save user
-      const user = new User(value);
-      user
-        .save()
-        .then((result) => {
-          if (result) {
-            sendVerificationEmail(result._id, req, res, next);
+      User.findOne({ email: value.email })
+        .then((user) => {
+          if (user) {
+            return res.status(400).json({ error: "Email already exists" });
+          } else {
+            // Save user
+            const user = new User(value);
+            user.save().then((result) => {
+              if (result) {
+                sendVerificationEmail(result._id, req, res, next);
+              }
+            });
           }
         })
         .catch(next);
@@ -310,7 +307,7 @@ module.exports = {
     }
   },
 
-  writeReview(req, res, next) {
+  async writeReview(req, res, next) {
     // Validation Schema
     const schema = Joi.object({
       user: Joi.objectId().required(),
@@ -324,6 +321,26 @@ module.exports = {
     if (error) {
       res.status(400).json(error.details);
     } else {
+      const reservation = await Reservation.findById(value.reservation);
+      // Check if token exists
+      if (reservation.reviewToken) {
+        // Check if the time is valid
+        if (
+          !moment
+            .utc()
+            .isBetween(
+              reservation.reviewToken.validStart,
+              reservation.reviewToken.validEnd
+            )
+        ) {
+          res
+            .status(400)
+            .json({ error: "Not alowed to write review. Invalid timer range" });
+        }
+      } else {
+        res.status(404).json({ error: "Review token not found" });
+      }
+
       //Create the review schema
       const review = {
         user: value.user,
@@ -392,7 +409,7 @@ function sendVerificationEmail(userID, req, res, next) {
               if (err) {
                 return res.status(500).send({ message: err.message });
               }
-              res
+              return res
                 .status(200)
                 .send(
                   "A verification email has been sent to " + user.email + "."

@@ -76,7 +76,7 @@ module.exports = {
             }
           });
 
-          return res.status(200).send();
+          return res.status(200).send({id: reservation._id});
         })
         .catch(next);
     }
@@ -195,7 +195,7 @@ module.exports = {
             }
           });
 
-          return res.status(200).send();
+          return res.status(200).send({id: reservation._id});
         })
         .catch(next);
     }

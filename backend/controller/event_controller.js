@@ -22,7 +22,7 @@ module.exports = {
       location: Joi.any().required(),
       date: Joi.date().format("DD/MM/YYYY HH:mm").utc().required(),
       time: Joi.number().required(),
-      duration: Joi.string().required(),
+      duration: Joi.string(),
       guestRequired: Joi.number().required(),
       price: Joi.number().required(),
       description: Joi.string().required(),
@@ -247,23 +247,3 @@ const buildQuery = (criteria) => {
 
   return query;
 };
-
-// const session  = await mongoose.startSession();
-
-//       session.startTransaction();
-//       try {
-//         const event = new Event(value);
-//         await event.save();
-
-//         // commit the changes if everything was successful
-//         await session.commitTransaction();
-//         // send success response
-//         res.status(200).send();
-//       }
-//       catch(next) {
-//         console.log("Error")
-//         await session.abortTransaction();
-//       }
-//       finally{
-//         session.endSession();
-//       }

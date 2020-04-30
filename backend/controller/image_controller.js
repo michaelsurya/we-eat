@@ -15,15 +15,4 @@ module.exports = {
       .then((user) => res.status(200).send(user.profilePict))
       .catch(next);
   },
-
-  uploadEventCoverPicture(req, res, next) {
-    const newImage = {
-      imageName: req.body.imageName,
-      imageData: req.file.path,
-    };
-
-    Event.findByIdAndUpdate(req.params.id, { coverPict: newImage })
-      .then((result) => res.status(200).send(result))
-      .catch(next);
-  },
 };
