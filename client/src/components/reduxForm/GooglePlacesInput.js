@@ -28,7 +28,7 @@ const GooglePlacesInput = (props) => {
       </label>
       <LoadScript
         id="script-loader"
-        googleMapsApiKey="AIzaSyDTbkTz6jmv4J-L_vdIF7OjVxqeC7Ghkps"
+        googleMapsApiKey="api key here"
         libraries={LIBRARIES}
       >
         <Autocomplete

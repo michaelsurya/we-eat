@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import {
-  Accordion,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  Label,
-  Segment,
-} from "semantic-ui-react";
+import { Accordion, Container, Header, Icon } from "semantic-ui-react";
 import styles from "../assets/css/help.module.css";
 import { Link } from "react-router-dom";
 

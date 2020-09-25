@@ -31,6 +31,9 @@ export const editPhoneNumber = (id, phoneNumber) => async (dispatch) => {
 };
 
 export const editProfile = (id, userData, history) => (dispatch) => {
+  delete userData.email;
+  delete userData.sex;
+
   axios
     .patch(`/api/users/${id}`, userData)
     .then((res) => {

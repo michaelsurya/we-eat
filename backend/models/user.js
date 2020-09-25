@@ -60,7 +60,7 @@ UserSchema.pre("save", function (next) {
 // Always executed after findOneAndUpdate query. To check verification
 UserSchema.post("findOneAndUpdate", async function () {
   const doc = await this.model.findOne(this.getQuery()).select("+phoneNumber");
-  if(doc){
+  if (doc) {
     if (doc.phoneNumber !== "") {
       doc.verifiedPhone = true;
     }
