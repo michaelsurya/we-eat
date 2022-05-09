@@ -8,7 +8,7 @@ const routes = require("./routes/routes");
 
 const app = express();
 
-const dbUri = "mongodb://localhost/weeat";
+const dbUri = process.env.DB_URI || "mongodb://localhost/weeat";
 
 mongoose.Promise = global.Promise;
 
