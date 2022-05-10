@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
@@ -35,7 +36,10 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-//Routes
+// React
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+// Routes
 routes(app);
 
 app.use((err, req, res, next) => {

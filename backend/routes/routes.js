@@ -1,3 +1,5 @@
+const path = require("path");
+
 const EventController = require("../controller/event_controller");
 const ImageController = require("../controller/image_controller");
 const ReservationController = require("../controller/reservation_controller");
@@ -8,7 +10,7 @@ const passport = require("passport");
 
 module.exports = (app) => {
   app.get("/", (req, res) => {
-    res.send("It works!");
+    res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
   });
 
   app.post("/api/events", upload.any(), EventController.newEvent);
