@@ -39,8 +39,10 @@ require("./config/passport")(passport);
 // React
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
+const baseUri = `${process.env.baseUri}/` || "/"
+
 // Routes
-routes(app);
+app.use(baseUri, routes);
 
 app.use((err, req, res, next) => {
   res.status(422).send({ error: err.message });

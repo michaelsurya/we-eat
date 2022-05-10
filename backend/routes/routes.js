@@ -1,3 +1,4 @@
+const express = require("express");
 const path = require("path");
 
 const EventController = require("../controller/event_controller");
@@ -6,42 +7,43 @@ const ReservationController = require("../controller/reservation_controller");
 const UserController = require("../controller/user_controller");
 
 const upload = require("../config/multer");
-const passport = require("passport");
 
-module.exports = (app) => {
-  app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
-  });
+var router = express.Router();
 
-  app.post("/api/events", upload.any(), EventController.newEvent);
-  app.get("/api/events/", EventController.search);
-  app.get("/api/events/:id", EventController.getOnePublic);
+router.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../client/build", "index.html"));
+});
 
-  app.get("/api/myevents/:id", EventController.getMyEvents);
-  app.get("/api/myreservations/:id", ReservationController.getMyReservations);
+router.post("/api/events", upload.any(), EventController.newEvent);
+router.get("/api/events/", EventController.search);
+router.get("/api/events/:id", EventController.getOnePublic);
 
-  app.post("/api/reservations", ReservationController.newReservation);
-  app.patch("/api/reservations", ReservationController.editReservation);
+router.get("/api/myevents/:id", EventController.getMyEvents);
+router.get("/api/myreservations/:id", ReservationController.getMyReservations);
 
-  app.get("/api/users/:id", UserController.getOnePublic);
-  app.patch("/api/users/:id", UserController.edit);
-  app.get("/api/users/private/:id", UserController.getOnePrivate);
-  app.post("/api/users/register", UserController.register);
-  app.post("/api/users/review", UserController.writeReview);
-  app.post("/api/users/login", UserController.authenticate);
-  app.post(
-    "/api/users/send/verification/",
-    UserController.sendEmailVerification
-  );
-  app.post(
-    "/api/users/resend/verification/",
-    UserController.resendEmailVerification
-  );
-  app.get("/api/verify/:token", UserController.verifyEmail);
+router.post("/api/reservations", ReservationController.newReservation);
+router.patch("/api/reservations", ReservationController.editReservation);
 
-  app.post(
-    "/api/uploads/profile/:id",
-    upload.single("imageData"),
-    ImageController.uploadProfile
-  );
-};
+router.get("/api/users/:id", UserController.getOnePublic);
+router.patch("/api/users/:id", UserController.edit);
+router.get("/api/users/private/:id", UserController.getOnePrivate);
+router.post("/api/users/register", UserController.register);
+router.post("/api/users/review", UserController.writeReview);
+router.post("/api/users/login", UserController.authenticate);
+router.post(
+  "/api/users/send/verification/",
+  UserController.sendEmailVerification
+);
+router.post(
+  "/api/users/resend/verification/",
+  UserController.resendEmailVerification
+);
+router.get("/api/verify/:token", UserController.verifyEmail);
+
+router.post(
+  "/api/uploads/profile/:id",
+  upload.single("imageData"),
+  ImageController.uploadProfile
+);
+
+module.exports = router
