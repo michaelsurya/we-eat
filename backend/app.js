@@ -36,10 +36,10 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-// React
-app.use(express.static(path.resolve(__dirname, '../client/build')));
-
 const baseUri = `${process.env.baseUri}` || "/"
+
+// React
+app.use(baseUri, express.static(path.resolve(__dirname, '../client/build/')));
 
 // Routes
 app.use(baseUri, routes);
