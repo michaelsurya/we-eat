@@ -39,7 +39,7 @@ require("./config/passport")(passport);
 // React
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-const baseUri = `${process.env.baseUri}/` || "/"
+const baseUri = `${process.env.baseUri}` || "/"
 
 // Routes
 app.use(baseUri, routes);
