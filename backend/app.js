@@ -26,6 +26,14 @@ mongoose.connection
     console.warn("Warning", error);
   });
 
+app.use(function (req, res, next) {
+  res.setHeader(
+    "Content-Security-Policy",
+    "img-src * blob: data: ;"
+  );
+  next();
+});
+
 app.use("/uploads", express.static("uploads"));
 
 // Body parser
@@ -36,10 +44,10 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-const baseUri = `${process.env.baseUri}` || "/"
+const baseUri = `${process.env.baseUri}` || "/";
 
 // React
-app.use(baseUri, express.static(path.resolve(__dirname, '../client/build/')));
+app.use(baseUri, express.static(path.resolve(__dirname, "../client/build/")));
 
 // Routes
 app.use(baseUri, routes);
