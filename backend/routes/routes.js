@@ -46,6 +46,10 @@ router.post(
   ImageController.uploadProfile
 );
 
+router.get('/uploads/:filename', (req,res) =>{
+  res.sendFile(path.resolve(__dirname, "../uploads/", req.params.filename));
+});
+
 router.get('*', (req,res) =>{
   res.sendFile(path.resolve(__dirname, "../../client/build", "index.html"));
 });

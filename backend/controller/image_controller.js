@@ -5,7 +5,7 @@ module.exports = {
   uploadProfile(req, res, next) {
     const newImage = {
       imageName: req.body.imageName,
-      imageData: req.file.path,
+      imageData: req.file.path.replace("\\","/"),
     };
 
     User.findByIdAndUpdate(req.params.id, {

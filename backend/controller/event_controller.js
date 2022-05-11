@@ -42,7 +42,7 @@ module.exports = {
     } else {
       // Construct the pictures
       value.pictures = req.files.map((file) => {
-        return { imageName: file.filename, imageData: file.path };
+        return { imageName: file.filename, imageData: file.path.replace("\\","/") };
       });
       // Set date to be timezone agnostic
       value.date = moment.utc(value.date, "DD/MM/YYYY HH:mm");
