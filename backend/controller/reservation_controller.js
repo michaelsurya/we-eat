@@ -7,7 +7,7 @@ Joi.objectId = require("joi-objectid")(Joi);
 const filter = require("lodash/filter");
 
 const moment = require("moment");
-const nodemailer = require("nodemailer");
+const transporter = require("../config/nodemailer");
 
 module.exports = {
   async editReservation(req, res, next) {
@@ -46,18 +46,9 @@ module.exports = {
           Reservation.findById(result._id).populate("user").populate("host")
         )
         .then((reservation) => {
-          // Prepare nodemailer transporter
-          let transporter = nodemailer.createTransport({
-            service: "Sendgrid",
-            auth: {
-              user: process.env.SENDGRID_USERNAME,
-              pass: process.env.SENDGRID_PASSWORD,
-            },
-          });
-
           // Construct the email
           let guestMail = {
-            from: "no-reply@weeat.com",
+            from: "MSPutra <no-reply@msputra.web.id>",
             to: reservation.user.email,
             subject: `Reservation: ${reservation._id}`,
           };
@@ -158,25 +149,16 @@ module.exports = {
             .populate("user")
         )
         .then((reservation) => {
-          // Prepare nodemailer transporter
-          let transporter = nodemailer.createTransport({
-            service: "Sendgrid",
-            auth: {
-              user: process.env.SENDGRID_USERNAME,
-              pass: process.env.SENDGRID_PASSWORD,
-            },
-          });
-
           // Construct the email
           var guestMail = {
-            from: "no-reply@weeat.com",
+            from: "MSPutra <no-reply@msputra.web.id>",
             to: reservation.user.email,
             subject: `Reservation: ${reservation._id}`,
             text: `Hello, ${reservation.user.firstName}\n\nYour reservation request has been sent to the host ${reservation.host.firstName}.\nWe will inform you once the host has taken action to your request.\n\nRegards,\nWeEAT`,
           };
 
           var hostMail = {
-            from: "no-reply@weeat.com",
+            from: "MSPutra <no-reply@msputra.web.id>",
             to: reservation.host.email,
             subject: `Reservation: ${reservation._id}`,
             text: `Hello, ${reservation.host.firstName}\n\n${reservation.user.firstName} has requested to join one your event.\nTo take action please go to "My Events" tab located in the top right dropdown of the WeEAT website.\n\nRegards,\nWeEAT`,

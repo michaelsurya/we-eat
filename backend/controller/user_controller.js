@@ -10,7 +10,7 @@ const Joi = require("@hapi/joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
 const moment = require("moment");
-const nodemailer = require("nodemailer");
+const transporter = require("../config/nodemailer");
 
 module.exports = {
   /*
@@ -378,27 +378,21 @@ function sendVerificationEmail(userID, req, res, next) {
             userId: userID,
             token: crypto.randomBytes(16).toString("hex"),
           });
+          
+          let baseUri = process.env.baseUri ? process.env.baseUri : ""
 
           // Save the token in the DB
           token.save().then(() => {
-            // Prepare nodemailer transporter
-            let transporter = nodemailer.createTransport({
-              service: "Sendgrid",
-              auth: {
-                user: process.env.SENDGRID_USERNAME,
-                pass: process.env.SENDGRID_PASSWORD,
-              },
-            });
-
             // Construct the email
             var mailOptions = {
-              from: "no-reply@weeat.com",
+              from: "MSPutra <no-reply@msputra.web.id>",
               to: user.email,
               subject: "Account Verification Token",
               text:
                 "Hello,\n\n" +
                 "Please verify your account by clicking the link: \nhttp://" +
                 req.headers.host +
+                baseUri +
                 "/api/verify/" +
                 token.token +
                 "\n",
@@ -407,6 +401,7 @@ function sendVerificationEmail(userID, req, res, next) {
             // Send the email
             transporter.sendMail(mailOptions, function (err) {
               if (err) {
+                console.log(err)
                 return res.status(500).send({ message: err.message });
               }
               return res
