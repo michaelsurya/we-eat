@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../apis/axios";
 import moment from "moment";
 import { GET_ERRORS, GET_EVENT, GET_EVENTS } from "./type";
 import { toast } from "react-toastify";

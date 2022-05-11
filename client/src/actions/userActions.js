@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../apis/axios";
 import { GET_ERRORS, GET_NEW_PROFILE_PICT, GET_USER } from "./type";
 import { toast } from "react-toastify";
 

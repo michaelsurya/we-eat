@@ -99,7 +99,7 @@ class Profile extends React.Component {
       return (
         <Image
           className={styles.image}
-          src={`http:\\\\localhost:8080\\${profilePict.imageData}`}
+          src={`${window.location.protocol}//${window.location.host}${process.env.REACT_APP_BASE_URL}/${profilePict.imageData}`}
           size="medium"
           circular
         />

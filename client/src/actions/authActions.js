@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../apis/axios";
 import setAuthToken from "../apis/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { SET_CURRENT_USER, USER_LOADING } from "./type";

@@ -24,7 +24,7 @@ import VerifyEmail from "./verify/VerifyEmail";
 
 const App = () => {
   return (
-    <Router basename="/weeat">
+    <Router basename={process.env.REACT_APP_BASE_URL}>
       <ScrollToTop/>
       <ToastContainer position="top-center" autoClose={2000} />
       <Switch>

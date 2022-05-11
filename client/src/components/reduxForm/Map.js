@@ -6,7 +6,7 @@ import { Form, Segment } from "semantic-ui-react";
 
 import InlineEditable from "./InlineEditable";
 
-Geocode.setApiKey("AIzaSyDTbkTz6jmv4J-L_vdIF7OjVxqeC7Ghkps");
+Geocode.setApiKey(process.env.REACT_APP_MAP_API_KEY);
 
 const LIBRARIES = ["places"];
 
@@ -244,7 +244,7 @@ class Map extends React.Component {
           <label>Location:</label>
           <LoadScript
             id="script-loader"
-            googleMapsApiKey="AIzaSyDTbkTz6jmv4J-L_vdIF7OjVxqeC7Ghkps"
+            googleMapsApiKey={process.env.REACT_APP_MAP_API_KEY}
             libraries={LIBRARIES}
           >
             <GoogleMap

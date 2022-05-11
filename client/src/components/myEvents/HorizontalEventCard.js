@@ -26,7 +26,7 @@ const HorizontalEventCard = ({
       return pictures.map((picture, index) => (
         <img
           alt={pictures.imageName}
-          src={`http:\\\\localhost:8080\\${picture.imageData}`}
+          src={`${window.location.protocol}//${window.location.host}${process.env.REACT_APP_BASE_URL}/${picture.imageData}`}
           key={index}
         ></img>
       ));
